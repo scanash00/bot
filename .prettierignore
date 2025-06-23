@@ -1,0 +1,11 @@
+node_modules
+package-lock.json
+yarn.lock
+bun.lockb
+.env
+.env.*
+!.env.example
+coverage
+build
+dist
+*.log

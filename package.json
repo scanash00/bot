@@ -1,0 +1,38 @@
+{
+  "name": "><",
+  "version": "1.`0.0",
+  "description": "A calming Discord bot with various utility commands",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node -r dotenv/config src/index.js",
+    "dev": "nodemon -r dotenv/config src/index.js",
+    "lint": "eslint . --ext .js --ignore-path .eslintignore",
+    "lint:fix": "eslint . --ext .js --fix --ignore-path .eslintignore",
+    "lint:format": "eslint . --ext .js --format=codeframe --ignore-path .eslintignore",
+    "format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .prettierignore",
+    "check": "bun run lint && bun run format:check"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^1.7.1",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "discord.js": "^14.20.0",
+    "dotenv": "^16.5.0",
+    "eslint-plugin-prettier": "^5.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.6.1",
+    "node-fetch": "^2.7.0",
+    "pg": "^8.16.2",
+    "whois-json": "^2.0.4",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^2.0.22",
+    "prettier": "^3.6.0"
+  }
+}
