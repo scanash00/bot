@@ -38,6 +38,7 @@ Copy `.env.example` to `.env` and fill in the required values:
 - `API_KEY_ENCRYPTION_SECRET` (32+ char secret)
 - `STATUS_API_KEY` (for status endpoint)
 - `ALLOWED_ORIGINS`, `NODE_ENV`, etc.
+- `CLIENT_ID` (your discord bot id, copy it from the dashboard)
 
 ### 3. Database Migrations
 
