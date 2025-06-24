@@ -4,7 +4,6 @@ const config = {
   discord: {
     token: process.env.TOKEN,
     clientId: process.env.CLIENT_ID,
-    publicKey: process.env.PUBLIC_KEY,
   },
 
   api: {
