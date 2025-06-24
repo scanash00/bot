@@ -78,9 +78,6 @@ const client = new Client({
 
 client.commands = new Collection();
 
-// ---- Command Loader and Registration ----
-client.commands = new Collection();
-
 client.on('ready', async () => {
   // eslint-disable-next-line no-console
   console.log(`Logged in as ${client.user.tag}!`);
