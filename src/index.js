@@ -62,12 +62,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(verifyApiKey);
-app.use('/status', status);
-
 const client = new Client({
   intents: [GatewayIntentBits.MessageContent],
 });
+
+app.use(verifyApiKey);
+app.use('/status', status(client));
 
 client.commands = new Collection();
 
