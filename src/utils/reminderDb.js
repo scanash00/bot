@@ -97,12 +97,12 @@ async function cleanupReminders(days = 30) {
   const query = `
     DELETE FROM reminders
     WHERE is_completed = TRUE
-    AND completed_at < CURRENT_TIMESTAMP - INTERVAL '${days} days'
+    AND completed_at < CURRENT_TIMESTAMP - ($1 * INTERVAL '1 day')
     RETURNING *
   `;
 
   try {
-    const result = await pool.query(query);
+    const result = await pool.query(query, [days]);
     return result.rowCount;
   } catch (error) {
     logger.error('Error cleaning up old reminders:', error);
