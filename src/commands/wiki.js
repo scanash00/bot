@@ -1,7 +1,7 @@
 // as long as you do not look up something weird im fine
 
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const logger = require('../utils/logger');
 
 const cooldowns = new Map();

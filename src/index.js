@@ -18,7 +18,7 @@ const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const verifyApiKey = require('./middlewares/verifyApiKey');
 const getGitCommitHash = require('./utils/getGitCommitHash');
