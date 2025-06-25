@@ -1,8 +1,6 @@
-const { Events } = require('discord.js');
-
+const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { browserHeaders } = require('../constants/index');
-const { ActionRowBuilder } = require('discord.js');
-const { Client } = require('discord.js');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 /**
  *
