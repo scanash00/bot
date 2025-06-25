@@ -1,7 +1,7 @@
 {
   "name": "><",
-  "version": "1.0.0",
-  "description": "A privacy-conscious, production-ready Discord user bot ",
+  "version": "1.10.0",
+  "description": "A privacy-conscious, production-ready Discord user bot",
   "main": "src/index.js",
   "scripts": {
     "start": "node -r dotenv/config src/index.js",
