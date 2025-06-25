@@ -6,5 +6,5 @@ const browserHeaders = {
 };
 
 module.exports = {
-    browserHeaders
-}
+  browserHeaders,
+};

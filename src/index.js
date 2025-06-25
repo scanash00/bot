@@ -83,16 +83,15 @@ client.on('error', (err) => {
 
 // initialize the commands
 const commandsPath = path.join(__dirname, 'handlers');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 (async () => {
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const handler = require(filePath);
     await handler(client);
-  };
-})()
-
+  }
+})();
 
 client.login(process.env.TOKEN);
 
-// i hope it's not broken. 
+// i hope it's not broken.

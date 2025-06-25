@@ -1,14 +1,14 @@
 {
-  "name": "><",
-  "version": "1.`0.0",
+  "name": "calm-bot",
+  "version": "1.0.0",
   "description": "A calming Discord bot with various utility commands",
   "main": "src/index.js",
   "scripts": {
     "start": "node -r dotenv/config src/index.js",
     "dev": "nodemon -r dotenv/config src/index.js",
-    "lint": "eslint . --ext .js --ignore-path .eslintignore",
-    "lint:fix": "eslint . --ext .js --fix --ignore-path .eslintignore",
-    "lint:format": "eslint . --ext .js --format=codeframe --ignore-path .eslintignore",
+    "lint": "eslint . --config eslint.config.js",
+    "lint:fix": "eslint . --config eslint.config.js --fix",
+    "lint:format": "eslint . --config eslint.config.js --format=codeframe",
     "format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "check": "bun run lint && bun run format:check"
@@ -30,8 +30,10 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.29.0",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.0"
   }
