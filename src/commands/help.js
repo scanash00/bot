@@ -19,7 +19,7 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setColor('#FAA0A0')
-        .setTitle('>< Bot Commands')
+        .setTitle('Aethel Bot Commands')
         .setDescription('Here are all the available commands:');
 
       for (const file of commandFiles) {

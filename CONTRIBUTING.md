@@ -1,4 +1,4 @@
-# Contributing to >< Bot
+# Contributing to Aethel
 
 Thank you for your interest in contributing!
 

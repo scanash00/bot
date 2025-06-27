@@ -1,4 +1,4 @@
--- Database schema for >< bot
+-- Database schema for Aethel
 
 CREATE TABLE IF NOT EXISTS users (
     user_id TEXT PRIMARY KEY,
