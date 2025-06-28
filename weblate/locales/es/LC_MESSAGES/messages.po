@@ -365,8 +365,6 @@ msgstr "❌ ¡El tiempo de recordatorio no puede ser mayor a 24 horas!"
 msgid "⏰ Reminder!"
 msgstr "⏰ ¡Recordatorio!"
 
-msgid "⏰ Reminder Set!"
-msgstr "⏰ ¡Recordatorio configurado!"
 
 msgid "I'll remind you about:\n\n*%message%*"
 msgstr "Te recordaré sobre:\n\n*%message%*"
