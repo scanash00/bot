@@ -54,7 +54,8 @@ const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
 
 function getRandomResponse(locale) {
-  const localeResponses = responses[locale];
+  // fallback to 'en' if locale is not found or invalid
+  const localeResponses = responses[locale] || responses['en'];
   return localeResponses[Math.floor(Math.random() * localeResponses.length)];
 }
 
@@ -131,7 +132,11 @@ export default {
       }
 
       const question = sanitizeInput(interaction.options.getString('question'));
-      const responseKey = getRandomResponse();
+      const locale =
+        interaction.locale && responses[interaction.locale.split('-')[0]]
+          ? interaction.locale.split('-')[0]
+          : 'en';
+      const responseKey = getRandomResponse(locale);
       const translatedResponse = await interaction.t(responseKey, { default: responseKey });
 
       logger.info(`8ball used by ${interaction.user.tag}: ${question}`);
