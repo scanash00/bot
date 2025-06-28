@@ -402,12 +402,6 @@ msgid "❌ An error occurred while setting your reminder. Please try again later
 msgstr "❌ Ocurrió un error al configurar tu recordatorio. Por favor, inténtalo de nuevo más tarde."
 
 #: src/commands/weather.js
-msgid "Get the current weather"
-msgstr "Obtener el clima actual"
-
-msgid "City name or zip code"
-msgstr "Nombre de la ciudad o código postal"
-
 #: src/commands/whois.js
 msgid "Get information about a user"
 msgstr "Obtener información sobre un usuario"
@@ -459,24 +453,7 @@ msgstr "Presión"
 msgid "weather.embed.footer"
 msgstr "Datos de OpenWeather • %date%"
 
-#: src/commands/weather.js
-msgid "Get the current weather"
-msgstr "Obtener el clima actual"
 
-msgid "City name or zip code"
-msgstr "Nombre de la ciudad o código postal"
-
-#: src/commands/whois.js
-msgid "Get information about a user"
-msgstr "Obtener información sobre un usuario"
-
-
-#: src/commands/wiki.js
-msgid "Search Wikipedia"
-msgstr "Buscar en Wikipedia"
-
-msgid "Search term"
-msgstr "Término de búsqueda"
 
 # Whois Command
 msgid "Look up WHOIS information for a domain or IP address"

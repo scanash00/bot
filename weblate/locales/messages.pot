@@ -187,12 +187,9 @@ msgid "What to remind you about"
 msgstr ""
 
 #: src/commands/weather.js
-msgid "Get the current weather"
-msgstr ""
 
-msgid "City name or zip code"
-msgstr ""
 
+#: src/commands/whois.js
 #: src/commands/whois.js
 msgid "Get information about a user"
 msgstr ""
@@ -207,192 +204,280 @@ msgstr ""
 msgid "Search term"
 msgstr ""
 
-# --- Extra keys from Spanish PO not in POT ---
+# Command names and descriptions
 msgid "commands.help.name"
 msgstr ""
+
 msgid "commands.help.description"
 msgstr ""
+
 msgid "commands.set-language.name"
 msgstr ""
+
 msgid "commands.8ball.name"
 msgstr ""
+
 msgid "commands.8ball.description"
 msgstr ""
+
 msgid "commands.cat.name"
 msgstr ""
+
 msgid "commands.dog.name"
 msgstr ""
+
 msgid "commands.joke.name"
 msgstr ""
+
 msgid "commands.remind.name"
 msgstr ""
+
 msgid "commands.weather.name"
 msgstr ""
+
 msgid "commands.whois.name"
 msgstr ""
+
 msgid "commands.wiki.name"
 msgstr ""
+
 msgid "commands.set-language.description"
 msgstr ""
+
 msgid "commands.ai.description"
 msgstr ""
+
 msgid "commands.cat.description"
 msgstr ""
+
 msgid "commands.dog.description"
 msgstr ""
+
 msgid "commands.joke.description"
 msgstr ""
+
 msgid "commands.remind.description"
 msgstr ""
+
 msgid "commands.weather.description"
 msgstr ""
+
 msgid "commands.whois.description"
 msgstr ""
+
 msgid "commands.wiki.description"
 msgstr ""
+
+# Categories and UI
 msgid "Fun"
 msgstr ""
+
 msgid "Utility"
 msgstr ""
+
 msgid "Information"
 msgstr ""
+
 msgid "categories.general"
 msgstr ""
+
 msgid "categories.fun"
 msgstr ""
+
 msgid "categories.moderation"
 msgstr ""
+
 msgid "categories.utility"
 msgstr ""
+
 msgid "categories.other"
 msgstr ""
+
+# Reminder messages
 msgid "Remind Me"
 msgstr ""
+
 msgid "❌ Invalid time format! Use combinations like: 1h30m, 45m, or 2h"
 msgstr ""
+
 msgid "❌ Please provide a valid message (1-1000 characters)"
 msgstr ""
+
 msgid "❌ Reminder time must be at least 1 minute!"
 msgstr ""
+
 msgid "❌ Reminder time cannot be longer than 24 hours!"
 msgstr ""
+
 msgid "⏰ Reminder!"
 msgstr ""
+
 msgid "⏰ Reminder Set!"
 msgstr ""
+
 msgid "I'll remind you about:\n\n*%message%*"
 msgstr ""
+
 msgid "⏱️ Time"
 msgstr ""
+
 msgid "You asked me to remind you about:\n\n*%message%*"
 msgstr ""
+
 msgid "⏱️ Time elapsed"
 msgstr ""
+
 msgid "📅 Original time"
 msgstr ""
+
 msgid "🔗 Original Message"
 msgstr ""
+
 msgid "Jump to message"
 msgstr ""
+
 msgid "🕒 Will trigger"
 msgstr ""
+
 msgid "🔗 Message Link"
 msgstr ""
+
 msgid "✅ Reminder set! I'll remind you in %time% about: %message%"
 msgstr ""
+
 msgid "❌ An error occurred while setting your reminder. Please try again later."
 msgstr ""
-msgid "Get the current weather"
-msgstr ""
-msgid "City name or zip code"
-msgstr ""
-msgid "Get information about a user"
-msgstr ""
+
+# Wiki article
 msgid "wiki.article.title"
 msgstr ""
+
 msgid "wiki.article.read_more"
 msgstr ""
+
 msgid "wiki.article.no_summary"
 msgstr ""
+
 msgid "wiki.article.truncated"
 msgstr ""
+
+# Weather
 msgid "weather.embed.title"
 msgstr ""
+
 msgid "weather.fields.temperature"
 msgstr ""
+
 msgid "weather.fields.feels_like"
 msgstr ""
+
 msgid "weather.fields.weather"
 msgstr ""
+
 msgid "weather.fields.humidity"
 msgstr ""
+
 msgid "weather.fields.wind_speed"
 msgstr ""
+
 msgid "weather.fields.pressure"
 msgstr ""
+
 msgid "weather.embed.footer"
 msgstr ""
+
+# Cat command
 msgid "Get a random cat image!"
 msgstr ""
+
 msgid "Random Cat"
 msgstr ""
+
 msgid "From r/%s"
 msgstr ""
+
 msgid "powered by pur.cat"
 msgstr ""
+
+# Dog command
 msgid "Get a random dog image!"
 msgstr ""
+
 msgid "Random Dog"
 msgstr ""
+
 msgid "powered by erm.dog"
 msgstr ""
+
+# AI command
 msgid "Ask an AI a question"
 msgstr ""
+
 msgid "Your question or prompt"
 msgstr ""
+
 msgid "❌ You've reached your daily limit of AI requests"
 msgstr ""
+
 msgid "❌ Error processing your request"
 msgstr ""
+
 msgid "❌ Please set up your API key first"
 msgstr ""
+
 msgid "❌ API key removed successfully"
 msgstr ""
+
 msgid "❌ Failed to remove API key"
 msgstr ""
+
 msgid "❌ Invalid API key format"
 msgstr ""
+
 msgid "❌ Failed to set API key"
 msgstr ""
+
 msgid "❌ Failed to process AI response"
 msgstr ""
+
 msgid "❌ Message is too long"
 msgstr ""
+
 msgid "❌ No response from AI"
 msgstr ""
 
+# Joke command
 msgid "joke.punchline"
 msgstr ""
 
 msgid "joke.types.general"
 msgstr ""
+
 msgid "joke.types.knock-knock"
 msgstr ""
+
 msgid "joke.types.programming"
 msgstr ""
+
 msgid "joke.types.dad"
 msgstr ""
+
 msgid "joke.title"
 msgstr ""
 
+# Reminder modal
 msgid "⏰ Set Reminder"
 msgstr ""
+
 msgid "When to remind you? (e.g., 10m, 1h, 2h30m)"
 msgstr ""
+
 msgid "10m, 1h, or 2h30m"
 msgstr ""
+
 msgid "What should I remind you about?"
 msgstr ""
+
 msgid "Type your reminder message here..."
 msgstr ""
 
