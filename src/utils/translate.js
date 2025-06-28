@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const gettext = require('gettext-parser');
-const pool = require('./pgClient');
 
 const LOCALE_MAPPING = {
   'en-US': 'en',
@@ -25,34 +24,24 @@ const localesPath = path.join(__dirname, '../../weblate/locales');
 function loadTranslations(lang) {
   const filePath = path.join(localesPath, lang, 'LC_MESSAGES/messages.po');
 
-  try {
-    if (fs.existsSync(filePath)) {
-      const poContent = fs.readFileSync(filePath, 'utf8');
-      const po = gettext.po.parse(poContent, 'utf8');
+  if (fs.existsSync(filePath)) {
+    const poContent = fs.readFileSync(filePath, 'utf8');
+    const po = gettext.po.parse(poContent, 'utf8');
 
-      const flatTranslations = {};
-      let translationCount = 0;
+    const flatTranslations = {};
 
-      for (const [context, items] of Object.entries(po.translations)) {
-        for (const [key, value] of Object.entries(items)) {
-          if (key === '') continue;
-
-          const translation = value.msgstr[0] || key;
-
-          flatTranslations[key] = translation;
-          translationCount++;
-        }
+    for (const [, items] of Object.entries(po.translations)) {
+      for (const [key, value] of Object.entries(items)) {
+        if (key === '') continue;
+        const translation = value.msgstr[0] || key;
+        flatTranslations[key] = translation;
       }
-
-      translations[lang] = flatTranslations;
-
-      const sampleKeys = Object.keys(flatTranslations).slice(0, 3);
-
-      return true;
-    } else {
-      return false;
     }
-  } catch (error) {
+
+    translations[lang] = flatTranslations;
+
+    return true;
+  } else {
     return false;
   }
 }
@@ -84,7 +73,9 @@ function loadAllTranslations() {
 
       loadTranslations(lang);
     }
-  } catch (error) {}
+  } catch (error) {
+    // ignore
+  }
 }
 
 loadAllTranslations();
@@ -171,7 +162,7 @@ function formatTranslation(translation, replace = {}) {
   );
 }
 
-function getUserLocale(userId) {
+function getUserLocale() {
   return 'en';
 }
 
@@ -200,7 +191,9 @@ async function translate(key, options = {}) {
         if (userLocale) {
           locale = userLocale;
         }
-      } catch (error) {}
+      } catch (error) {
+        // ignore
+      }
     }
 
     const normalizedLocale = normalizeLocale(locale);

@@ -33,19 +33,19 @@ async function runMigrations() {
 
     for (const file of migrationFiles) {
       if (!completedMigrationNames.has(file)) {
-        console.log(`Running migration: ${file}`);
+        // console.log(`Running migration: ${file}`);
         const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf8');
         await client.query(sql);
         await client.query('INSERT INTO migrations (name) VALUES ($1)', [file]);
-        console.log(`Completed migration: ${file}`);
+        // console.log(`Completed migration: ${file}`);
       }
     }
 
     await client.query('COMMIT');
-    console.log('All migrations completed successfully');
+    // console.log('All migrations completed successfully');
   } catch (error) {
     await client.query('ROLLBACK');
-    console.error('Migration failed:', error);
+    // console.error('Migration failed:', error);
     process.exit(1);
   } finally {
     client.release();
@@ -53,4 +53,4 @@ async function runMigrations() {
   }
 }
 
-runMigrations().catch(console.error);
+runMigrations();

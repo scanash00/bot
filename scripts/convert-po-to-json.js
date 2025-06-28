@@ -15,17 +15,17 @@ fs.readdirSync(localesPath).forEach((langDir) => {
 
   if (fs.existsSync(poFilePath)) {
     try {
-      console.log(`Converting ${langDir} translations...`);
+      // console.log(`Converting ${langDir} translations...`);
       const poContent = fs.readFileSync(poFilePath, 'utf8');
       const jsonContent = po2json.parse(poContent);
 
       const outputFile = path.join(outputDir, `${langDir}.json`);
       fs.writeFileSync(outputFile, JSON.stringify(jsonContent, null, 2));
-      console.log(`Saved ${langDir} translations to ${outputFile}`);
+      // console.log(`Saved ${langDir} translations to ${outputFile}`);
     } catch (error) {
-      console.error(`Error processing ${langDir}:`, error);
+      // console.error(`Error processing ${langDir}:`, error);
     }
   }
 });
 
-console.log('Conversion complete!');
+// console.log('Conversion complete!');

@@ -251,18 +251,7 @@ module.exports = {
 
       if (minutes < 1) {
         logger.warn(`Reminder time too short from ${userTag}: ${timeStr}`);
-        const successMessage = await i18n(
-          "✅ Reminder set! I'll remind you in %time% about: %message%",
-          {
-            userId: interaction.user.id,
-            locale: interaction.locale,
-            replace: {
-              time: formatTimeString(minutes),
-              message: message,
-            },
-          },
-          `✅ Reminder set! I'll remind you in ${formatTimeString(minutes)} about: ${message}`
-        );
+
         const errorMsg = await interaction.t('❌ Reminder time must be at least 1 minute!', {
           default: '❌ Reminder time must be at least 1 minute!',
         });
@@ -479,11 +468,6 @@ module.exports = {
         '10m, 1h, or 2h30m',
         { userId: user.id, locale: interaction.locale || 'en' },
         '10m, 1h, or 2h30m'
-      );
-      const contextInfoLabel = await i18n(
-        'You will be reminded about this message.',
-        { userId: user.id, locale: interaction.locale || 'en' },
-        'You will be reminded about this message.'
       );
 
       const modal = new ModalBuilder().setCustomId(modalId).setTitle(modalTitle);

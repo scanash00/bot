@@ -5,7 +5,6 @@ const {
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
-  EmbedBuilder,
 } = require('discord.js');
 const pool = require('../utils/pgClient');
 const { encrypt, decrypt } = require('../utils/encrypt');

@@ -1,4 +1,4 @@
-const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { browserHeaders } = require('../constants/index');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const withTranslation = require('../middleware/withTranslation');

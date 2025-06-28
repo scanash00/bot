@@ -97,12 +97,10 @@ module.exports = {
       const cooldownEnd = cooldowns.get(cooldownKey) || 0;
       const userId = interaction.user.id;
 
-      let userLanguage = 'en';
       try {
-        const locale = (await i18n.getUserLocale(userId)) || 'en';
-        userLanguage = locale.split('-')[0].toLowerCase();
+        await i18n.getUserLocale(userId);
       } catch (error) {
-        console.error('Error getting user language, using default:', error);
+        // Optionally log error, or just ignore
       }
 
       if (now < cooldownEnd) {
@@ -163,7 +161,6 @@ module.exports = {
       logger.error('Error in 8ball command:', error);
       const errorMessage = await i18n('An error occurred while processing your request.', {
         userId: interaction.user.id,
-        locale: userLanguage,
         default: 'An error occurred while processing your request.',
       });
 

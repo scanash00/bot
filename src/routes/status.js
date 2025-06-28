@@ -1,6 +1,5 @@
 const e = require('express');
 const getGitCommitHash = require('../utils/getGitCommitHash');
-const { Client } = require('discord.js');
 
 /**
  *

@@ -9,8 +9,6 @@ const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
 
 const MAX_EXTRACT_LENGTH = 2000;
-const TRUNCATION_NOTICE = '\n\n*[Summary truncated]*';
-const TRUNCATED_LENGTH = MAX_EXTRACT_LENGTH - TRUNCATION_NOTICE.length;
 
 async function searchWikipedia(query, locale = 'en') {
   const wikiLang = locale.startsWith('es') ? 'es' : 'en';

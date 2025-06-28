@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, Collection } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const i18n = require('../utils/translate');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -84,7 +83,7 @@ module.exports = {
           }
           commandsByCategory.get(category).push(translatedCommand);
         } catch (error) {
-          console.error(`Error loading command ${file}:`, error);
+          // console.error(`Error loading command ${file}:`, error);
         }
       }
 
@@ -104,7 +103,7 @@ module.exports = {
 
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
-      console.error('Error in help command:', error);
+      // console.error('Error in help command:', error);
       try {
         const errorMessage = '❌ An error occurred while loading commands. Please try again later.';
 
@@ -127,8 +126,8 @@ module.exports = {
           });
         }
       } catch (err) {
-        console.error('Error sending error message:', err);
-        console.error('FATAL: Could not send any error message to user');
+        // console.error('Error sending error message:', err);
+        // console.error('FATAL: Could not send any error message to user');
       }
     }
   },
