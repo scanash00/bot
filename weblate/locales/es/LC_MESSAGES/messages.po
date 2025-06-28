@@ -384,8 +384,6 @@ msgstr "📅 Hora original"
 msgid "🔗 Original Message"
 msgstr "🔗 Mensaje original"
 
-msgid "Jump to message"
-msgstr "Ir al mensaje"
 
 msgid "🕒 Will trigger"
 msgstr "🕒 Se activará"
