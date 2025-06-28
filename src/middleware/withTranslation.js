@@ -1,6 +1,6 @@
-const i18n = require('../utils/translate');
+import i18n from '../utils/translate.js';
 
-module.exports = async (interaction) => {
+export default async (interaction) => {
   if (!interaction) return;
 
   interaction.t = async (key, options = {}) => {

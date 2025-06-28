@@ -2,7 +2,7 @@
  *
  * @param {Client} client
  */
-module.exports = (client) => {
+export default (client) => {
   client.once('ready', () => {
     client.user.setStatus('online');
     client.user.setActivity('/remind | /weather', { type: 0 });

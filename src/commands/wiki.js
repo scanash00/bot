@@ -1,9 +1,9 @@
 // as long as you do not look up something weird im fine
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const logger = require('../utils/logger');
-const i18n = require('../utils/translate');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import fetch from 'node-fetch';
+import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -106,7 +106,7 @@ async function createWikiEmbed(article, locale = 'en') {
   return embed;
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('wiki')
     .setNameLocalizations({

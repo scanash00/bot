@@ -1,8 +1,13 @@
-const { SlashCommandBuilder, EmbedBuilder, Collection } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+import { SlashCommandBuilder, EmbedBuilder, Collection } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default {
   data: new SlashCommandBuilder()
     .setName('help')
     .setNameLocalizations({

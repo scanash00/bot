@@ -1,6 +1,6 @@
 // Very super duper smart encryption
 
-const crypto = require('crypto');
+import crypto from 'crypto';
 
 const ALGO = 'aes-256-gcm';
 const KEY = crypto.createHash('sha256').update(process.env.API_KEY_ENCRYPTION_SECRET).digest();
@@ -26,4 +26,4 @@ function decrypt(encrypted) {
   return decrypted;
 }
 
-module.exports = { encrypt, decrypt };
+export { encrypt, decrypt };

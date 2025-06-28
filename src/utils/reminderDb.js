@@ -1,5 +1,5 @@
-const pool = require('./pgClient');
-const logger = require('./logger');
+import pool from './pgClient.js';
+import logger from './logger.js';
 
 async function saveReminder(reminderData) {
   const query = `
@@ -110,7 +110,7 @@ async function cleanupReminders(days = 30) {
   }
 }
 
-module.exports = {
+export {
   saveReminder,
   completeReminder,
   getActiveReminders,

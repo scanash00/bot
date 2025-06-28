@@ -1,6 +1,6 @@
 // A really advanced remind command
 
-const {
+import {
   SlashCommandBuilder,
   ContextMenuCommandBuilder,
   ApplicationCommandType,
@@ -9,16 +9,16 @@ const {
   TextInputStyle,
   ActionRowBuilder,
   EmbedBuilder,
-} = require('discord.js');
-const logger = require('../utils/logger');
-const {
+} from 'discord.js';
+import logger from '../utils/logger.js';
+import {
   sanitizeInput,
   validateTimeString,
   parseTimeString,
   formatTimeString,
-} = require('../utils/validation');
-const { saveReminder, completeReminder, cleanupReminders } = require('../utils/reminderDb');
-const i18n = require('../utils/translate');
+} from '../utils/validation.js';
+import { saveReminder, completeReminder, cleanupReminders } from '../utils/reminderDb.js';
+import i18n from '../utils/translate.js';
 
 const activeReminders = new Map();
 
@@ -196,7 +196,7 @@ function createContextMenu() {
     .setType(ApplicationCommandType.Message);
 }
 
-module.exports = {
+export default {
   data: createCommandBuilder(),
   contextMenu: createContextMenu(),
   cooldown: 5,

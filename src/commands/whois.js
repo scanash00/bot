@@ -1,8 +1,8 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const whois = require('whois-json');
-const { isIP } = require('net');
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import whois from 'whois-json';
+import { isIP } from 'net';
+import { sanitizeInput, isValidDomain } from '../utils/validation.js';
+import logger from '../utils/logger.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 10000;
@@ -123,7 +123,7 @@ function getWhoisServers(domain) {
 
 async function isServerReachable(server) {
   try {
-    const { Resolver } = require('dns').promises;
+    const { Resolver } = await import('dns').then((module) => module.promises);
     const resolver = new Resolver();
     resolver.setServers(['1.1.1.1', '8.8.8.8']);
     await resolver.resolve4(server);
@@ -132,10 +132,6 @@ async function isServerReachable(server) {
     logger.debug(`Server ${server} is not reachable:`, error.message);
     return false;
   }
-}
-
-function isValidDomain(domain) {
-  return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain);
 }
 
 function formatWhoisData(data) {
@@ -515,6 +511,6 @@ const command = {
   },
 };
 
-module.exports = command;
+export default command;
 
 // parsing the response hurts

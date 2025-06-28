@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { validateCommandOptions, sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
-const i18n = require('../utils/translate');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { validateCommandOptions, sanitizeInput } from '../utils/validation.js';
+import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const responses = {
   en: [
@@ -53,12 +53,12 @@ const responses = {
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
 
-function getRandomResponse() {
-  const localeResponses = responses.en;
+function getRandomResponse(locale) {
+  const localeResponses = responses[locale];
   return localeResponses[Math.floor(Math.random() * localeResponses.length)];
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('8ball')
     .setNameLocalizations({

@@ -1,14 +1,14 @@
 // man, the /ai command is so broken
-const {
+import {
   SlashCommandBuilder,
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
-} = require('discord.js');
-const pool = require('../utils/pgClient');
-const { encrypt, decrypt } = require('../utils/encrypt');
-const i18n = require('../utils/translate');
+} from 'discord.js';
+import pool from '../utils/pgClient.js';
+import { encrypt, decrypt } from '../utils/encrypt.js';
+import i18n from '../utils/translate.js';
 
 const userConversations = new Map();
 const pendingRequests = new Map();
@@ -105,7 +105,7 @@ async function incrementAndCheckDailyLimit(userId, limit = 20) {
   }
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('ai')
     .setNameLocalizations({
@@ -246,7 +246,7 @@ module.exports = {
       }
     } catch (error) {
       // console.error('Error in execute:', error);
-      const t = (key, ...args) => i18n.translate(interaction.user?.id, key, ...args);
+      const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
       await interaction.reply(
         await t(
           'ai.error',

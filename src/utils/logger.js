@@ -1,5 +1,5 @@
-const winston = require('winston');
-const config = require('../../config/config');
+import winston from 'winston';
+import config from '../../config/config.js';
 
 const logger = winston.createLogger({
   level: config.logging.level,
@@ -31,6 +31,6 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-module.exports = logger;
+export default logger;
 
 // logger

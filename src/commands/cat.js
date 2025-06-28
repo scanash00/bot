@@ -1,13 +1,13 @@
-const {
+import {
   SlashCommandBuilder,
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
   EmbedBuilder,
-} = require('discord.js');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+} from 'discord.js';
+import fetch from 'node-fetch';
+import { sanitizeInput } from '../utils/validation.js';
+import logger from '../utils/logger.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -43,7 +43,7 @@ function createCatEmbed(data, locale = 'en') {
   return embed;
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('cat')
     .setNameLocalizations({

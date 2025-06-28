@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 function validateCommandOptions(interaction, requiredOptions = []) {
   for (const option of requiredOptions) {
     const value = interaction.options.getString(option);
@@ -58,11 +60,17 @@ function formatTimeString(minutes) {
   return parts.join(' ');
 }
 
-module.exports = {
+function isValidDomain(domain) {
+  if (typeof domain !== 'string') return false;
+  return validator.isFQDN(domain, { require_tld: true });
+}
+
+export {
   validateCommandOptions,
+  sanitizeInput,
   validateTimeString,
   parseTimeString,
   formatTimeString,
-  sanitizeInput,
   isValidUrl,
+  isValidDomain,
 };

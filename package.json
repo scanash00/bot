@@ -1,5 +1,6 @@
 {
   "name": "Aethel",
+  "type": "module",
   "version": "1.10.0",
   "description": "A privacy-conscious, production-ready Discord user bot",
   "main": "src/index.js",
@@ -7,9 +8,9 @@
     "start": "node -r dotenv/config src/index.js",
     "dev": "nodemon -r dotenv/config src/index.js",
     "migrate": "node -r dotenv/config scripts/run-migrations.js",
-    "lint": "eslint . --config eslint.config.js",
-    "lint:fix": "eslint . --config eslint.config.js --fix",
-    "lint:format": "eslint . --config eslint.config.js --format=codeframe",
+    "lint": "eslint . --config eslint.config.cjs",
+    "lint:fix": "eslint . --config eslint.config.cjs --fix",
+    "lint:format": "eslint . --config eslint.config.cjs --format=codeframe",
     "format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "check": "pnpm run lint && pnpm run format:check"
@@ -18,27 +19,27 @@
     "@discordjs/rest": "^2.5.1",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
-    "discord.js": "^14.20.0",
-    "dotenv": "^16.5.0",
-    "eslint-plugin-prettier": "^5.5.0",
+    "discord.js": "^14.21.0",
+    "dotenv": "^16.6.1",
+    "eslint-plugin-prettier": "^5.5.1",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.1",
-    "gettext-parser": "^7.0.0",
+    "gettext-parser": "^8.0.0",
     "helmet": "^8.1.0",
     "i18n": "^0.15.1",
     "ioredis": "^5.6.1",
     "node-fetch": "^3.3.2",
-    "pg": "^8.16.2",
+    "pg": "^8.16.3",
     "po2json": "^0.4.5",
     "whois-json": "^2.0.4",
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "eslint": "^9.29.0",
+    "@eslint/js": "^9.30.0",
+    "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.2.0",
     "nodemon": "^3.1.10",
-    "prettier": "^3.6.0"
+    "prettier": "^3.6.2"
   }
 }

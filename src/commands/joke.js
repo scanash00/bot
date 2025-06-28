@@ -1,7 +1,8 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import fetch from 'node-fetch';
+import { sanitizeInput } from '../utils/validation.js';
+
+import logger from '../utils/logger.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 5000;
@@ -19,7 +20,7 @@ async function fetchJoke(type) {
   return Array.isArray(data) ? data[0] : data;
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('joke')
     .setNameLocalizations({

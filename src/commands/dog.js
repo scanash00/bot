@@ -1,13 +1,13 @@
-const {
+import {
   SlashCommandBuilder,
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
   EmbedBuilder,
-} = require('discord.js');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+} from 'discord.js';
+import fetch from 'node-fetch';
+import { sanitizeInput } from '../utils/validation.js';
+import logger from '../utils/logger.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -78,7 +78,7 @@ function createButtonRow(locale = 'en') {
   return new ActionRowBuilder().addComponents(refreshButton);
 }
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('dog')
     .setNameLocalizations({

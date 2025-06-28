@@ -1,13 +1,13 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { browserHeaders } = require('../constants/index');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const withTranslation = require('../middleware/withTranslation');
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { browserHeaders } from '../constants/index.js';
+import fetch from 'node-fetch';
+import withTranslation from '../middleware/withTranslation.js';
 
 /**
  *
  * @param {Client} client
  */
-module.exports = (client) => {
+export default (client) => {
   client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton()) {
       try {

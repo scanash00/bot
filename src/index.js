@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 process.on('uncaughtException', (err) => {
   // eslint-disable-next-line no-console
@@ -11,16 +11,17 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
-const express = require('express');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import express from 'express';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const verifyApiKey = require('./middlewares/verifyApiKey');
-const status = require('./routes/status');
+import verifyApiKey from './middlewares/verifyApiKey.js';
+import status from './routes/status.js';
 
 // do not ask
 
@@ -80,12 +81,16 @@ client.on('error', (err) => {
 });
 
 // initialize the commands
+// ESM-compatible __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const commandsPath = path.join(__dirname, 'handlers');
 const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 (async () => {
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    const handler = require(filePath);
+    const { default: handler } = await import(filePath);
     await handler(client);
   }
 })();

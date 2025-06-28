@@ -1,6 +1,11 @@
-const path = require('path');
-const fs = require('fs');
-const gettext = require('gettext-parser');
+import path from 'path';
+import fs from 'fs';
+import gettextParser from 'gettext-parser';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const LOCALE_MAPPING = {
   'en-US': 'en',
@@ -26,7 +31,7 @@ function loadTranslations(lang) {
 
   if (fs.existsSync(filePath)) {
     const poContent = fs.readFileSync(filePath, 'utf8');
-    const po = gettext.po.parse(poContent, 'utf8');
+    const po = gettextParser.po.parse(poContent, 'utf8');
 
     const flatTranslations = {};
 
@@ -226,4 +231,4 @@ const i18nUtil = Object.assign(translate, {
   loadTranslations,
 });
 
-module.exports = i18nUtil;
+export default i18nUtil;

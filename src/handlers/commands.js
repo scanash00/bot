@@ -1,20 +1,20 @@
-const { REST, Routes } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
+import { REST, Routes } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
 
-const config = require('../../config/config');
+import config from '../../config/config.js';
 
 /**
  *
  * @param {Client} client
  */
-module.exports = async (client) => {
+export default async (client) => {
   try {
     const commandsPath = path.join(process.cwd(), 'src', 'commands');
     const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
     const commands = [];
     for (const file of commandFiles) {
-      const command = require(`${commandsPath}/${file}`);
+      const { default: command } = await import(`${commandsPath}/${file}`);
       if (command.data && command.data.name) {
         const data = command.data;
         data.setDMPermission(true);

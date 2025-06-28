@@ -24,4 +24,4 @@ const authenticateApiKey = (req, res, next) => {
   next();
 };
 
-module.exports = authenticateApiKey;
+export default authenticateApiKey;

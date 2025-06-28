@@ -1,12 +1,13 @@
-const e = require('express');
-const getGitCommitHash = require('../utils/getGitCommitHash');
+import express from 'express';
+import getGitCommitHash from '../utils/getGitCommitHash.js';
 
 /**
  *
  * @param {Client} client
  */
-module.exports = (client) => {
-  const status = e.Router();
+export default (client) => {
+  const status = express.Router();
+
   status.get('/', async (req, res) => {
     const uptimeSeconds = Math.floor(process.uptime());
     const days = Math.floor(uptimeSeconds / 86400);

@@ -1,4 +1,4 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const config = {
   discord: {
@@ -32,4 +32,4 @@ if (missingConfig.length > 0) {
   throw new Error(`Missing required environment variables: ${missingKeys}`);
 }
 
-module.exports = config;
+export default config;
