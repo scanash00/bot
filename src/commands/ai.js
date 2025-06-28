@@ -5,9 +5,11 @@ const {
   TextInputBuilder,
   TextInputStyle,
   ActionRowBuilder,
+  EmbedBuilder,
 } = require('discord.js');
 const pool = require('../utils/pgClient');
 const { encrypt, decrypt } = require('../utils/encrypt');
+const i18n = require('../utils/translate');
 
 const userConversations = new Map();
 const pendingRequests = new Map();
@@ -107,9 +109,32 @@ async function incrementAndCheckDailyLimit(userId, limit = 20) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ai')
-    .setDescription('Ask the AI a question')
+    .setNameLocalizations({
+      'es-ES': 'ia',
+      'es-419': 'ia',
+      'en-US': 'ai',
+    })
+    .setDescription('Chat with an AI assistant')
+    .setDescriptionLocalizations({
+      'es-ES': 'Chatea con un asistente de IA',
+      'es-419': 'Chatea con un asistente de IA',
+      'en-US': 'Chat with an AI assistant',
+    })
     .addStringOption((option) =>
-      option.setName('prompt').setDescription('What would you like to ask?').setRequired(true)
+      option
+        .setName('prompt')
+        .setNameLocalizations({
+          'es-ES': 'mensaje',
+          'es-419': 'mensaje',
+          'en-US': 'prompt',
+        })
+        .setDescription('Your message to the AI')
+        .setDescriptionLocalizations({
+          'es-ES': 'Tu mensaje para la IA',
+          'es-419': 'Tu mensaje para la IA',
+          'en-US': 'Your message to the AI',
+        })
+        .setRequired(true)
     )
     .addBooleanOption((option) =>
       option.setName('use_custom_api').setDescription('Use your own API key?').setRequired(false)
@@ -118,6 +143,17 @@ module.exports = {
       option.setName('reset').setDescription('Reset your AI chat history').setRequired(false)
     ),
   async execute(interaction) {
+    if (pendingRequests.has(interaction.user.id)) {
+      const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
+      return interaction.reply({
+        content: await t(
+          'ai.request_in_progress',
+          'You already have a request in progress. Please wait for it to complete.'
+        ),
+        ephemeral: true,
+      });
+    }
+
     try {
       const useCustomApi = interaction.options.getBoolean('use_custom_api');
       const userId = interaction.user.id;
@@ -126,8 +162,9 @@ module.exports = {
 
       if (reset) {
         userConversations.delete(userId);
+        const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
         await interaction.reply({
-          content: '🧹 Your AI chat history has been reset.',
+          content: await t('ai.reset', '🧹 Your AI chat history has been reset.'),
           ephemeral: true,
         });
         return;
@@ -138,9 +175,12 @@ module.exports = {
       if (useCustomApi === false) {
         await setUserApiKey(userId, null, null, null);
         userConversations.delete(userId);
+        const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
         await interaction.reply({
-          content:
-            '✅ Switched to default API. Your custom API key has been cleared and the default model will be used.',
+          content: await t(
+            'ai.default_api',
+            '✅ Switched to default API. Your custom API key has been cleared and the default model will be used.'
+          ),
           ephemeral: true,
         });
 
@@ -150,27 +190,45 @@ module.exports = {
 
       const { apiKey } = await getUserCredentials(userId);
       if (useCustomApi && !apiKey) {
-        const modal = new ModalBuilder()
-          .setCustomId('apiCredentials')
-          .setTitle('Enter your API details (private session)');
+        const locale = interaction.locale || 'en';
+        const modal = new ModalBuilder().setCustomId('apiCredentials').setTitle(
+          await i18n('ai.modal.title', {
+            locale,
+            default: 'Enter your API details (private session)',
+          })
+        );
 
         const apiKeyInput = new TextInputBuilder()
           .setCustomId('apiKey')
-          .setLabel('API Key')
+          .setLabel(await i18n('ai.modal.api_key', { locale, default: 'API Key' }))
           .setStyle(TextInputStyle.Short)
-          .setPlaceholder('To stop using your key: /ai use_custom_api false')
+          .setPlaceholder(
+            await i18n('ai.modal.api_key_placeholder', {
+              locale,
+              default: 'To stop using your key: /ai use_custom_api false',
+            })
+          )
           .setRequired(true);
 
         const apiUrlInput = new TextInputBuilder()
           .setCustomId('apiUrl')
-          .setLabel('API URL')
+          .setLabel(await i18n('ai.modal.api_url', { locale, default: 'API URL' }))
           .setStyle(TextInputStyle.Short)
+          .setPlaceholder(
+            await i18n('ai.modal.api_url_placeholder', { locale, default: 'Your API URL' })
+          )
           .setRequired(true);
 
         const modelInput = new TextInputBuilder()
           .setCustomId('model')
-          .setLabel('Model')
+          .setLabel(await i18n('ai.modal.model', { locale, default: 'Model' }))
           .setStyle(TextInputStyle.Short)
+          .setPlaceholder(
+            await i18n('ai.modal.model_placeholder', {
+              locale,
+              default: 'Model name (e.g., gpt-4)',
+            })
+          )
           .setRequired(true);
 
         const firstActionRow = new ActionRowBuilder().addComponents(apiKeyInput);
@@ -189,8 +247,12 @@ module.exports = {
       }
     } catch (error) {
       // console.error('Error in execute:', error);
+      const t = (key, ...args) => i18n.translate(interaction.user?.id, key, ...args);
       await interaction.reply(
-        'An error occurred while processing your request. Please try again later.'
+        await t(
+          'ai.error',
+          'An error occurred while processing your request. Please try again later.'
+        )
       );
     }
   },
@@ -204,7 +266,13 @@ module.exports = {
         const pendingRequest = pendingRequests.get(userId);
 
         if (!pendingRequest) {
-          return interaction.editReply('No pending request found. Please try the command again.');
+          const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
+          return interaction.editReply(
+            await t(
+              'ai.no_pending_request',
+              'No pending request found. Please try the command again.'
+            )
+          );
         }
 
         const { interaction: originalInteraction } = pendingRequest;
@@ -219,9 +287,12 @@ module.exports = {
 
         await setUserApiKey(userId, apiKey, model, apiUrl);
 
+        const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
         await interaction.followUp({
-          content:
-            '✅ API credentials saved. You can now use the `/ai` command without re-entering your credentials. To stop using your key, do `/ai use_custom_api false`',
+          content: await t(
+            'ai.api_credentials_saved',
+            '✅ API credentials saved. You can now use the `/ai` command without re-entering your credentials. To stop using your key, do `/ai use_custom_api false`'
+          ),
           ephemeral: true,
         });
 
@@ -229,8 +300,12 @@ module.exports = {
       }
     } catch (error) {
       // console.error('Error in handleModal:', error);
+      const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
       await interaction.editReply(
-        'An error occurred while processing your request. Please try again later.'
+        await t(
+          'ai.error',
+          'An error occurred while processing your request. Please try again later.'
+        )
       );
     } finally {
       pendingRequests.delete(interaction.user.id);
@@ -241,12 +316,12 @@ module.exports = {
     try {
       const prompt = interaction.options.getString('prompt');
 
-      const { apiKey } = await getUserCredentials(userId);
+      const { apiKey, model, apiUrl } = await getUserCredentials(userId);
 
       const usingCustomApi = !!apiKey;
-      let finalApiUrl = 'https://openrouter.ai/api/v1/chat/completions';
+      let finalApiUrl = apiUrl || 'https://openrouter.ai/api/v1/chat/completions';
       const finalApiKey = apiKey || process.env.OPENROUTER_API_KEY;
-      let finalModel = usingCustomApi ? 'openai/gpt-4.1-mini' : 'x-ai/grok-3-mini-beta';
+      let finalModel = model || (usingCustomApi ? 'openai/gpt-4.1-mini' : 'x-ai/grok-3-mini-beta');
 
       const usingDefaultKey = !usingCustomApi && process.env.OPENROUTER_API_KEY;
       if (usingDefaultKey) {

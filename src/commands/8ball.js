@@ -1,45 +1,91 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { validateCommandOptions, sanitizeInput } = require('../utils/validation');
 const logger = require('../utils/logger');
+const i18n = require('../utils/translate');
 
-const responses = [
-  'It is certain.',
-  'It is decidedly so.',
-  'Without a doubt.',
-  'Yes definitely.',
-  'You may rely on it.',
-  'As I see it, yes.',
-  'Most likely.',
-  'Outlook good.',
-  'Yes.',
-  'Signs point to yes.',
-  'Reply hazy, try again.',
-  'Ask again later.',
-  'Better not tell you now.',
-  'Cannot predict now.',
-  'Concentrate and ask again.',
-  "Don't count on it.",
-  'My reply is no.',
-  'My sources say no.',
-  'Outlook not so good.',
-  'Very doubtful.',
-];
+const responses = {
+  en: [
+    'It is certain.',
+    'It is decidedly so.',
+    'Without a doubt.',
+    'Yes definitely.',
+    'You may rely on it.',
+    'As I see it, yes.',
+    'Most likely.',
+    'Outlook good.',
+    'Yes.',
+    'Signs point to yes.',
+    'Reply hazy, try again.',
+    'Ask again later.',
+    'Better not tell you now.',
+    'Cannot predict now.',
+    'Concentrate and ask again.',
+    "Don't count on it.",
+    'My reply is no.',
+    'My sources say no.',
+    'Outlook not so good.',
+    'Very doubtful.',
+  ],
+  es: [
+    'Es cierto.',
+    'Definitivamente sí.',
+    'Sin lugar a dudas.',
+    'Sí, definitivamente.',
+    'Puedes confiar en ello.',
+    'Tal como lo veo, sí.',
+    'Muy probablemente.',
+    'Las perspectivas son buenas.',
+    'Sí.',
+    'Las señales apuntan a que sí.',
+    'Respuesta confusa, intenta de nuevo.',
+    'Pregunta de nuevo más tarde.',
+    'Mejor no te lo digo ahora.',
+    'No puedo predecirlo ahora.',
+    'Concéntrate y pregunta de nuevo.',
+    'No cuentes con ello.',
+    'Mi respuesta es no.',
+    'Mis fuentes dicen que no.',
+    'Las perspectivas no son muy buenas.',
+    'Muy dudoso.',
+  ],
+};
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
 
 function getRandomResponse() {
-  return responses[Math.floor(Math.random() * responses.length)];
+  const localeResponses = responses.en;
+  return localeResponses[Math.floor(Math.random() * localeResponses.length)];
 }
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('8ball')
+    .setNameLocalizations({
+      'es-ES': 'bola8',
+      'es-419': 'bola8',
+      'en-US': '8ball',
+    })
     .setDescription('Ask the magic 8-ball a question')
+    .setDescriptionLocalizations({
+      'es-ES': 'Haz una pregunta a la bola 8 mágica',
+      'es-419': 'Haz una pregunta a la bola 8 mágica',
+      'en-US': 'Ask the magic 8-ball a question',
+    })
     .addStringOption((option) =>
       option
         .setName('question')
+        .setNameLocalizations({
+          'es-ES': 'pregunta',
+          'es-419': 'pregunta',
+          'en-US': 'question',
+        })
         .setDescription('Your yes/no question for the magic 8-ball')
+        .setDescriptionLocalizations({
+          'es-ES': 'Tu pregunta de sí/no para la bola 8 mágica',
+          'es-419': 'Tu pregunta de sí/no para la bola 8 mágica',
+          'en-US': 'Your yes/no question for the magic 8-ball',
+        })
         .setRequired(true)
         .setMaxLength(200)
     ),
@@ -49,11 +95,28 @@ module.exports = {
       const now = Date.now();
       const cooldownKey = `${interaction.user.id}-8ball`;
       const cooldownEnd = cooldowns.get(cooldownKey) || 0;
+      const userId = interaction.user.id;
+
+      let userLanguage = 'en';
+      try {
+        const locale = (await i18n.getUserLocale(userId)) || 'en';
+        userLanguage = locale.split('-')[0].toLowerCase();
+      } catch (error) {
+        console.error('Error getting user language, using default:', error);
+      }
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
+        const waitMessage = await i18n(
+          'Please wait {{time}} second(s) before using this command again.',
+          {
+            userId,
+            replace: { time: timeLeft },
+            default: `Please wait ${timeLeft} second(s) before using this command again.`,
+          }
+        );
         return interaction.reply({
-          content: `Please wait ${timeLeft} second(s) before using this command again.`,
+          content: waitMessage,
           ephemeral: true,
         });
       }
@@ -70,27 +133,51 @@ module.exports = {
       }
 
       const question = sanitizeInput(interaction.options.getString('question'));
-      const response = getRandomResponse();
+      const responseKey = getRandomResponse();
+      const translatedResponse = await interaction.t(responseKey, { default: responseKey });
 
       logger.info(`8ball used by ${interaction.user.tag}: ${question}`);
+      const [title, questionLabel, answerLabel, footer] = await Promise.all([
+        await interaction.t('🎱 The Magic 8-Ball says...', {
+          default: '🎱 The Magic 8-Ball says...',
+        }),
+        await interaction.t('Question', { default: 'Question' }),
+        await interaction.t('Answer', { default: 'Answer' }),
+        await interaction.t('The magic 8-ball has spoken!', {
+          default: 'The magic 8-ball has spoken!',
+        }),
+      ]);
 
       const embed = new EmbedBuilder()
         .setColor(0x3498db)
-        .setTitle('🎱 The Magic 8-Ball says...')
+        .setTitle(title)
         .addFields(
-          { name: 'Question', value: question },
-          { name: 'Answer', value: `**${response}**` }
+          { name: questionLabel, value: question },
+          { name: answerLabel, value: `**${translatedResponse}**` }
         )
-        .setFooter({ text: 'The magic 8-ball has spoken!' })
+        .setFooter({ text: footer })
         .setTimestamp();
 
       await interaction.reply({ embeds: [embed] });
     } catch (error) {
       logger.error('Error in 8ball command:', error);
-      await interaction.reply({
-        content: 'An error occurred while processing your request.',
-        ephemeral: true,
+      const errorMessage = await i18n('An error occurred while processing your request.', {
+        userId: interaction.user.id,
+        locale: userLanguage,
+        default: 'An error occurred while processing your request.',
       });
+
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({
+          content: errorMessage,
+          ephemeral: true,
+        });
+      } else {
+        await interaction.reply({
+          content: errorMessage,
+          ephemeral: true,
+        });
+      }
     }
   },
 };

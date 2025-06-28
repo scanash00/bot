@@ -20,23 +20,41 @@ async function fetchCatImage() {
   return response.json();
 }
 
-function createCatEmbed(data) {
-  const title = data.title ? sanitizeInput(data.title).slice(0, 245) + '...' : 'Random Cat';
+function createCatEmbed(data, locale = 'en') {
+  const title = data.title
+    ? sanitizeInput(data.title).slice(0, 245) + '...'
+    : locale.startsWith('es')
+      ? 'Gato Aleatorio'
+      : 'Random Cat';
+
   const embed = new EmbedBuilder()
     .setColor(0xfaa0a0)
     .setTitle(title)
     .setImage(data.url)
-    .setFooter({ text: 'powered by pur.cat' });
+    .setFooter({
+      text: locale.startsWith('es') ? 'impulsado por pur.cat' : 'powered by pur.cat',
+    });
 
   if (data.subreddit) {
-    embed.setDescription(`From r/${sanitizeInput(data.subreddit)}`);
+    const fromText = locale.startsWith('es') ? 'De r/' : 'From r/';
+    embed.setDescription(`${fromText}${sanitizeInput(data.subreddit)}`);
   }
 
   return embed;
 }
 
 module.exports = {
-  data: new SlashCommandBuilder().setName('cat').setDescription('Get a random cat image!'),
+  data: new SlashCommandBuilder()
+    .setName('cat')
+    .setNameLocalizations({
+      'es-ES': 'gato',
+      'es-419': 'gato',
+    })
+    .setDescription('Get a random cat image!')
+    .setDescriptionLocalizations({
+      'es-ES': '¡Obtén una imagen aleatoria de un gato!',
+      'es-419': '¡Obtén una imagen aleatoria de un gato!',
+    }),
 
   async execute(interaction) {
     try {
@@ -60,17 +78,17 @@ module.exports = {
       try {
         logger.info(`Cat command used by ${interaction.user.tag}`);
 
-        const data = await fetchCatImage();
+        const catData = await fetchCatImage();
 
-        if (!data || !data.url) {
+        if (!catData || !catData.url) {
           throw new Error('No image URL found in response');
         }
 
-        const embed = createCatEmbed(data);
+        const embed = createCatEmbed(catData, interaction.locale);
 
         const refreshButton = new ButtonBuilder()
           .setCustomId('refresh_cat')
-          .setLabel('New Cat')
+          .setLabel(interaction.locale.startsWith('es') ? 'Nuevo Gato' : 'New Cat')
           .setStyle(ButtonStyle.Danger)
           .setEmoji('🐱');
 

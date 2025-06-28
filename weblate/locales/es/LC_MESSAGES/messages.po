@@ -1,118 +1,597 @@
 # Weblate configuration for Aethel
 # Copyright (C) 2025 Aethel Labs
 # This file is distributed under the same license as the Aethel project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# Aethel Team <info@aethel-labs.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Aethel 1.10.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: security@pur.cat\n"
 "POT-Creation-Date: 2025-06-27 16:54:08-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: es\n"
+"PO-Revision-Date: 2025-06-27 17:30-0800\n"
+"Last-Translator: Security Team <security@pur.cat>\n"
+"Language-Team: Spanish\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/commands/help.js
 msgid "Show all available commands and their usage"
-msgstr ""
+msgstr "Muestra todos los comandos disponibles y su uso"
 
 msgid "Aethel Commands"
-msgstr ""
+msgstr "Comandos de Aethel"
 
 msgid "Here are all the available commands:"
-msgstr ""
+msgstr "Aquí están todos los comandos disponibles:"
 
 msgid "No options"
-msgstr ""
+msgstr "Sin opciones"
+
+# Command Descriptions
+msgid "commands.help.name"
+msgstr "ayuda"
+
+msgid "commands.help.description"
+msgstr "Muestra todos los comandos disponibles y su uso"
+
+msgid "commands.set-language.name"
+msgstr "establecer-idioma"
+
+msgid "commands.8ball.name"
+msgstr "bola8"
+
+msgid "commands.8ball.description"
+msgstr "Haz una pregunta a la bola 8 mágica"
+
+msgid "8ball.title"
+msgstr "🎱 La Bola 8 Mágica dice..."
+
+msgid "8ball.question"
+msgstr "Pregunta"
+
+msgid "8ball.answer"
+msgstr "Respuesta"
+
+msgid "8ball.footer"
+msgstr "¡La bola 8 mágica ha hablado!"
+
+msgid "Please wait %d second(s) before using this command again."
+msgstr "Por favor, espera %d segundo(s) antes de usar este comando de nuevo."
+
+msgid "An error occurred while processing your request."
+msgstr "Ocurrió un error al procesar tu solicitud."
+
+msgid "commands.ai.name"
+msgstr "ia"
+
+msgid "commands.cat.name"
+msgstr "gato"
+
+msgid "commands.dog.name"
+msgstr "perro"
+
+msgid "commands.joke.name"
+msgstr "chiste"
+
+msgid "commands.remind.name"
+msgstr "recordatorio"
+
+msgid "commands.weather.name"
+msgstr "clima"
+
+msgid "commands.whois.name"
+msgstr "quien"
+
+msgid "commands.wiki.name"
+msgstr "wiki"
+
+# Command Descriptions
+
+msgid "commands.set-language.description"
+msgstr "Establece tu idioma preferido para el bot"
+
+msgid "commands.ai.description"
+msgstr "Haz una pregunta a la IA"
+
+msgid "commands.cat.description"
+msgstr "¡Obtén una imagen aleatoria de un gato!"
+
+msgid "commands.dog.description"
+msgstr "¡Obtén una imagen aleatoria de un perro!"
+
+msgid "commands.joke.description"
+msgstr "¡Obtén un chiste aleatorio!"
+
+msgid "commands.remind.description"
+msgstr "Establece un recordatorio"
+
+msgid "commands.weather.description"
+msgstr "Obtén el clima actual para una ubicación"
+
+msgid "commands.whois.description"
+msgstr "Busca información WHOIS para un dominio o dirección IP"
+
+msgid "commands.wiki.description"
+msgstr "Busca un tema en Wikipedia"
+
+# Categories
+msgid "Fun"
+msgstr "Diversión"
+
+msgid "Utility"
+msgstr "Utilidades"
+
+msgid "Information"
+msgstr "Información"
+
+# Magic 8ball answer translations (synced with English source)
+msgid "It is certain."
+msgstr "Es cierto."
+
+msgid "It is decidedly so."
+msgstr "Definitivamente sí."
+
+msgid "Without a doubt."
+msgstr "Sin lugar a dudas."
+
+msgid "Yes definitely."
+msgstr "Sí, definitivamente."
+
+msgid "You may rely on it."
+msgstr "Puedes confiar en ello."
+
+msgid "As I see it, yes."
+msgstr "Tal como lo veo, sí."
+
+msgid "Most likely."
+msgstr "Muy probablemente."
+
+msgid "Outlook good."
+msgstr "Las perspectivas son buenas."
+
+msgid "Yes."
+msgstr "Sí."
+
+msgid "Signs point to yes."
+msgstr "Las señales apuntan a que sí."
+
+msgid "Reply hazy, try again."
+msgstr "Respuesta confusa, intenta de nuevo."
+
+msgid "Ask again later."
+msgstr "Pregunta de nuevo más tarde."
+
+msgid "Better not tell you now."
+msgstr "Mejor no te lo digo ahora."
+
+msgid "Cannot predict now."
+msgstr "No puedo predecirlo ahora."
+
+msgid "Concentrate and ask again."
+msgstr "Concéntrate y pregunta de nuevo."
+
+msgid "Don't count on it."
+msgstr "No cuentes con ello."
+
+msgid "My reply is no."
+msgstr "Mi respuesta es no."
+
+msgid "My sources say no."
+msgstr "Mis fuentes dicen que no."
+
+msgid "Outlook not so good."
+msgstr "Las perspectivas no son muy buenas."
+
+msgid "Very doubtful."
+msgstr "Muy dudoso."
 
 #: src/commands/joke.js
 msgid "Get a random joke!"
-msgstr ""
+msgstr "¡Obtén un chiste aleatorio!"
 
 msgid "The type of joke you want"
-msgstr ""
-
-msgid "General"
-msgstr ""
+msgstr "El tipo de chiste que deseas"
 
 msgid "Knock-knock"
-msgstr ""
+msgstr "Toc-toc"
 
 msgid "Programming"
-msgstr ""
+msgstr "Programación"
 
 msgid "Dad"
-msgstr ""
-
-msgid "Please wait %d second(s) before using this command again."
-msgstr ""
+msgstr "Papá"
 
 msgid "The punchline will appear in 3 seconds..."
-msgstr ""
+msgstr "El remate aparecerá en 3 segundos..."
+
+# Key for punchline loading footer in joke command
+msgid "joke.loading"
+msgstr "El remate aparecerá en 3 segundos..."
 
 msgid "Ba dum tss! 🥁"
-msgstr ""
+msgstr "¡Chin chin! 🥁"
+
+# Key for punchline footer in joke command
+msgid "joke.punchline"
+msgstr "¡Chin chin! 🥁"
+
+msgid "joke.types.general"
+msgstr "General"
+
+msgid "joke.types.knock-knock"
+msgstr "Toc toc"
+
+msgid "joke.types.programming"
+msgstr "Programación"
+
+msgid "joke.types.dad"
+msgstr "Papá"
+
+msgid "joke.title"
+msgstr "{type} Chiste"
+
+msgid "⏰ Set Reminder"
+msgstr "⏰ Crear Recordatorio"
+msgid "When to remind you? (e.g., 10m, 1h, 2h30m)"
+msgstr "¿Cuándo recordarte? (ej: 10m, 1h, 2h30m)"
+msgid "10m, 1h, or 2h30m"
+msgstr "10m, 1h, o 2h30m"
+msgid "What should I remind you about?"
+msgstr "¿Sobre qué debo recordarte?"
+msgid "Type your reminder message here..."
+msgstr "Escribe tu mensaje de recordatorio aquí..."
+
+msgid "You will be reminded about this message."
+msgstr "Se te recordará sobre este mensaje."
+
+msgid "⏰ Reminder Set!"
+msgstr "⏰ ¡Recordatorio establecido!"
+msgid "I'll remind you about this message in {time}"
+msgstr "Te recordaré sobre este mensaje en {time}"
+msgid "Message Link"
+msgstr "Enlace al mensaje"
+msgid "Jump to message"
+msgstr "Ir al mensaje"
+msgid "Will Trigger"
+msgstr "Se activará"
+msgid "Reminder ID: {id}"
+msgstr "ID del recordatorio: {id}"
 
 msgid "Sorry, I had trouble fetching a joke. Please try again later!"
-msgstr ""
+msgstr "Lo siento, tuve problemas para obtener un chiste. ¡Por favor, inténtalo de nuevo más tarde!"
+
+# Key for error message when fetching joke fails
+msgid "joke.error_fetching"
+msgstr "Lo siento, tuve problemas para obtener un chiste. ¡Por favor, inténtalo de nuevo más tarde!"
 
 msgid "An unexpected error occurred. Please try again later."
-msgstr ""
+msgstr "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde."
+
+# Key for unexpected error in joke command
+msgid "joke.unexpected_error"
+msgstr "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde."
 
 #: src/commands/8ball.js
 msgid "Ask the magic 8-ball a question"
-msgstr ""
+msgstr "Hazle una pregunta a la bola 8 mágica"
 
 msgid "The question you want to ask the 8-ball"
-msgstr ""
+msgstr "La pregunta que quieres hacerle a la bola 8"
+
+msgid "🎱 The Magic 8-Ball says..."
+msgstr "🎱 La Bola 8 Mágica dice..."
+
+msgid "Question"
+msgstr "Pregunta"
+
+msgid "Answer"
+msgstr "Respuesta"
+
+msgid "The magic 8-ball has spoken!"
+msgstr "¡La bola 8 mágica ha hablado!"
+
+# Categories
+msgid "categories.general"
+msgstr "General"
+
+msgid "categories.fun"
+msgstr "Diversión"
+
+msgid "categories.moderation"
+msgstr "Moderación"
+
+msgid "categories.utility"
+msgstr "Utilidades"
+
+msgid "categories.other"
+msgstr "Otros"
 
 #: src/commands/ai.js
 msgid "Ask the AI a question"
-msgstr ""
+msgstr "Hazle una pregunta a la IA"
 
 msgid "Your question for the AI"
-msgstr ""
+msgstr "Tu pregunta para la IA"
 
 #: src/commands/cat.js
 msgid "Get a random cat picture"
-msgstr ""
+msgstr "Obtén una foto aleatoria de gato"
 
 #: src/commands/dog.js
 msgid "Get a random dog picture"
-msgstr ""
+msgstr "Obtén una foto aleatoria de perro"
 
 #: src/commands/remind.js
 msgid "Set a reminder"
-msgstr ""
+msgstr "Establece un recordatorio"
 
-msgid "When to remind (e.g., 'in 2 hours' or 'tomorrow at 3pm')"
-msgstr ""
+msgid "When to remind you (e.g., 1h, 30m, 5h30m)"
+msgstr "Cuándo recordarte (ej: 1h, 30m, 5h30m)"
 
 msgid "What to remind you about"
-msgstr ""
+msgstr "Sobre qué quieres que te recuerde"
+
+# AI Command
+msgid "ai.request_in_progress"
+msgstr "Ya tienes una solicitud en curso. Por favor espera a que se complete."
+
+msgid "ai.thinking"
+msgstr "🤔 Pensando..."
+
+msgid "ai.error_occurred"
+msgstr "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde."
+
+msgid "ai.reset"
+msgstr "🧹 Tu historial de chat con la IA ha sido reiniciado."
+
+msgid "ai.default_api"
+msgstr "✅ Cambiado a la API predeterminada. Tu clave API personalizada ha sido eliminada y se usará el modelo predeterminado."
+
+msgid "ai.no_pending_request"
+msgstr "No se encontró ninguna solicitud pendiente. Por favor, intenta el comando de nuevo."
+
+msgid "ai.api_credentials_saved"
+msgstr "✅ Credenciales de API guardadas. Ahora puedes usar el comando `/ai` sin tener que volver a ingresar tus credenciales. Para dejar de usar tu clave, usa `/ai use_custom_api false`"
+
+msgid "ai.error"
+msgstr "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde."
+
+msgid "Remind Me"
+msgstr "Recordarme"
+
+msgid "❌ Invalid time format! Use combinations like: 1h30m, 45m, or 2h"
+msgstr "❌ ¡Formato de tiempo inválido! Usa combinaciones como: 1h30m, 45m o 2h"
+
+msgid "❌ Please provide a valid message (1-1000 characters)"
+msgstr "❌ Por favor proporciona un mensaje válido (1-1000 caracteres)"
+
+msgid "❌ Reminder time must be at least 1 minute!"
+msgstr "❌ ¡El tiempo de recordatorio debe ser de al menos 1 minuto!"
+
+msgid "❌ Reminder time cannot be longer than 24 hours!"
+msgstr "❌ ¡El tiempo de recordatorio no puede ser mayor a 24 horas!"
+
+msgid "⏰ Reminder!"
+msgstr "⏰ ¡Recordatorio!"
+
+msgid "⏰ Reminder Set!"
+msgstr "⏰ ¡Recordatorio configurado!"
+
+msgid "I'll remind you about:\n\n*%message%*"
+msgstr "Te recordaré sobre:\n\n*%message%*"
+
+msgid "⏱️ Time"
+msgstr "⏱️ Tiempo"
+
+msgid "You asked me to remind you about:\n\n*%message%*"
+msgstr "Me pediste que te recordara sobre:\n\n*%message%*"
+
+msgid "⏱️ Time elapsed"
+msgstr "⏱️ Tiempo transcurrido"
+
+msgid "📅 Original time"
+msgstr "📅 Hora original"
+
+msgid "🔗 Original Message"
+msgstr "🔗 Mensaje original"
+
+msgid "Jump to message"
+msgstr "Ir al mensaje"
+
+msgid "🕒 Will trigger"
+msgstr "🕒 Se activará"
+
+msgid "🔗 Message Link"
+msgstr "🔗 Enlace del mensaje"
+
+msgid "✅ Reminder set! I'll remind you in %time% about: %message%"
+msgstr "✅ ¡Recordatorio configurado! Te recordaré en %time% sobre: %message%"
+
+msgid "❌ An error occurred while setting your reminder. Please try again later."
+msgstr "❌ Ocurrió un error al configurar tu recordatorio. Por favor, inténtalo de nuevo más tarde."
 
 #: src/commands/weather.js
 msgid "Get the current weather"
-msgstr ""
+msgstr "Obtener el clima actual"
 
 msgid "City name or zip code"
-msgstr ""
+msgstr "Nombre de la ciudad o código postal"
 
 #: src/commands/whois.js
 msgid "Get information about a user"
-msgstr ""
+msgstr "Obtener información sobre un usuario"
 
 msgid "The user to get information about"
-msgstr ""
+msgstr "El usuario sobre el que quieres información"
 
 #: src/commands/wiki.js
 msgid "Search Wikipedia"
-msgstr ""
+msgstr "Buscar en Wikipedia"
 
 msgid "Search term"
-msgstr ""
+msgstr "Término de búsqueda"
+
+msgid "wiki.article.title"
+msgstr "%title%"
+
+msgid "wiki.article.read_more"
+msgstr "Leer más"
+
+msgid "wiki.article.no_summary"
+msgstr "No hay un resumen disponible para este artículo."
+
+msgid "wiki.article.truncated"
+msgstr "(artículo truncado)"
+
+# Weather Command
+msgid "weather.embed.title"
+msgstr "Clima en %city%, %country% %emoji%"
+
+msgid "weather.fields.temperature"
+msgstr "Temperatura"
+
+msgid "weather.fields.feels_like"
+msgstr "Sensación térmica"
+
+msgid "weather.fields.weather"
+msgstr "Clima"
+
+msgid "weather.fields.humidity"
+msgstr "Humedad"
+
+msgid "weather.fields.wind_speed"
+msgstr "Velocidad del viento"
+
+msgid "weather.fields.pressure"
+msgstr "Presión"
+
+msgid "weather.embed.footer"
+msgstr "Datos de OpenWeather • %date%"
+
+#: src/commands/weather.js
+msgid "Get the current weather"
+msgstr "Obtener el clima actual"
+
+msgid "City name or zip code"
+msgstr "Nombre de la ciudad o código postal"
+
+#: src/commands/whois.js
+msgid "Get information about a user"
+msgstr "Obtener información sobre un usuario"
+
+msgid "The user to get information about"
+msgstr "El usuario sobre el que quieres información"
+
+#: src/commands/wiki.js
+msgid "Search Wikipedia"
+msgstr "Buscar en Wikipedia"
+
+msgid "Search term"
+msgstr "Término de búsqueda"
+
+# Whois Command
+msgid "Look up WHOIS information for a domain or IP address"
+msgstr "Buscar información WHOIS de un dominio o dirección IP"
+
+msgid "Domain or IP address to look up"
+msgstr "Dominio o dirección IP a buscar"
+
+msgid "❌ Please provide a valid domain or IP address"
+msgstr "❌ Por favor proporciona un dominio o dirección IP válidos"
+
+msgid "❌ Error fetching WHOIS data: %s"
+msgstr "❌ Error al obtener datos WHOIS: %s"
+
+msgid "❌ No WHOIS data available for this domain/IP"
+msgstr "❌ No hay datos WHOIS disponibles para este dominio/IP"
+
+# Cat Command
+msgid "Get a random cat image!"
+msgstr "¡Obtén una imagen aleatoria de un gato!"
+
+msgid "Random Cat"
+msgstr "Gato Aleatorio"
+
+msgid "From r/%s"
+msgstr "De r/%s"
+
+msgid "powered by pur.cat"
+msgstr "impulsado por pur.cat"
+
+# Dog Command
+msgid "Get a random dog image!"
+msgstr "¡Obtén una imagen aleatoria de un perro!"
+
+msgid "Random Dog"
+msgstr "Perro Aleatorio"
+
+msgid "powered by erm.dog"
+msgstr "impulsado por erm.dog"
+
+# AI Command
+msgid "Ask an AI a question"
+msgstr "Hazle una pregunta a una IA"
+
+msgid "Your question or prompt"
+msgstr "Tu pregunta o indicación"
+
+msgid "❌ You've reached your daily limit of AI requests"
+msgstr "❌ Has alcanzado tu límite diario de solicitudes de IA"
+
+msgid "❌ Error processing your request"
+msgstr "❌ Error al procesar tu solicitud"
+
+msgid "❌ Please set up your API key first"
+msgstr "❌ Por favor configura tu clave API primero"
+
+msgid "❌ API key removed successfully"
+msgstr "❌ Clave API eliminada con éxito"
+
+msgid "❌ Failed to remove API key"
+msgstr "❌ Error al eliminar la clave API"
+
+msgid "❌ Invalid API key format"
+msgstr "❌ Formato de clave API inválido"
+
+msgid "❌ Failed to set API key"
+msgstr "❌ Error al configurar la clave API"
+
+msgid "❌ Failed to process AI response"
+msgstr "❌ Error al procesar la respuesta de la IA"
+
+msgid "❌ Message is too long"
+msgstr "❌ El mensaje es demasiado largo"
+
+msgid "\u274c No response from AI"
+msgstr "\u274c No hubo respuesta de la IA"
+
+#: src/commands/ai.js
+msgid "ai.modal.title"
+msgstr "Introduce tus datos de API (sesión privada)"
+
+#: src/commands/ai.js
+msgid "ai.modal.api_key"
+msgstr "Clave API"
+
+#: src/commands/ai.js
+msgid "ai.modal.api_key_placeholder"
+msgstr "Para dejar de usar tu clave: /ia use_custom_api false"
+
+#: src/commands/ai.js
+msgid "ai.modal.api_url"
+msgstr "URL de API"
+
+#: src/commands/ai.js
+msgid "ai.modal.api_url_placeholder"
+msgstr "Tu URL de API"
+
+#: src/commands/ai.js
+msgid "ai.modal.model"
+msgstr "Modelo"
+
+#: src/commands/ai.js
+msgid "ai.modal.model_placeholder"
+msgstr "Nombre del modelo (p. ej., gpt-4)"

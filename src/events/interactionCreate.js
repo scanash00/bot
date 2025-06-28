@@ -1,6 +1,7 @@
 const { Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const { browserHeaders } = require('../constants/index');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const withTranslation = require('../middleware/withTranslation');
 
 /**
  *
@@ -125,6 +126,8 @@ module.exports = (client) => {
     }
 
     if (interaction.isMessageContextMenuCommand()) {
+      await withTranslation(interaction, client);
+
       if (interaction.commandName === 'Dev Test Reminder') {
         const remind = client.commands.get('Dev Test Reminder');
         if (remind && remind.devTestContextMenuExecute) {
@@ -142,6 +145,9 @@ module.exports = (client) => {
       }
     }
     if (!interaction.isCommand()) return;
+
+    await withTranslation(interaction, client);
+
     const command = client.commands.get(interaction.commandName);
     if (!command) {
       // eslint-disable-next-line no-console

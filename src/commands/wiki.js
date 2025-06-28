@@ -3,6 +3,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const logger = require('../utils/logger');
+const i18n = require('../utils/translate');
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -11,8 +12,10 @@ const MAX_EXTRACT_LENGTH = 2000;
 const TRUNCATION_NOTICE = '\n\n*[Summary truncated]*';
 const TRUNCATED_LENGTH = MAX_EXTRACT_LENGTH - TRUNCATION_NOTICE.length;
 
-async function searchWikipedia(query) {
-  const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&srlimit=1`;
+async function searchWikipedia(query, locale = 'en') {
+  const wikiLang = locale.startsWith('es') ? 'es' : 'en';
+  const searchUrl = `https://${wikiLang}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&srlimit=1`;
+
   const response = await fetch(searchUrl);
 
   if (!response.ok) {
@@ -21,15 +24,18 @@ async function searchWikipedia(query) {
 
   const data = await response.json();
 
-  if (!data.query || !data.query.search || data.query.search.length === 0) {
+  if (!data.query?.search?.length) {
     throw new Error('No articles found');
   }
 
-  return data.query.search[0];
+  return {
+    ...data.query.search[0],
+    wikiLang,
+  };
 }
 
-async function getArticleSummary(pageId) {
-  const summaryUrl = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&pithumbsize=300&pageids=${pageId}`;
+async function getArticleSummary(pageId, wikiLang = 'en') {
+  const summaryUrl = `https://${wikiLang}.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&pithumbsize=300&pageids=${pageId}`;
   const response = await fetch(summaryUrl);
 
   if (!response.ok) {
@@ -46,22 +52,53 @@ async function getArticleSummary(pageId) {
   return page;
 }
 
-function createWikiEmbed(article) {
-  let extract = article.extract || 'No summary available.';
+async function createWikiEmbed(article, locale = 'en') {
+  let extract =
+    article.extract ||
+    (await i18n('wiki.article.no_summary', { userId: 'system', locale }, 'No summary available.'));
 
   if (extract.length > MAX_EXTRACT_LENGTH) {
-    extract = extract.substring(0, TRUNCATED_LENGTH) + TRUNCATION_NOTICE;
+    const truncatedText = await i18n(
+      'wiki.article.truncated',
+      { userId: 'system', locale },
+      '[Summary truncated]'
+    );
+    extract =
+      extract.substring(0, MAX_EXTRACT_LENGTH - truncatedText.length - 2) + ' ' + truncatedText;
   }
 
+  const readMore = await i18n(
+    'wiki.article.read_more',
+    {
+      userId: 'system',
+      locale,
+      replace: {},
+    },
+    'Leer más en Wikipedia'
+  );
+
+  const title = await i18n(
+    'wiki.article.title',
+    {
+      userId: 'system',
+      locale,
+      replace: {
+        title: article.title,
+      },
+    },
+    `Wikipedia: ${article.title}`
+  );
+
+  const wikiLang = locale.startsWith('es') ? 'es' : 'en';
+
   const embed = new EmbedBuilder()
-    .setColor(0x3498db)
-    .setTitle(article.title)
+    .setTitle(title)
+    .setURL(
+      `https://${wikiLang}.wikipedia.org/wiki/${encodeURIComponent(article.title.replace(/ /g, '_'))}`
+    )
     .setDescription(extract)
-    .addFields({
-      name: 'Read More',
-      value: `[Click here to read the full article](https://en.wikipedia.org/?curid=${article.pageid})`,
-    })
-    .setFooter({ text: 'Data from Wikipedia' })
+    .setColor(0x4285f4)
+    .setFooter({ text: readMore })
     .setTimestamp();
 
   if (article.thumbnail?.source) {
@@ -74,11 +111,31 @@ function createWikiEmbed(article) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('wiki')
+    .setNameLocalizations({
+      'es-ES': 'wikipedia',
+      'es-419': 'wikipedia',
+      'en-US': 'wiki',
+    })
     .setDescription('Search Wikipedia for a topic')
+    .setDescriptionLocalizations({
+      'es-ES': 'Busca un tema en Wikipedia',
+      'es-419': 'Busca un tema en Wikipedia',
+      'en-US': 'Search Wikipedia for a topic',
+    })
     .addStringOption((option) =>
       option
         .setName('search')
+        .setNameLocalizations({
+          'es-ES': 'buscar',
+          'es-419': 'buscar',
+          'en-US': 'search',
+        })
         .setDescription('What do you want to search for?')
+        .setDescriptionLocalizations({
+          'es-ES': '¿Qué quieres buscar?',
+          'es-419': '¿Qué quieres buscar?',
+          'en-US': 'What do you want to search for?',
+        })
         .setRequired(true)
         .setMaxLength(200)
     ),
@@ -91,8 +148,18 @@ module.exports = {
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
+        const waitMessage = await i18n(
+          'commands.wiki.cooldown',
+          {
+            userId: interaction.user.id,
+            locale: interaction.locale,
+            timeLeft,
+          },
+          `Please wait ${timeLeft} second(s) before using this command again.`
+        );
+
         return interaction.reply({
-          content: `Please wait ${timeLeft} second(s) before using this command again.`,
+          content: waitMessage,
           ephemeral: true,
         });
       }
@@ -106,24 +173,35 @@ module.exports = {
         const searchQuery = interaction.options.getString('search');
         logger.info(`Wiki command used by ${interaction.user.tag} for query: ${searchQuery}`);
 
-        const searchResult = await searchWikipedia(searchQuery);
+        const userLanguage = interaction.locale || 'en';
 
-        const article = await getArticleSummary(searchResult.pageid);
+        const searchResult = await searchWikipedia(searchQuery, userLanguage);
 
-        const embed = createWikiEmbed(article);
+        const article = await getArticleSummary(searchResult.pageid, searchResult.wikiLang);
+
+        const embed = await createWikiEmbed(article, userLanguage);
         await interaction.editReply({ embeds: [embed] });
       } catch (error) {
         logger.error('Error in wiki command:', error);
 
-        let errorMessage = 'There was an error searching Wikipedia. Please try again later.';
+        let errorKey = 'errors.generic';
+        const errorVars = {};
 
         if (error.message === 'No articles found') {
-          errorMessage =
-            'No Wikipedia articles found for that search term. Try being more specific or check your spelling.';
+          errorKey = 'errors.no_articles';
         } else if (error.message.includes('Article not found')) {
-          errorMessage =
-            'The article was found but could not be loaded. Please try a different search term.';
+          errorKey = 'errors.article_not_loaded';
         }
+
+        const errorMessage = await i18n(
+          `wiki.${errorKey}`,
+          {
+            userId: interaction.user.id,
+            locale: interaction.locale,
+            ...errorVars,
+          },
+          'There was an error searching Wikipedia. Please try again later.'
+        );
 
         await interaction.editReply({
           content: errorMessage,

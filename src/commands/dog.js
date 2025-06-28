@@ -45,25 +45,33 @@ async function fetchDogImage() {
   throw new Error('No valid image URL found in response');
 }
 
-function createDogEmbed(data) {
-  const title = data.title ? sanitizeInput(data.title).slice(0, 245) + '...' : 'Random Dog';
+function createDogEmbed(data, locale = 'en') {
+  const title = data.title
+    ? sanitizeInput(data.title).slice(0, 245) + '...'
+    : locale.startsWith('es')
+      ? 'Perro Aleatorio'
+      : 'Random Dog';
+
   const embed = new EmbedBuilder()
-    .setColor(0xa0522d)
+    .setColor(0x8a2be2)
     .setTitle(title)
     .setImage(data.url)
-    .setFooter({ text: 'powered by erm.dog' });
+    .setFooter({
+      text: locale.startsWith('es') ? 'impulsado por erm.dog' : 'powered by erm.dog',
+    });
 
   if (data.subreddit) {
-    embed.setDescription(`From r/${sanitizeInput(data.subreddit)}`);
+    const fromText = locale.startsWith('es') ? 'De r/' : 'From r/';
+    embed.setDescription(`${fromText}${sanitizeInput(data.subreddit)}`);
   }
 
   return embed;
 }
 
-function createButtonRow() {
+function createButtonRow(locale = 'en') {
   const refreshButton = new ButtonBuilder()
     .setCustomId('refresh_dog')
-    .setLabel('New Dog')
+    .setLabel(locale.startsWith('es') ? 'Nuevo Perro' : 'New Dog')
     .setStyle(ButtonStyle.Secondary)
     .setEmoji('🐶');
 
@@ -71,7 +79,17 @@ function createButtonRow() {
 }
 
 module.exports = {
-  data: new SlashCommandBuilder().setName('dog').setDescription('Get a random dog image!'),
+  data: new SlashCommandBuilder()
+    .setName('dog')
+    .setNameLocalizations({
+      'es-ES': 'perro',
+      'es-419': 'perro',
+    })
+    .setDescription('Get a random dog image!')
+    .setDescriptionLocalizations({
+      'es-ES': '¡Obtén una imagen aleatoria de un perro!',
+      'es-419': '¡Obtén una imagen aleatoria de un perro!',
+    }),
 
   async execute(interaction) {
     try {
@@ -95,9 +113,9 @@ module.exports = {
       try {
         logger.info(`Dog command used by ${interaction.user.tag}`);
 
-        const data = await fetchDogImage();
-        const embed = createDogEmbed(data);
-        const row = createButtonRow();
+        const dogData = await fetchDogImage();
+        const embed = createDogEmbed(dogData, interaction.locale);
+        const row = createButtonRow(interaction.locale);
 
         await interaction.editReply({
           embeds: [embed],

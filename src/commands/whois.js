@@ -436,11 +436,27 @@ async function getWhoisData(query) {
 const command = {
   data: new SlashCommandBuilder()
     .setName('whois')
+    .setNameLocalizations({
+      'es-ES': 'quien',
+      'es-419': 'quien',
+    })
     .setDescription('Look up WHOIS information for a domain or IP address')
+    .setDescriptionLocalizations({
+      'es-ES': 'Buscar información WHOIS de un dominio o dirección IP',
+      'es-419': 'Buscar información WHOIS de un dominio o dirección IP',
+    })
     .addStringOption((option) =>
       option
         .setName('query')
-        .setDescription('Domain name or IP address to look up')
+        .setNameLocalizations({
+          'es-ES': 'consulta',
+          'es-419': 'consulta',
+        })
+        .setDescription('Domain or IP address to look up')
+        .setDescriptionLocalizations({
+          'es-ES': 'Dominio o dirección IP a buscar',
+          'es-419': 'Dominio o dirección IP a buscar',
+        })
         .setRequired(true)
     ),
 

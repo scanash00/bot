@@ -22,17 +22,49 @@ async function fetchJoke(type) {
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('joke')
+    .setNameLocalizations({
+      'es-ES': 'chiste',
+      'es-419': 'chiste',
+      'en-US': 'joke',
+    })
     .setDescription('Get a random joke!')
+    .setDescriptionLocalizations({
+      'es-ES': '¡Obtén un chiste aleatorio!',
+      'es-419': '¡Obtén un chiste aleatorio!',
+      'en-US': 'Get a random joke!',
+    })
     .addStringOption((option) =>
       option
         .setName('type')
-        .setDescription('The type of joke you want') // I hope you don't want any
+        .setNameLocalizations({
+          'es-ES': 'tipo',
+          'es-419': 'tipo',
+          'en-US': 'type',
+        })
+        .setDescription('The type of joke you want')
+        .setDescriptionLocalizations({
+          'es-ES': 'El tipo de chiste que deseas',
+          'es-419': 'El tipo de chiste que deseas',
+          'en-US': 'The type of joke you want',
+        })
         .setRequired(false)
         .addChoices(
-          { name: 'General', value: 'general' },
-          { name: 'Knock-knock', value: 'knock-knock' },
-          { name: 'Programming', value: 'programming' },
-          { name: 'Dad', value: 'dad' }
+          {
+            name: 'General',
+            value: 'general',
+            name_localizations: { 'es-ES': 'General', 'es-419': 'General' },
+          },
+          {
+            name: 'Knock-knock',
+            value: 'knock-knock',
+            name_localizations: { 'es-ES': 'Toc toc', 'es-419': 'Toc toc' },
+          },
+          {
+            name: 'Programming',
+            value: 'programming',
+            name_localizations: { 'es-ES': 'Programación', 'es-419': 'Programación' },
+          },
+          { name: 'Dad', value: 'dad', name_localizations: { 'es-ES': 'Papá', 'es-419': 'Papá' } }
         )
     ),
 
@@ -44,8 +76,14 @@ module.exports = {
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
+        const waitMessage = await interaction.t('commands.joke.cooldown', {
+          userId: interaction.user.id,
+          locale: interaction.locale,
+          timeLeft,
+          default: `Please wait ${timeLeft} second(s) before using this command again.`,
+        });
         return interaction.reply({
-          content: `Please wait ${timeLeft} second(s) before using this command again.`,
+          content: waitMessage,
           ephemeral: true,
         });
       }
@@ -62,11 +100,32 @@ module.exports = {
 
         const joke = await fetchJoke(jokeType);
 
+        const jokeTypeTranslated = await interaction.t(`joke.types.${joke.type}`, {
+          userId: interaction.user.id,
+          locale: interaction.locale,
+          default: joke.type.charAt(0).toUpperCase() + joke.type.slice(1),
+        });
+
+        let jokeTitle = await interaction.t('joke.title', {
+          userId: interaction.user.id,
+          locale: interaction.locale,
+          type: jokeTypeTranslated,
+          default: `${jokeTypeTranslated} Joke`,
+        });
+        if (jokeTitle && jokeTitle.includes('{type}')) {
+          jokeTitle = jokeTitle.replace('{type}', jokeTypeTranslated);
+        }
         const embed = new EmbedBuilder()
           .setColor(0x3498db)
-          .setTitle(`${joke.type.charAt(0).toUpperCase() + joke.type.slice(1)} Joke`)
+          .setTitle(jokeTitle)
           .setDescription(sanitizeInput(joke.setup))
-          .setFooter({ text: 'The punchline will appear in 3 seconds...' });
+          .setFooter({
+            text: await interaction.t('joke.loading', {
+              userId: interaction.user.id,
+              locale: interaction.locale,
+              default: 'The punchline will appear in 3 seconds...',
+            }),
+          });
 
         await interaction.editReply({ embeds: [embed] });
 
@@ -75,7 +134,13 @@ module.exports = {
             embed.setDescription(
               `${sanitizeInput(joke.setup)}\n\n*${sanitizeInput(joke.punchline)}*`
             );
-            embed.setFooter({ text: 'Ba dum tss! 🥁' });
+            embed.setFooter({
+              text: await interaction.t('joke.punchline', {
+                userId: interaction.user.id,
+                locale: interaction.locale,
+                default: 'Ba dum tss! 🥁',
+              }),
+            });
             await interaction.editReply({ embeds: [embed] });
           } catch (error) {
             logger.error('Error updating joke with punchline:', error);

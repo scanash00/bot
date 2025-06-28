@@ -21,7 +21,10 @@ const config = {
   },
 };
 
-const requiredConfig = [{ key: 'DISCORD_TOKEN', value: config.discord.token }];
+const requiredConfig = [
+  { key: 'TOKEN', value: config.discord.token },
+  { key: 'CLIENT_ID', value: config.discord.clientId },
+];
 
 const missingConfig = requiredConfig.filter(({ value }) => !value);
 if (missingConfig.length > 0) {
