@@ -187,9 +187,6 @@ msgid "What to remind you about"
 msgstr ""
 
 #: src/commands/weather.js
-
-
-#: src/commands/whois.js
 #: src/commands/whois.js
 msgid "Get information about a user"
 msgstr ""
