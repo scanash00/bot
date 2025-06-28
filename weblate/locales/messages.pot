@@ -1,0 +1,119 @@
+# Weblate configuration for Aethel
+# Copyright (C) 2025 Aethel Labs
+# This file is distributed under the same license as the Aethel project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Aethel 1.10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-27 16:54:08-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/commands/help.js
+msgid "Show all available commands and their usage"
+msgstr ""
+
+msgid "Aethel Commands"
+msgstr ""
+
+msgid "Here are all the available commands:"
+msgstr ""
+
+msgid "No options"
+msgstr ""
+
+#: src/commands/joke.js
+msgid "Get a random joke!"
+msgstr ""
+
+msgid "The type of joke you want"
+msgstr ""
+
+msgid "General"
+msgstr ""
+
+msgid "Knock-knock"
+msgstr ""
+
+msgid "Programming"
+msgstr ""
+
+msgid "Dad"
+msgstr ""
+
+msgid "Please wait %d second(s) before using this command again."
+msgstr ""
+
+msgid "The punchline will appear in 3 seconds..."
+msgstr ""
+
+msgid "Ba dum tss! 🥁"
+msgstr ""
+
+msgid "Sorry, I had trouble fetching a joke. Please try again later!"
+msgstr ""
+
+msgid "An unexpected error occurred. Please try again later."
+msgstr ""
+
+#: src/commands/8ball.js
+msgid "Ask the magic 8-ball a question"
+msgstr ""
+
+msgid "The question you want to ask the 8-ball"
+msgstr ""
+
+#: src/commands/ai.js
+msgid "Ask the AI a question"
+msgstr ""
+
+msgid "Your question for the AI"
+msgstr ""
+
+#: src/commands/cat.js
+msgid "Get a random cat picture"
+msgstr ""
+
+#: src/commands/dog.js
+msgid "Get a random dog picture"
+msgstr ""
+
+#: src/commands/remind.js
+msgid "Set a reminder"
+msgstr ""
+
+msgid "When to remind (e.g., 'in 2 hours' or 'tomorrow at 3pm')"
+msgstr ""
+
+msgid "What to remind you about"
+msgstr ""
+
+#: src/commands/weather.js
+msgid "Get the current weather"
+msgstr ""
+
+msgid "City name or zip code"
+msgstr ""
+
+#: src/commands/whois.js
+msgid "Get information about a user"
+msgstr ""
+
+msgid "The user to get information about"
+msgstr ""
+
+#: src/commands/wiki.js
+msgid "Search Wikipedia"
+msgstr ""
+
+msgid "Search term"
+msgstr ""

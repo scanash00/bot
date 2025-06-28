@@ -5,7 +5,7 @@ Thank you for your interest in contributing!
 ## How to Contribute
 
 - Fork the repository and create your branch from `dev`.
-- Run `bun run lint` and ensure code passes ESLint and Prettier.
+- Run `pnpm run lint` and ensure code passes ESLint and Prettier.
 - Add tests for any new features or bugfixes.
 - Open a pull request with a clear description of your changes.
 - Be respectful and constructive in code reviews and discussions.

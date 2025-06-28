@@ -11,7 +11,7 @@
     "lint:format": "eslint . --config eslint.config.js --format=codeframe",
     "format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .prettierignore",
-    "check": "bun run lint && bun run format:check"
+    "check": "pnpm run lint && pnpm run format:check"
   },
   "dependencies": {
     "@discordjs/rest": "^2.5.1",

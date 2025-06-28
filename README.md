@@ -25,7 +25,7 @@ A privacy-conscious, production-ready Discord user bot with AI chat, reminders, 
 ```sh
 git clone https://github.com/scanash00/bot.git
 cd bot
-bun i
+pnpm i
 ```
 
 ### 2. Environment Variables
@@ -45,14 +45,14 @@ Copy `.env.example` to `.env` and fill in the required values:
 Run all SQL migrations:
 
 ```sh
-bun run scripts/run-migration.js # or node scripts/run-migration.js
+pnpm run scripts/run-migration.js # or node scripts/run-migration.js
 ```
 
 ---
 
 ## Usage
 
-- Start the bot: `bun start`
+- Start the bot: `pnpm start`
 - Add the bot to your account and use `/ai`, `/remind`, etc.
 - Use `/ai use_custom_api:true` to set your own API key (encrypted)
 
@@ -90,7 +90,7 @@ See [LICENSE](LICENSE) and [Creative Commons CC BY-NC 4.0](https://creativecommo
 
 7. Start the bot:
    ```bash
-   bun start
+   pnpm start
    ```
 
 ## Usage
