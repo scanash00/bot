@@ -204,15 +204,9 @@ msgstr "Programación"
 msgid "Dad"
 msgstr "Papá"
 
-msgid "The punchline will appear in 3 seconds..."
-msgstr "El remate aparecerá en 3 segundos..."
-
 # Key for punchline loading footer in joke command
 msgid "joke.loading"
 msgstr "El remate aparecerá en 3 segundos..."
-
-msgid "Ba dum tss! 🥁"
-msgstr "¡Chin chin! 🥁"
 
 # Key for punchline footer in joke command
 msgid "joke.punchline"
@@ -260,15 +254,9 @@ msgstr "Se activará"
 msgid "Reminder ID: {id}"
 msgstr "ID del recordatorio: {id}"
 
-msgid "Sorry, I had trouble fetching a joke. Please try again later!"
-msgstr "Lo siento, tuve problemas para obtener un chiste. ¡Por favor, inténtalo de nuevo más tarde!"
-
 # Key for error message when fetching joke fails
 msgid "joke.error_fetching"
 msgstr "Lo siento, tuve problemas para obtener un chiste. ¡Por favor, inténtalo de nuevo más tarde!"
-
-msgid "An unexpected error occurred. Please try again later."
-msgstr "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde."
 
 # Key for unexpected error in joke command
 msgid "joke.unexpected_error"

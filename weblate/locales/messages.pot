@@ -75,21 +75,6 @@ msgstr "✅ API credentials saved. You can now use the `/ai` command without re-
 msgid "ai.error"
 msgstr "An error occurred while processing your request. Please try again later."
 
-msgid "Please wait %d second(s) before using this command again."
-msgstr ""
-
-msgid "The punchline will appear in 3 seconds..."
-msgstr ""
-
-msgid "Ba dum tss! 🥁"
-msgstr ""
-
-msgid "Sorry, I had trouble fetching a joke. Please try again later!"
-msgstr ""
-
-msgid "An unexpected error occurred. Please try again later."
-msgstr ""
-
 #: src/commands/8ball.js
 msgid "Ask the magic 8-ball a question"
 msgstr ""
