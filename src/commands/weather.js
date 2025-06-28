@@ -54,52 +54,72 @@ async function createWeatherEmbed(data, useFahrenheit, locale = 'en') {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-  const [tempText, feelsLikeText, weatherText, humidityText, windText, pressureText] =
-    await Promise.all([
-      i18n('weather.fields.temperature', { userId: 'system', locale }, 'Temperature'),
-      i18n('weather.fields.feels_like', { userId: 'system', locale }, 'Feels Like'),
-      i18n('weather.fields.weather', { userId: 'system', locale }, 'Weather'),
-      i18n('weather.fields.humidity', { userId: 'system', locale }, 'Humidity'),
-      i18n('weather.fields.wind_speed', { userId: 'system', locale }, 'Wind Speed'),
-      i18n('weather.fields.pressure', { userId: 'system', locale }, 'Pressure'),
-    ]);
+  const isEnglish = !locale || locale.startsWith('en');
 
-  const title = await i18n(
-    'weather.embed.title',
-    {
-      userId: 'system',
-      locale,
-      replace: {
-        city: sanitizeInput(data.name),
-        country: data.sys.country,
-        emoji: weatherEmoji,
+  let tempText, feelsLikeText, weatherText, humidityText, windText, pressureText, title, footer;
+
+  if (isEnglish) {
+    tempText = 'Temperature';
+    feelsLikeText = 'Feels Like';
+    weatherText = 'Weather';
+    humidityText = 'Humidity';
+    windText = 'Wind Speed';
+    pressureText = 'Pressure';
+    title = `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`;
+    const dateFormatter = new Intl.DateTimeFormat(locale || 'en', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const formattedDate = dateFormatter.format(new Date());
+    footer = `Data from OpenWeather • ${formattedDate}`;
+  } else {
+    [tempText, feelsLikeText, weatherText, humidityText, windText, pressureText] =
+      await Promise.all([
+        i18n('weather.fields.temperature', { userId: 'system', locale }, 'Temperature'),
+        i18n('weather.fields.feels_like', { userId: 'system', locale }, 'Feels Like'),
+        i18n('weather.fields.weather', { userId: 'system', locale }, 'Weather'),
+        i18n('weather.fields.humidity', { userId: 'system', locale }, 'Humidity'),
+        i18n('weather.fields.wind_speed', { userId: 'system', locale }, 'Wind Speed'),
+        i18n('weather.fields.pressure', { userId: 'system', locale }, 'Pressure'),
+      ]);
+    title = await i18n(
+      'weather.embed.title',
+      {
+        userId: 'system',
+        locale,
+        replace: {
+          city: sanitizeInput(data.name),
+          country: data.sys.country,
+          emoji: weatherEmoji,
+        },
       },
-    },
-    `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`
-  );
-
-  const dateFormatter = new Intl.DateTimeFormat(locale, {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
-
-  const formattedDate = dateFormatter.format(new Date());
-
-  const footer = await i18n(
-    'weather.embed.footer',
-    {
-      userId: 'system',
-      locale,
-      replace: {
-        date: formattedDate,
+      `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`
+    );
+    const dateFormatter = new Intl.DateTimeFormat(locale, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const formattedDate = dateFormatter.format(new Date());
+    footer = await i18n(
+      'weather.embed.footer',
+      {
+        userId: 'system',
+        locale,
+        replace: {
+          date: formattedDate,
+        },
       },
-    },
-    'Data from OpenWeather • %date%'
-  );
+      `Data from OpenWeather • ${formattedDate}`
+    );
+  }
 
   return new EmbedBuilder()
     .setColor(0x3498db)
