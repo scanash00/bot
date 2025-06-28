@@ -482,8 +482,6 @@ msgstr "Nombre de la ciudad o código postal"
 msgid "Get information about a user"
 msgstr "Obtener información sobre un usuario"
 
-msgid "The user to get information about"
-msgstr "El usuario sobre el que quieres información"
 
 #: src/commands/wiki.js
 msgid "Search Wikipedia"
