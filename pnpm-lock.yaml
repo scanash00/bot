@@ -33,8 +33,8 @@ importers:
         specifier: ^7.5.1
         version: 7.5.1(express@5.1.0)
       gettext-parser:
-        specifier: ^8.0.0
-        version: 8.0.0
+        specifier: ^7.0.0
+        version: 7.0.1
       helmet:
         specifier: ^8.1.0
         version: 8.1.0
@@ -671,9 +671,8 @@ packages:
   gettext-parser@1.1.0:
     resolution: {integrity: sha512-zL3eayB0jF+cr6vogH/VJKoKcj7uQj2TPByaaj6a4k/3elk9iq7fiwCM2FqdzS/umo021RetSanVisarzeb9Wg==}
 
-  gettext-parser@8.0.0:
-    resolution: {integrity: sha512-eFmhDi2xQ+2reMRY2AbJ2oa10uFOl1oyGbAKdCZiNOk94NJHi7aN0OBELSC9v35ZAPQdr+uRBi93/Gu4SlBdrA==}
-    engines: {node: '>=18'}
+  gettext-parser@7.0.1:
+    resolution: {integrity: sha512-LU+ieGH3L9HmKEArTlX816/iiAlyA0fx/n/QSeQpkAaH/+jxMk/5UtDkAzcVvW+KlY25/U+IE6dnfkJ8ynt8pQ==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -2113,7 +2112,7 @@ snapshots:
     dependencies:
       encoding: 0.1.13
 
-  gettext-parser@8.0.0:
+  gettext-parser@7.0.1:
     dependencies:
       content-type: 1.0.5
       encoding: 0.1.13
