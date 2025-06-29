@@ -55,10 +55,10 @@ msgstr "dili-seç"
 
 # Command Descriptions
 msgid "Show all available commands and their usage"
-msgstr "Kullanılabilir komutları ve kullanımlarını göster."
+msgstr "Kullanılabilir komutları ve kullanımlarını göster"
 
 msgid "Ask the magic 8-ball a question"
-msgstr ""
+msgstr "8ball'a bir soru sor."
 
 msgid "Get a random cat picture"
 msgstr ""
