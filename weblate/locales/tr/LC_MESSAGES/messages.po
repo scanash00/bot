@@ -316,94 +316,97 @@ msgid "I'll remind you about:\n\n*%message%*"
 msgstr ""
 "hatırlatacağım metin:\n"
 "\n"
-"*%mesaj%*"
+"*%message%*"
 
 msgid "You asked me to remind you about:\n\n*%message%*"
 msgstr ""
+"Benden size hatırlatmamı istediniz:\n"
+"\n"
+"*%message%*"
 
 msgid "⏱️ Time"
-msgstr ""
+msgstr "⏱️ Zaman"
 
 msgid "⏱️ Time elapsed"
-msgstr ""
+msgstr "⏱️ Zaman geçti"
 
 msgid "📅 Original time"
-msgstr ""
+msgstr "📅 Orjinal zaman"
 
 msgid "🔗 Original Message"
-msgstr ""
+msgstr "🔗 Orjinal Mesaj"
 
 msgid "🔗 Message Link"
-msgstr ""
+msgstr "🔗 Mesaj Linki"
 
 msgid "🕒 Will trigger"
-msgstr ""
+msgstr "🕒 Tetikleyecek"
 
 msgid "Jump to message"
-msgstr ""
+msgstr "Mesajı göster"
 
 msgid "When to remind you? (e.g., 10m, 1h, 2h30m)"
-msgstr ""
+msgstr "Size ne zaman hatırlatılmalı? (örneğin, 10m, 1h, 2h30m)"
 
 msgid "10m, 1h, or 2h30m"
-msgstr ""
+msgstr "10m, 1h, veya 2h30m"
 
 msgid "What should I remind you about?"
-msgstr ""
+msgstr "Size neyi hatırlatayım?"
 
 msgid "Type your reminder message here..."
-msgstr ""
+msgstr "Hatırlatma mesajınızı buraya yazın..."
 
 msgid "You will be reminded about this message."
-msgstr ""
+msgstr "Bu mesaj size hatırlatılacaktır."
 
 msgid "Please wait %d second(s) before using this command again."
-msgstr ""
+msgstr "Lütfen bu komutu tekrar kullanmadan önce %d saniye bekleyin."
 
 # Wikipedia
 msgid "Wikipedia Article"
-msgstr ""
+msgstr "Wikipedia Makalesi"
 
 msgid "Read more on Wikipedia"
-msgstr ""
+msgstr "Daha fazlasını Wikipedia'da okuyun"
 
 msgid "No summary available"
-msgstr ""
+msgstr "Özet mevcut değil"
 
 msgid "Article truncated - click link to read more"
-msgstr ""
+msgstr "Makale kesildi - devamını okumak için bağlantıya tıklayın"
 
 # Weather
 msgid "Weather at %city%, %country% %emoji%"
-msgstr ""
+msgstr "%city%, %country% hava durumu şu anda %emoji%"
 
 msgid "Temperature"
-msgstr ""
+msgstr "Sıcaklık"
 
 msgid "Feels Like"
-msgstr ""
+msgstr "Gibi Hissediyor"
 
 msgid "Weather"
-msgstr ""
+msgstr "Hava durumu"
 
 msgid "Humidity"
-msgstr ""
+msgstr "Nem"
 
 msgid "Wind Speed"
-msgstr ""
+msgstr "Rüzgar Hızı"
 
 msgid "Pressure"
-msgstr ""
+msgstr "Basınç"
 
 msgid "Weather data provided by OpenWeatherMap"
-msgstr ""
+msgstr "OpenWeatherMap tarafından sağlanan hava durumu verileri"
 
 # Cat Command
 msgid "Random Cat"
-msgstr ""
+msgstr "Rastgele kedi"
 
 msgid "From r/%s"
-msgstr ""
+msgstr "r/%s'den"
 
 msgid "powered by pur.cat"
 msgstr ""
