@@ -51,43 +51,32 @@ async function getArticleSummary(pageId, wikiLang = 'en') {
 }
 
 async function createWikiEmbed(article, locale = 'en') {
+  const t = async (key, opts = {}) => await i18n(key, { locale: locale || 'en', ...opts });
   let extract =
-    article.extract ||
-    (await i18n('wiki.article.no_summary', { userId: 'system', locale }, 'No summary available.'));
+    article.extract || (await t('No summary available', { default: 'No summary available.' }));
 
   if (extract.length > MAX_EXTRACT_LENGTH) {
-    const truncatedText = await i18n(
-      'wiki.article.truncated',
-      { userId: 'system', locale },
-      '[Summary truncated]'
-    );
+    const truncatedText = await t('Article truncated - click link to read more', {
+      default: '[Summary truncated]',
+    });
     extract =
       extract.substring(0, MAX_EXTRACT_LENGTH - truncatedText.length - 2) + ' ' + truncatedText;
   }
 
-  const readMore = await i18n(
-    'wiki.article.read_more',
-    {
-      userId: 'system',
-      locale,
-      replace: {},
-    },
-    'Leer más en Wikipedia'
-  );
-
-  const title = await i18n(
-    'wiki.article.title',
-    {
-      userId: 'system',
-      locale,
-      replace: {
-        title: article.title,
-      },
-    },
-    `Wikipedia: ${article.title}`
-  );
-
+  const readMore = await t('Read more on Wikipedia', { default: 'Read more on Wikipedia' });
+  let title = await t('Wikipedia Article', {
+    default: `Wikipedia: ${article.title}`,
+    replace: { title: article.title },
+  });
+  if (typeof title !== 'string' || !title.trim() || title === '%title%') {
+    title = article.title;
+  }
   const wikiLang = locale.startsWith('es') ? 'es' : 'en';
+
+  let footerText = readMore;
+  if (typeof footerText !== 'string' || !footerText.trim()) {
+    footerText = 'Read more on Wikipedia';
+  }
 
   const embed = new EmbedBuilder()
     .setTitle(title)
@@ -96,12 +85,8 @@ async function createWikiEmbed(article, locale = 'en') {
     )
     .setDescription(extract)
     .setColor(0x4285f4)
-    .setFooter({ text: readMore })
+    .setFooter({ text: footerText })
     .setTimestamp();
-
-  if (article.thumbnail?.source) {
-    embed.setThumbnail(article.thumbnail.source);
-  }
 
   return embed;
 }
@@ -158,7 +143,7 @@ export default {
 
         return interaction.reply({
           content: waitMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -177,33 +162,25 @@ export default {
 
         const article = await getArticleSummary(searchResult.pageid, searchResult.wikiLang);
 
-        const embed = await createWikiEmbed(article, userLanguage);
+        const embed = await createWikiEmbed(article, interaction.locale);
         await interaction.editReply({ embeds: [embed] });
       } catch (error) {
         logger.error('Error in wiki command:', error);
 
-        let errorKey = 'errors.generic';
-        const errorVars = {};
+        // eslint-disable-next-line no-unused-vars
+        const errorKey = 'wiki.error';
 
-        if (error.message === 'No articles found') {
-          errorKey = 'errors.no_articles';
-        } else if (error.message.includes('Article not found')) {
-          errorKey = 'errors.article_not_loaded';
-        }
-
-        const errorMessage = await i18n(
-          `wiki.${errorKey}`,
+        const errorMsg = await i18n(
+          'Sorry, I had trouble fetching the Wikipedia article. Please try again later!',
           {
-            userId: interaction.user.id,
-            locale: interaction.locale,
-            ...errorVars,
-          },
-          'There was an error searching Wikipedia. Please try again later.'
+            locale: interaction.locale || 'en',
+            default: 'Sorry, I had trouble fetching the Wikipedia article. Please try again later!',
+          }
         );
 
         await interaction.editReply({
-          content: errorMessage,
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     } catch (error) {
@@ -211,11 +188,17 @@ export default {
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({
           content: 'An unexpected error occurred. Please try again later.',
-          ephemeral: true,
+          flags: 1 << 6,
         });
       } else if (interaction.deferred) {
+        const errorMsg = await i18n('An unexpected error occurred. Please try again later.', {
+          locale: interaction.locale || 'en',
+          default: 'An unexpected error occurred. Please try again later.',
+        });
+
         await interaction.editReply({
-          content: 'An unexpected error occurred. Please try again later.',
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     }

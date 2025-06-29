@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import i18n from '../utils/translate.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,16 +25,24 @@ export default {
 
   async execute(interaction) {
     try {
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply({ flags: 1 << 6 });
 
       const userId = interaction.user?.id;
       if (!userId) {
-        return interaction.editReply({ content: '❌ Unable to identify user.' });
+        const errorMsg = await i18n('Unable to identify user.', {
+          locale: interaction.locale || 'en',
+          default: '❌ Unable to identify user.',
+        });
+        return interaction.editReply({ content: errorMsg });
       }
 
       const [title, description] = await Promise.all([
-        await interaction.t('Aethel Commands', { default: 'Aethel Commands' }),
-        await interaction.t('Here are all the available commands:', {
+        await i18n('Aethel Commands', {
+          locale: interaction.locale || 'en',
+          default: 'Aethel Commands',
+        }),
+        await i18n('Here are all the available commands:', {
+          locale: interaction.locale || 'en',
           default: 'Here are all the available commands:',
         }),
       ]);
@@ -48,36 +57,30 @@ export default {
 
       const commandsByCategory = new Collection();
 
-      const categories = {
-        general: await interaction.t('categories.general', { default: 'General' }),
-        fun: await interaction.t('categories.fun', { default: 'Fun' }),
-        moderation: await interaction.t('categories.moderation', { default: 'Moderation' }),
-        utility: await interaction.t('categories.utility', { default: 'Utility' }),
-        other: await interaction.t('categories.other', { default: 'Other' }),
-      };
-
       for (const file of commandFiles) {
         if (file === 'help.js') continue;
 
         try {
-          const command = require(`${commandsPath}/${file}`);
+          const commandModule = await import(`${commandsPath}/${file}`);
+          const command = commandModule.default || commandModule;
           if (!command.data) continue;
 
-          const commandName = file.replace(/\.js$/, '');
-
-          const [translatedName, translatedDescription] = await Promise.all([
-            await interaction.t(`commands.${commandName}.name`, { default: command.data.name }),
-            await interaction.t(`commands.${commandName}.description`, {
-              default: command.data.description,
-            }),
-          ]);
+          // Use i18n for command name/description, fallback to default if not found
+          const name = await i18n(command.data.name, {
+            locale: interaction.locale || 'en',
+            default: command.data.name,
+          });
+          const description = await i18n(command.data.description, {
+            locale: interaction.locale || 'en',
+            default: command.data.description,
+          });
 
           const translatedCommand = {
             ...command,
             data: {
               ...command.data,
-              name: translatedName || command.data.name,
-              description: translatedDescription || command.data.description,
+              name,
+              description,
             },
             category: command.category || 'other',
           };
@@ -92,25 +95,31 @@ export default {
         }
       }
 
-      for (const [category, commands] of commandsByCategory) {
-        const categoryName = categories[category] || category;
-        const commandList = commands
-          .sort((a, b) => a.data.name.localeCompare(b.data.name))
-          .map((cmd) => `• **/${cmd.data.name}** - ${cmd.data.description}`)
-          .join('\n');
-
-        embed.addFields({
-          name: `**${categoryName}**`,
-          value: commandList || 'No commands in this category',
-          inline: false,
-        });
+      const commandList = [];
+      for (const commands of commandsByCategory.values()) {
+        for (const cmd of commands) {
+          commandList.push(`• **/${cmd.data.name}** - ${cmd.data.description}`);
+        }
       }
+      embed.addFields({
+        name: title,
+        value:
+          commandList.join('\n') ||
+          (await i18n('No options', { locale: interaction.locale || 'en', default: 'No options' })),
+        inline: false,
+      });
 
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
       // console.error('Error in help command:', error);
       try {
-        const errorMessage = '❌ An error occurred while loading commands. Please try again later.';
+        const errorMessage = await i18n(
+          'An error occurred while loading commands. Please try again later.',
+          {
+            locale: interaction.locale || 'en',
+            default: '❌ An error occurred while loading commands. Please try again later.',
+          }
+        );
 
         if (interaction.deferred) {
           await interaction.editReply({
@@ -120,14 +129,12 @@ export default {
         } else if (!interaction.replied) {
           await interaction.reply({
             content: errorMessage,
-            flags: 1 << 6, // EPHEMERAL
-            ephemeral: true,
+            flags: 1 << 6,
           });
         } else {
           await interaction.followUp({
             content: errorMessage,
-            flags: 1 << 6, // EPHEMERAL
-            ephemeral: true,
+            flags: 1 << 6,
           });
         }
       } catch (err) {

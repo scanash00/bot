@@ -142,34 +142,41 @@ export default {
       option.setName('reset').setDescription('Reset your AI chat history').setRequired(false)
     ),
   async execute(interaction) {
-    if (pendingRequests.has(interaction.user.id)) {
-      const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
-      return interaction.reply({
-        content: await t(
-          'ai.request_in_progress',
-          'You already have a request in progress. Please wait for it to complete.'
-        ),
-        ephemeral: true,
-      });
+    const userId = interaction.user.id;
+
+    if (pendingRequests.has(userId)) {
+      const pending = pendingRequests.get(userId);
+      if (pending && pending.timestamp && Date.now() - pending.timestamp > 30000) {
+        pendingRequests.delete(userId);
+      } else {
+        const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
+        return interaction.reply({
+          content: await t(
+            'ai.request_in_progress',
+            'You already have a request in progress. Please wait for it to complete.'
+          ),
+          flags: 1 << 6,
+        });
+      }
     }
 
     try {
       const useCustomApi = interaction.options.getBoolean('use_custom_api');
-      const userId = interaction.user.id;
       const prompt = interaction.options.getString('prompt');
       const reset = interaction.options.getBoolean('reset');
+
+      pendingRequests.set(userId, { interaction, prompt, timestamp: Date.now() });
 
       if (reset) {
         userConversations.delete(userId);
         const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
         await interaction.reply({
           content: await t('ai.reset', '🧹 Your AI chat history has been reset.'),
-          ephemeral: true,
+          flags: 1 << 6,
         });
+        pendingRequests.delete(userId);
         return;
       }
-
-      pendingRequests.set(userId, { interaction, prompt });
 
       if (useCustomApi === false) {
         await setUserApiKey(userId, null, null, null);
@@ -180,7 +187,7 @@ export default {
             'ai.default_api',
             '✅ Switched to default API. Your custom API key has been cleared and the default model will be used.'
           ),
-          ephemeral: true,
+          flags: 1 << 6,
         });
 
         await this.processAIRequest(interaction, userId, interaction);
@@ -245,14 +252,24 @@ export default {
         await this.processAIRequest(interaction, userId, interaction);
       }
     } catch (error) {
-      // console.error('Error in execute:', error);
+      pendingRequests.delete(userId);
       const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
-      await interaction.reply(
-        await t(
-          'ai.error',
-          'An error occurred while processing your request. Please try again later.'
-        )
-      );
+      if (!interaction.replied && !interaction.deferred) {
+        await interaction.reply({
+          content: await t(
+            'ai.error',
+            'An error occurred while processing your request. Please try again later.'
+          ),
+          flags: 1 << 6,
+        });
+      } else {
+        await interaction.editReply({
+          content: await t(
+            'ai.error',
+            'An error occurred while processing your request. Please try again later.'
+          ),
+        });
+      }
     }
   },
 
@@ -292,7 +309,7 @@ export default {
             'ai.api_credentials_saved',
             '✅ API credentials saved. You can now use the `/ai` command without re-entering your credentials. To stop using your key, do `/ai use_custom_api false`'
           ),
-          ephemeral: true,
+          flags: 1 << 6,
         });
 
         await this.processAIRequest(originalInteraction, userId, interaction);
@@ -314,7 +331,7 @@ export default {
   async processAIRequest(interaction, userId, replyTarget = interaction) {
     try {
       const prompt = interaction.options.getString('prompt');
-
+      const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
       const { apiKey, model, apiUrl } = await getUserCredentials(userId);
 
       const usingCustomApi = !!apiKey;
@@ -334,13 +351,13 @@ export default {
           const allowed = await incrementAndCheckDailyLimit(userId, 10);
           if (!allowed) {
             return await replyTarget.editReply(
-              'You have reached the daily free usage limit for the default model. Please try again tomorrow or use your own API key.'
+              await t('ai.daily_limit', "❌ You've reached your daily limit of AI requests")
             );
           }
         }
       } else if (!finalApiKey) {
         return await replyTarget.editReply(
-          'No API key found. Please provide your own API key using the custom API option or ensure the default API key is configured.'
+          await t('ai.no_api_key', '❌ Please set up your API key first')
         );
       }
 
@@ -399,23 +416,24 @@ export default {
           } else {
             errorMessage = `HTTP ${response.status} - ${response.statusText}`;
           }
-
+          pendingRequests.delete(userId);
           return await replyTarget.editReply(
-            `There was an error getting a response from the AI (${response.status}): ${errorMessage}. Please check your API key and try again.`
+            await t('ai.error_processing', `❌ Error processing your request: ${errorMessage}`)
           );
         } catch (e) {
+          pendingRequests.delete(userId);
           return await replyTarget.editReply(
-            `There was an error processing the AI response (HTTP ${response.status}). Please try again later.`
+            await t('ai.error_processing', `❌ Error processing your request`)
           );
         }
       }
-
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (e) {
+        pendingRequests.delete(userId);
         return await replyTarget.editReply(
-          'Received an invalid response from the AI service. Please try again.'
+          await t('ai.error_processing', '❌ Failed to process AI response')
         );
       }
       let aiResponse;
@@ -424,7 +442,7 @@ export default {
       } else if (data.choices && data.choices[0]?.text) {
         aiResponse = data.choices[0].text;
       } else {
-        aiResponse = 'No response generated.';
+        aiResponse = await t('ai.no_response', '❌ No response from AI');
       }
 
       conversation.push({ role: 'assistant', content: aiResponse });
@@ -462,29 +480,36 @@ export default {
       try {
         const processedFirstChunk = processUrls(chunks[0]);
         await replyTarget.editReply(processedFirstChunk);
-
         for (let i = 1; i < chunks.length; i++) {
           const processedChunk = processUrls(chunks[i]);
           await interaction.followUp({
             content: processedChunk,
-            allowedMentions: { repliedUser: false },
+            flags: 1 << 6,
           });
         }
       } catch (error) {
         try {
-          await replyTarget.editReply(`${chunks[0]}\n\n*[Message truncated due to length]*`);
+          await replyTarget.editReply(
+            `${chunks[0]}\n\n*${await t('ai.message_too_long', '❌ Message is too long')}*`
+          );
         } catch (e) {
           // Swallow error
         }
       }
     } catch (error) {
       try {
+        const t = (key, ...args) => i18n(key, { userId: interaction.user?.id, default: args[0] });
         await replyTarget.editReply(
-          'An error occurred while processing your request. Please try again later.'
+          await t(
+            'ai.error',
+            'An error occurred while processing your request. Please try again later.'
+          )
         );
       } catch (e) {
         // Swallow error
       }
+    } finally {
+      pendingRequests.delete(userId);
     }
   },
 };

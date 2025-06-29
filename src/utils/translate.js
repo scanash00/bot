@@ -27,14 +27,25 @@ const translations = {
 const localesPath = path.join(__dirname, '../../weblate/locales');
 
 function loadTranslations(lang) {
-  const filePath = path.join(localesPath, lang, 'LC_MESSAGES/messages.po');
+  const moPath = path.join(localesPath, lang, 'LC_MESSAGES/messages.mo');
+  const poPath = path.join(localesPath, lang, 'LC_MESSAGES/messages.po');
 
-  if (fs.existsSync(filePath)) {
-    const poContent = fs.readFileSync(filePath, 'utf8');
+  const flatTranslations = {};
+  if (fs.existsSync(moPath)) {
+    const moContent = fs.readFileSync(moPath);
+    const mo = gettextParser.mo.parse(moContent);
+    for (const [, items] of Object.entries(mo.translations)) {
+      for (const [key, value] of Object.entries(items)) {
+        if (key === '') continue;
+        const translation = value.msgstr[0] || key;
+        flatTranslations[key] = translation;
+      }
+    }
+    translations[lang] = flatTranslations;
+    return true;
+  } else if (fs.existsSync(poPath)) {
+    const poContent = fs.readFileSync(poPath, 'utf8');
     const po = gettextParser.po.parse(poContent, 'utf8');
-
-    const flatTranslations = {};
-
     for (const [, items] of Object.entries(po.translations)) {
       for (const [key, value] of Object.entries(items)) {
         if (key === '') continue;
@@ -42,9 +53,7 @@ function loadTranslations(lang) {
         flatTranslations[key] = translation;
       }
     }
-
     translations[lang] = flatTranslations;
-
     return true;
   } else {
     return false;

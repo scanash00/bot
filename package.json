@@ -13,7 +13,8 @@
     "lint:format": "eslint . --config eslint.config.cjs --format=codeframe",
     "format": "prettier --write \"**/*.{js,json,md}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .prettierignore",
-    "check": "pnpm run lint && pnpm run format:check"
+    "check": "pnpm run lint && pnpm run format:check",
+    "compile:mo": "node scripts/compile-pos.js"
   },
   "dependencies": {
     "@discordjs/rest": "^2.5.1",

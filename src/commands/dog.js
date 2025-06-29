@@ -8,6 +8,7 @@ import {
 import fetch from 'node-fetch';
 import { sanitizeInput } from '../utils/validation.js';
 import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -45,37 +46,30 @@ async function fetchDogImage() {
   throw new Error('No valid image URL found in response');
 }
 
-function createDogEmbed(data, locale = 'en') {
-  const title = data.title
-    ? sanitizeInput(data.title).slice(0, 245) + '...'
-    : locale.startsWith('es')
-      ? 'Perro Aleatorio'
-      : 'Random Dog';
+export async function createDogEmbedAsync(dogData, t, _locale) {
+  const title = dogData.title
+    ? sanitizeInput(dogData.title).slice(0, 245) + '...'
+    : await t('Random Dog', { default: 'Random Dog' });
 
-  const embed = new EmbedBuilder()
-    .setColor(0x8a2be2)
-    .setTitle(title)
-    .setImage(data.url)
-    .setFooter({
-      text: locale.startsWith('es') ? 'impulsado por erm.dog' : 'powered by erm.dog',
-    });
+  const embed = new EmbedBuilder().setColor(0x8a2be2).setTitle(title).setImage(dogData.url);
 
-  if (data.subreddit) {
-    const fromText = locale.startsWith('es') ? 'De r/' : 'From r/';
-    embed.setDescription(`${fromText}${sanitizeInput(data.subreddit)}`);
+  let footerText = await t('powered by erm.dog', { default: 'powered by erm.dog' });
+  if (typeof footerText !== 'string') {
+    footerText = 'powered by erm.dog';
+  }
+  embed.setFooter({ text: footerText });
+
+  if (dogData.subreddit) {
+    let fromText = await t('From r/%s', { default: 'From r/%s' });
+    if (typeof fromText !== 'string') fromText = 'From r/%s';
+    if (fromText.includes('%s')) {
+      embed.setDescription(fromText.replace('%s', sanitizeInput(dogData.subreddit)));
+    } else {
+      embed.setDescription(`${fromText}${sanitizeInput(dogData.subreddit)}`);
+    }
   }
 
   return embed;
-}
-
-function createButtonRow(locale = 'en') {
-  const refreshButton = new ButtonBuilder()
-    .setCustomId('refresh_dog')
-    .setLabel(locale.startsWith('es') ? 'Nuevo Perro' : 'New Dog')
-    .setStyle(ButtonStyle.Secondary)
-    .setEmoji('🐶');
-
-  return new ActionRowBuilder().addComponents(refreshButton);
 }
 
 export default {
@@ -99,9 +93,16 @@ export default {
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
+        const waitMessage = await interaction.t(
+          'Please wait %d second(s) before using this command again.',
+          {
+            default: `Please wait ${timeLeft} second(s) before using this command again.`,
+            replace: { d: timeLeft },
+          }
+        );
         return interaction.reply({
-          content: `Please wait ${timeLeft} second(s) before using this command again.`,
-          ephemeral: true,
+          content: waitMessage,
+          flags: 1 << 6,
         });
       }
 
@@ -109,35 +110,56 @@ export default {
       setTimeout(() => cooldowns.delete(cooldownKey), COOLDOWN_TIME);
 
       await interaction.deferReply();
-
       try {
         logger.info(`Dog command used by ${interaction.user.tag}`);
-
         const dogData = await fetchDogImage();
-        const embed = createDogEmbed(dogData, interaction.locale);
-        const row = createButtonRow(interaction.locale);
-
+        if (!dogData || !dogData.url) {
+          throw new Error('No image URL found in response');
+        }
+        const embed = await createDogEmbedAsync(
+          dogData,
+          async (...args) => await interaction.t(...args)
+        );
+        const refreshLabel = await interaction.t('New Dog', { default: 'New Dog' });
+        const refreshButton = new ButtonBuilder()
+          .setCustomId('refresh_dog')
+          .setLabel(refreshLabel)
+          .setStyle(ButtonStyle.Secondary)
+          .setEmoji('🐶');
+        const row = new ActionRowBuilder().addComponents(refreshButton);
         await interaction.editReply({
           embeds: [embed],
           components: [row],
         });
       } catch (error) {
         logger.error('Error fetching dog image:', error);
+        const errorMsg = await i18n(
+          'Sorry, I had trouble fetching a dog image. Please try again later!',
+          {
+            locale: interaction.locale || 'en',
+            default: 'Sorry, I had trouble fetching a dog image. Please try again later!',
+          }
+        );
         await interaction.editReply({
-          content: 'Sorry, I had trouble fetching a dog image. Please try again later!',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     } catch (error) {
       logger.error('Unexpected error in dog command:', error);
+      const errorMsg = await i18n('An unexpected error occurred. Please try again later.', {
+        locale: interaction.locale || 'en',
+        default: 'An unexpected error occurred. Please try again later.',
+      });
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({
-          content: 'An unexpected error occurred. Please try again later.',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       } else if (interaction.deferred) {
         await interaction.editReply({
-          content: 'An unexpected error occurred. Please try again later.',
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     }

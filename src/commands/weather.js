@@ -44,6 +44,7 @@ async function fetchWeatherData(location, units = 'metric') {
 }
 
 async function createWeatherEmbed(data, useFahrenheit, locale = 'en') {
+  const t = async (key, opts = {}) => await i18n(key, { locale: locale || 'en', ...opts });
   const tempUnit = useFahrenheit ? '°F' : '°C';
   const windUnit = useFahrenheit ? 'mph' : 'km/h';
   const windSpeed = useFahrenheit ? Math.round(data.wind.speed) : Math.round(data.wind.speed * 3.6);
@@ -54,76 +55,54 @@ async function createWeatherEmbed(data, useFahrenheit, locale = 'en') {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
-  const isEnglish = !locale || locale.startsWith('en');
+  const now = new Date();
+  // eslint-disable-next-line no-unused-vars
+  const nowUnix = Date.now();
+  // eslint-disable-next-line no-unused-vars
+  const formattedDateDiscord = '';
+  const formattedDateString = now.toLocaleString(locale || 'en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
-  let tempText, feelsLikeText, weatherText, humidityText, windText, pressureText, title, footer;
+  const [
+    tempText,
+    feelsLikeText,
+    weatherText,
+    humidityText,
+    windText,
+    pressureText,
+    title,
+    footer,
+  ] = await Promise.all([
+    t('Temperature', { default: 'Temperature' }),
+    t('Feels Like', { default: 'Feels Like' }),
+    t('Weather', { default: 'Weather' }),
+    t('Humidity', { default: 'Humidity' }),
+    t('Wind Speed', { default: 'Wind Speed' }),
+    t('Pressure', { default: 'Pressure' }),
+    t('Weather Information', {
+      default: `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`,
+    }),
+    t('Weather data provided by OpenWeatherMap', {
+      default: 'Weather data provided by OpenWeatherMap',
+    }),
+  ]);
 
-  if (isEnglish) {
-    tempText = 'Temperature';
-    feelsLikeText = 'Feels Like';
-    weatherText = 'Weather';
-    humidityText = 'Humidity';
-    windText = 'Wind Speed';
-    pressureText = 'Pressure';
-    title = `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`;
-    const dateFormatter = new Intl.DateTimeFormat(locale || 'en', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const formattedDate = dateFormatter.format(new Date());
-    footer = `Data from OpenWeather • ${formattedDate}`;
-  } else {
-    [tempText, feelsLikeText, weatherText, humidityText, windText, pressureText] =
-      await Promise.all([
-        i18n('weather.fields.temperature', { userId: 'system', locale }, 'Temperature'),
-        i18n('weather.fields.feels_like', { userId: 'system', locale }, 'Feels Like'),
-        i18n('weather.fields.weather', { userId: 'system', locale }, 'Weather'),
-        i18n('weather.fields.humidity', { userId: 'system', locale }, 'Humidity'),
-        i18n('weather.fields.wind_speed', { userId: 'system', locale }, 'Wind Speed'),
-        i18n('weather.fields.pressure', { userId: 'system', locale }, 'Pressure'),
-      ]);
-    title = await i18n(
-      'weather.embed.title',
-      {
-        userId: 'system',
-        locale,
-        replace: {
-          city: sanitizeInput(data.name),
-          country: data.sys.country,
-          emoji: weatherEmoji,
-        },
-      },
-      `Weather in ${sanitizeInput(data.name)}, ${data.sys.country} ${weatherEmoji}`
-    );
-    const dateFormatter = new Intl.DateTimeFormat(locale, {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const formattedDate = dateFormatter.format(new Date());
-    footer = await i18n(
-      'weather.embed.footer',
-      {
-        userId: 'system',
-        locale,
-        replace: {
-          date: formattedDate,
-        },
-      },
-      `Data from OpenWeather • ${formattedDate}`
-    );
-  }
+  const replacedTitle = title
+    .replace(/%city%/gi, sanitizeInput(data.name))
+    .replace(/%country%/gi, data.sys.country)
+    .replace(/%emoji%/gi, weatherEmoji)
+    .replace(/%date%/gi, formattedDateString);
 
-  return new EmbedBuilder()
-    .setColor(0x3498db)
-    .setTitle(title)
+  const replacedFooter = footer.replace(/%date%/gi, formattedDateString);
+
+  const embed = new EmbedBuilder()
+    .setColor(0x4285f4)
+    .setTitle(replacedTitle)
     .addFields(
       { name: tempText, value: `${Math.round(data.main.temp)}${tempUnit}`, inline: true },
       {
@@ -136,8 +115,10 @@ async function createWeatherEmbed(data, useFahrenheit, locale = 'en') {
       { name: windText, value: `${windSpeed} ${windUnit}`, inline: true },
       { name: pressureText, value: `${data.main.pressure} hPa`, inline: true }
     )
-    .setFooter({ text: footer })
+    .setFooter({ text: replacedFooter })
     .setTimestamp();
+
+  return embed;
 }
 
 export default {
@@ -181,18 +162,16 @@ export default {
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
         const waitMessage = await i18n(
-          'commands.weather.cooldown',
+          'Please wait %d second(s) before using this command again.',
           {
-            userId: interaction.user.id,
-            locale: interaction.locale,
-            timeLeft,
-          },
-          `Please wait ${timeLeft} second(s) before using this command again.`
+            locale: interaction.locale || 'en',
+            default: `Please wait ${timeLeft} second(s) before using this command again.`,
+            replace: { d: timeLeft },
+          }
         );
-
         return interaction.reply({
           content: waitMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -214,49 +193,66 @@ export default {
           weatherData = await fetchWeatherData(location, 'imperial');
         }
 
-        const userLocale = interaction.locale || 'en';
-        const embed = await createWeatherEmbed(weatherData, useFahrenheit, userLocale);
+        // eslint-disable-next-line no-unused-vars
+        const userLocale = '';
+        const embed = await createWeatherEmbed(weatherData, useFahrenheit, interaction.locale);
         await interaction.editReply({ embeds: [embed] });
       } catch (error) {
         logger.error('Error in weather command:', error);
 
-        let errorKey = 'errors.generic';
-        let errorVars = {};
+        // eslint-disable-next-line no-unused-vars
+        const errorKey = 'weather.error';
+        // eslint-disable-next-line no-unused-vars
+        const errorVars = {};
 
-        if (error.status === '404') {
-          errorKey = 'errors.not_found';
-        } else if (error.message.includes('API key')) {
-          errorKey = 'errors.api_key';
-        } else if (error.message) {
-          errorKey = 'errors.unknown';
-          errorVars = { error: error.message };
-        }
-
-        const errorMessage = await i18n(
-          `weather.${errorKey}`,
+        let errorMsg = await i18n(
+          'Sorry, I had trouble fetching the weather. Please try again later!',
           {
-            userId: interaction.user.id,
-            locale: interaction.locale,
-            ...errorVars,
-          },
-          'There was an error getting the weather information. Please try again later.'
+            locale: interaction.locale || 'en',
+            default: 'Sorry, I had trouble fetching the weather. Please try again later!',
+          }
         );
 
-        await interaction.editReply({
-          content: errorMessage,
-          ephemeral: true,
+        if (error.status === '404') {
+          errorMsg = await i18n('Location not found. Please check the city name and try again.', {
+            locale: interaction.locale || 'en',
+            default: 'Location not found. Please check the city name and try again.',
+          });
+        } else if (error.message.includes('API key')) {
+          errorMsg = await i18n('OpenWeather API key is missing or invalid.', {
+            locale: interaction.locale || 'en',
+            default: 'OpenWeather API key is missing or invalid.',
+          });
+        } else if (error.message) {
+          errorMsg = await i18n('An unexpected error occurred: %error%', {
+            locale: interaction.locale || 'en',
+            default: 'An unexpected error occurred: %error%',
+            replace: { error: error.message },
+          });
+        }
+
+        await interaction.reply({
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     } catch (error) {
       logger.error('Unexpected error in weather command:', error);
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({
-          content: 'An unexpected error occurred. Please try again later.',
-          ephemeral: true,
+          content: await i18n('An unexpected error occurred. Please try again later.', {
+            locale: interaction.locale || 'en',
+            default: 'An unexpected error occurred. Please try again later.',
+          }),
+          flags: 1 << 6,
         });
       } else if (interaction.deferred) {
         await interaction.editReply({
-          content: 'An unexpected error occurred. Please try again later.', // this will probably never happen, i hope
+          content: await i18n('An unexpected error occurred. Please try again later.', {
+            locale: interaction.locale || 'en',
+            default: 'An unexpected error occurred. Please try again later.',
+          }),
+          flags: 1 << 6,
         });
       }
     }

@@ -1,6 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import fetch from 'node-fetch';
 import { sanitizeInput } from '../utils/validation.js';
+import i18n from '../utils/translate.js';
 
 import logger from '../utils/logger.js';
 
@@ -77,15 +78,17 @@ export default {
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
-        const waitMessage = await interaction.t('commands.joke.cooldown', {
-          userId: interaction.user.id,
-          locale: interaction.locale,
-          timeLeft,
-          default: `Please wait ${timeLeft} second(s) before using this command again.`,
-        });
+        const waitMessage = await i18n(
+          'Please wait %d second(s) before using this command again.',
+          {
+            locale: interaction.locale || 'en',
+            default: `Please wait ${timeLeft} second(s) before using this command again.`,
+            replace: { d: timeLeft },
+          }
+        );
         return interaction.reply({
           content: waitMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -101,32 +104,34 @@ export default {
 
         const joke = await fetchJoke(jokeType);
 
-        const jokeTypeTranslated = await interaction.t(`joke.types.${joke.type}`, {
-          userId: interaction.user.id,
-          locale: interaction.locale,
-          default: joke.type.charAt(0).toUpperCase() + joke.type.slice(1),
-        });
+        const jokeTypeTranslated = await i18n(
+          joke.type.charAt(0).toUpperCase() + joke.type.slice(1),
+          {
+            locale: interaction.locale || 'en',
+            userId: interaction.user.id,
+            default: joke.type.charAt(0).toUpperCase() + joke.type.slice(1),
+          }
+        );
 
-        let jokeTitle = await interaction.t('joke.title', {
+        let jokeTitle = await i18n('Random Joke', {
+          locale: interaction.locale || 'en',
           userId: interaction.user.id,
-          locale: interaction.locale,
           type: jokeTypeTranslated,
           default: `${jokeTypeTranslated} Joke`,
         });
         if (jokeTitle && jokeTitle.includes('{type}')) {
           jokeTitle = jokeTitle.replace('{type}', jokeTypeTranslated);
         }
+        const waitingFooter = await i18n('Waiting for punchline...', {
+          locale: interaction.locale || 'en',
+          userId: interaction.user.id,
+          default: 'The punchline will appear in 3 seconds...',
+        });
         const embed = new EmbedBuilder()
           .setColor(0x3498db)
           .setTitle(jokeTitle)
           .setDescription(sanitizeInput(joke.setup))
-          .setFooter({
-            text: await interaction.t('joke.loading', {
-              userId: interaction.user.id,
-              locale: interaction.locale,
-              default: 'The punchline will appear in 3 seconds...',
-            }),
-          });
+          .setFooter({ text: waitingFooter });
 
         await interaction.editReply({ embeds: [embed] });
 
@@ -135,13 +140,12 @@ export default {
             embed.setDescription(
               `${sanitizeInput(joke.setup)}\n\n*${sanitizeInput(joke.punchline)}*`
             );
-            embed.setFooter({
-              text: await interaction.t('joke.punchline', {
-                userId: interaction.user.id,
-                locale: interaction.locale,
-                default: 'Ba dum tss! 🥁',
-              }),
+            const punchlineFooter = await i18n('Ba dum tss! 🥁', {
+              locale: interaction.locale || 'en',
+              userId: interaction.user.id,
+              default: 'Ba dum tss! 🥁',
             });
+            embed.setFooter({ text: punchlineFooter });
             await interaction.editReply({ embeds: [embed] });
           } catch (error) {
             logger.error('Error updating joke with punchline:', error);
@@ -149,21 +153,33 @@ export default {
         }, 3000);
       } catch (error) {
         logger.error('Error fetching joke:', error);
+        const errorMsg = await i18n(
+          'Sorry, I had trouble fetching a joke. Please try again later!',
+          {
+            locale: interaction.locale || 'en',
+            default: 'Sorry, I had trouble fetching a joke. Please try again later!',
+          }
+        );
         await interaction.editReply({
-          content: 'Sorry, I had trouble fetching a joke. Please try again later!',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     } catch (error) {
       logger.error('Unexpected error in joke command:', error);
+      const errorMsg = await i18n('An unexpected error occurred. Please try again later.', {
+        locale: interaction.locale || 'en',
+        default: 'An unexpected error occurred. Please try again later.',
+      });
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({
-          content: 'An unexpected error occurred. Please try again later.',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       } else if (interaction.deferred) {
         await interaction.editReply({
-          content: 'An unexpected error occurred. Please try again later.',
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     }

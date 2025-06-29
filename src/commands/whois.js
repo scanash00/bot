@@ -3,6 +3,7 @@ import whois from 'whois-json';
 import { isIP } from 'net';
 import { sanitizeInput, isValidDomain } from '../utils/validation.js';
 import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 10000;
@@ -464,7 +465,7 @@ const command = {
       const timeLeft = Math.ceil((COOLDOWN_TIME - (now - cooldown)) / 1000);
       return interaction.reply({
         content: `⏳ Please wait ${timeLeft} seconds before using this command again.`,
-        ephemeral: true,
+        flags: 1 << 6,
       });
     }
 
@@ -476,7 +477,7 @@ const command = {
     if (!isValidDomain(query) && !isIP(query)) {
       return interaction.reply({
         content: '❌ Please provide a valid domain name or IP address.',
-        ephemeral: true,
+        flags: 1 << 6,
       });
     }
 
@@ -504,8 +505,17 @@ const command = {
     } catch (error) {
       logger.error(`Error in whois command for ${sanitizedQuery}:`, error);
 
+      const errorMsg = await i18n(
+        'Sorry, I had trouble fetching WHOIS data. Please try again later!',
+        {
+          locale: interaction.locale || 'en',
+          default: 'Sorry, I had trouble fetching WHOIS data. Please try again later!',
+        }
+      );
+
       await interaction.editReply({
-        content: `❌ Error: ${error.message || 'An error occurred while fetching WHOIS data.'}`,
+        content: errorMsg,
+        flags: 1 << 6,
       });
     }
   },

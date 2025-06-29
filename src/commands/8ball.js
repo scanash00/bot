@@ -107,16 +107,16 @@ export default {
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
         const waitMessage = await i18n(
-          'Please wait {{time}} second(s) before using this command again.',
+          'Please wait %d second(s) before using this command again.',
           {
-            userId,
-            replace: { time: timeLeft },
+            locale: interaction.locale || 'en',
             default: `Please wait ${timeLeft} second(s) before using this command again.`,
+            replace: { d: timeLeft },
           }
         );
         return interaction.reply({
           content: waitMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -127,7 +127,7 @@ export default {
       if (!validation.isValid) {
         return interaction.reply({
           content: validation.message,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -141,12 +141,14 @@ export default {
 
       logger.info(`8ball used by ${interaction.user.tag}: ${question}`);
       const [title, questionLabel, answerLabel, footer] = await Promise.all([
-        await interaction.t('🎱 The Magic 8-Ball says...', {
+        await i18n('Magic 8-Ball', {
+          locale: interaction.locale || 'en',
           default: '🎱 The Magic 8-Ball says...',
         }),
-        await interaction.t('Question', { default: 'Question' }),
-        await interaction.t('Answer', { default: 'Answer' }),
-        await interaction.t('The magic 8-ball has spoken!', {
+        await i18n('Question', { locale: interaction.locale || 'en', default: 'Question' }),
+        await i18n('Answer', { locale: interaction.locale || 'en', default: 'Answer' }),
+        await i18n('Ask again for another fortune!', {
+          locale: interaction.locale || 'en',
           default: 'The magic 8-ball has spoken!',
         }),
       ]);
@@ -164,20 +166,24 @@ export default {
       await interaction.reply({ embeds: [embed] });
     } catch (error) {
       logger.error('Error in 8ball command:', error);
-      const errorMessage = await i18n('An error occurred while processing your request.', {
-        userId: interaction.user.id,
-        default: 'An error occurred while processing your request.',
-      });
+      const errorMessage = await i18n(
+        'An error occurred while processing your request. Please try again later.',
+        {
+          locale: interaction.locale || 'en',
+          userId: interaction.user.id,
+          default: 'An error occurred while processing your request. Please try again later.',
+        }
+      );
 
       if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           content: errorMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       } else {
         await interaction.reply({
           content: errorMessage,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
     }

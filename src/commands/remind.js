@@ -37,7 +37,6 @@ function createReminderHandler(client, reminder) {
         (new Date(reminder.expires_at) - new Date(reminder.created_at)) / (60 * 1000)
       );
 
-      // Get translations
       const reminderTitle = await i18n('⏰ Reminder!', {
         locale: reminder.locale || 'en',
         default: '⏰ Reminder!',
@@ -208,7 +207,7 @@ export default {
     const guildId = interaction.guildId;
 
     try {
-      await interaction.deferReply({ ephemeral: true });
+      await interaction.deferReply({ flags: 1 << 6 });
 
       const timeStr = interaction.options.getString('time');
       let message = interaction.options.getString('message');
@@ -230,7 +229,7 @@ export default {
         );
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -243,7 +242,7 @@ export default {
         );
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -257,7 +256,7 @@ export default {
         });
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -268,7 +267,7 @@ export default {
         });
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -284,7 +283,7 @@ export default {
           guild_id: guildId,
           message: message,
           expires_at: expiresAt,
-          locale: interaction.locale || 'en', // Save user's locale
+          locale: interaction.locale || 'en',
           metadata: {
             source: 'slash_command',
             command_id: interaction.commandId,
@@ -407,13 +406,13 @@ export default {
           await interaction.editReply({
             content: `❌ ${errorMessage}`,
             embeds: [errorEmbed],
-            ephemeral: true,
+            flags: 1 << 6,
           });
         } else {
           await interaction.reply({
             content: `❌ ${errorMessage}`,
             embeds: [errorEmbed],
-            ephemeral: true,
+            flags: 1 << 6,
           });
         }
       } catch (replyError) {
@@ -499,9 +498,9 @@ export default {
           .setTimestamp();
 
         if (interaction.replied || interaction.deferred) {
-          await interaction.followUp({ embeds: [errorEmbed], ephemeral: true });
+          await interaction.followUp({ embeds: [errorEmbed], flags: 1 << 6 });
         } else {
-          await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+          await interaction.reply({ embeds: [errorEmbed], flags: 1 << 6 });
         }
       } catch (replyError) {
         logger.error('Failed to send error response for context menu', { error: replyError });
@@ -516,7 +515,7 @@ export default {
       return;
     }
 
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply({ flags: 1 << 6 });
 
     try {
       const messageInfo = global._reminders.get(modalId);
@@ -525,7 +524,7 @@ export default {
         logger.warn(`No message info found for modal ID: ${modalId}`, { userId: user.id });
         return await interaction.editReply({
           content: '❌ This reminder setup has expired. Please try again.',
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -543,7 +542,7 @@ export default {
         );
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -558,7 +557,7 @@ export default {
         );
         return await interaction.editReply({
           content: errorMsg,
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -595,7 +594,7 @@ export default {
         logger.error(`Error saving reminder to database: ${error.message}`, { error });
         return await interaction.editReply({
           content: '❌ Failed to save your reminder. Please try again later.',
-          ephemeral: true,
+          flags: 1 << 6,
         });
       }
 
@@ -685,7 +684,7 @@ export default {
       try {
         await interaction.editReply({
           content: '❌ An error occurred while setting your reminder. Please try again later.',
-          ephemeral: true,
+          flags: 1 << 6,
         });
       } catch (replyError) {
         logger.error('Failed to send error response to user:', { error: replyError });
