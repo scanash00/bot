@@ -24,38 +24,38 @@ msgid "help"
 msgstr "yardım"
 
 msgid "8ball"
-msgstr "8ball"
+msgstr ""
 
 msgid "cat"
-msgstr ""
+msgstr "kedi"
 
 msgid "dog"
-msgstr ""
+msgstr "köpek"
 
 msgid "joke"
-msgstr ""
+msgstr "şaka"
 
 msgid "remind"
-msgstr ""
+msgstr "hatırlat"
 
 msgid "weather"
-msgstr ""
+msgstr "hava-durumu"
 
 msgid "whois"
-msgstr ""
+msgstr "kim"
 
 msgid "wiki"
-msgstr ""
+msgstr "wiki"
 
 msgid "ai"
-msgstr ""
+msgstr "yapay-zeka"
 
 msgid "set-language"
-msgstr ""
+msgstr "dili-seç"
 
 # Command Descriptions
 msgid "Show all available commands and their usage"
-msgstr ""
+msgstr "Kullanılabilir komutları ve kullanımlarını göster."
 
 msgid "Ask the magic 8-ball a question"
 msgstr ""
