@@ -107,101 +107,101 @@ msgid "Search term"
 msgstr "terim ara"
 
 msgid "Your question for the AI"
-msgstr "AI için soracağın sorun"
+msgstr "Yapay zekaya soracağın sorun"
 
 # Categories
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 msgid "Fun"
-msgstr ""
+msgstr "Eğlence"
 
 msgid "Utility"
-msgstr ""
+msgstr "Ekstra"
 
 msgid "Information"
-msgstr ""
+msgstr "Bilgilendirme"
 
 msgid "Moderation"
-msgstr ""
+msgstr "Moderasyon"
 
 msgid "Other"
-msgstr ""
+msgstr "Diğer"
 
 # Help Command
 msgid "Aethel Commands"
-msgstr ""
+msgstr "Aethel Komutları"
 
 msgid "Here are all the available commands:"
-msgstr ""
+msgstr "Bütün kullanılabilir komutlar burada:"
 
 msgid "No options"
-msgstr ""
+msgstr "Seçenek yok"
 
 # Joke Types
 msgid "Knock-knock"
-msgstr ""
+msgstr "Tak-tak"
 
 msgid "Programming"
-msgstr ""
+msgstr "Programlama"
 
 msgid "Dad"
-msgstr ""
+msgstr "Baba"
 
 # Magic 8-Ball Responses
 msgid "Magic 8-Ball"
-msgstr ""
+msgstr "Büyülü 8-ball"
 
 msgid "Question"
-msgstr ""
+msgstr "Soru"
 
 msgid "Answer"
-msgstr ""
+msgstr "Cevap"
 
 msgid "Ask again for another fortune!"
-msgstr ""
+msgstr "Başka bir fal için tekrar sor!"
 
 msgid "It is certain."
-msgstr ""
+msgstr "Bu kesin."
 
 msgid "It is decidedly so."
-msgstr ""
+msgstr "Kesinlikle öyle."
 
 msgid "Without a doubt."
-msgstr ""
+msgstr "Hiç şüphesiz."
 
 msgid "Yes definitely."
-msgstr ""
+msgstr "Evet, kesinlikle."
 
 msgid "You may rely on it."
-msgstr ""
+msgstr "Buna güvenebilirsiniz."
 
 msgid "As I see it, yes."
-msgstr ""
+msgstr "Gördüğüm kadarıyla, evet."
 
 msgid "Most likely."
-msgstr ""
+msgstr "Büyük ihtimalle."
 
 msgid "Outlook good."
-msgstr ""
+msgstr "Görünüm iyi."
 
 msgid "Yes."
-msgstr ""
+msgstr "Evet."
 
 msgid "Signs point to yes."
-msgstr ""
+msgstr "İşaretler evet diyor."
 
 msgid "Reply hazy, try again."
-msgstr ""
+msgstr "Cevap bulanık, tekrar deneyin."
 
 msgid "Ask again later."
-msgstr ""
+msgstr "Sonra tekrar sor."
 
 msgid "Better not tell you now."
-msgstr ""
+msgstr "Şimdi söylemesem daha iyi."
 
 msgid "Cannot predict now."
-msgstr ""
+msgstr "Cannot predict now."
 
 msgid "Concentrate and ask again."
 msgstr ""
