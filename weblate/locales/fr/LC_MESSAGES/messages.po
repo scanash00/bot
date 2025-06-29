@@ -362,7 +362,7 @@ msgstr "Article tronqué - cliquez sur le lien pour lire la suite"
 
 # Weather
 msgid "Weather Information"
-msgstr "Informations météo"
+msgstr "Météo à %city%, %country% %emoji%"
 
 msgid "Temperature"
 msgstr "Température"

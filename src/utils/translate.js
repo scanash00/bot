@@ -17,11 +17,15 @@ const LOCALE_MAPPING = {
   'es-419': 'es',
   es_419: 'es',
   es: 'es',
+  fr: 'fr',
+  'fr-FR': 'fr',
+  fr_FR: 'fr',
 };
 
 const translations = {
   en: {},
   es: {},
+  fr: {},
 };
 
 const localesPath = path.join(__dirname, '../../weblate/locales');

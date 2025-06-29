@@ -362,7 +362,7 @@ msgid "Article truncated - click link to read more"
 msgstr ""
 
 # Weather
-msgid "Weather Information"
+msgid "Weather at %city%, %country% %emoji%"
 msgstr ""
 
 msgid "Temperature"
