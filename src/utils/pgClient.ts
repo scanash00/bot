@@ -9,8 +9,4 @@ pool.on('error', () => {
   // console.error('Postgres Pool Error:', err);
 });
 
-pool.queryAsync = (text, params) => pool.query(text, params);
-
-pool.close = () => pool.end();
-
 export default pool;

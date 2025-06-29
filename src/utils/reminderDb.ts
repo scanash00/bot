@@ -1,7 +1,22 @@
 import pool from './pgClient.js';
 import logger from './logger.js';
 
-async function saveReminder(reminderData) {
+interface ReminderData {
+  reminder_id: string;
+  user_id: string;
+  user_tag: string;
+  channel_id: string;
+  guild_id: string;
+  message: string;
+  expires_at: Date;
+  metadata?: Record<string, any>;
+}
+
+interface ReminderRecord extends ReminderData {
+  // Include any additional fields returned from DB if needed
+}
+
+async function saveReminder(reminderData: ReminderData): Promise<ReminderRecord> {
   const query = `
     INSERT INTO reminders (
       reminder_id, user_id, user_tag, channel_id, guild_id, 
@@ -22,7 +37,7 @@ async function saveReminder(reminderData) {
   ];
 
   try {
-    const result = await pool.query(query, values);
+    const result = await pool.query<ReminderRecord>(query, values);
     return result.rows[0];
   } catch (error) {
     logger.error('Error saving reminder to database:', error);
@@ -30,7 +45,7 @@ async function saveReminder(reminderData) {
   }
 }
 
-async function completeReminder(reminderId) {
+async function completeReminder(reminderId: string) {
   const query = `
     UPDATE reminders
     SET is_completed = TRUE, completed_at = CURRENT_TIMESTAMP
@@ -64,7 +79,7 @@ async function getActiveReminders() {
   }
 }
 
-async function getReminder(reminderId) {
+async function getReminder(reminderId: string) {
   const query = 'SELECT * FROM reminders WHERE reminder_id = $1';
 
   try {
@@ -76,7 +91,7 @@ async function getReminder(reminderId) {
   }
 }
 
-async function getUserReminders(userId) {
+async function getUserReminders(userId: string) {
   const query = `
     SELECT * FROM reminders
     WHERE user_id = $1
