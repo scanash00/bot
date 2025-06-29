@@ -24,7 +24,7 @@ msgid "help"
 msgstr "yardım"
 
 msgid "8ball"
-msgstr ""
+msgstr "8ball"
 
 msgid "cat"
 msgstr "kedi"
@@ -406,25 +406,25 @@ msgid "Random Cat"
 msgstr "Rastgele kedi"
 
 msgid "From r/%s"
-msgstr "r/%s'den"
+msgstr "r/%s gelen"
 
 msgid "powered by pur.cat"
-msgstr ""
+msgstr "pur.cat tarafından desteklenmektedir"
 
 #. Button label for refreshing the cat image
 msgid "New Cat"
-msgstr ""
+msgstr "Yeni Kedi"
 
 # Dog Command
 msgid "Random Dog"
-msgstr ""
+msgstr "Rastgele Köpek"
 
 msgid "powered by erm.dog"
-msgstr ""
+msgstr "erm.dog tarafından desteklenmektedir"
 
 # Joke Command
 msgid "Random Joke"
-msgstr ""
+msgstr "Rastgele Şaka"
 
 msgid "Punchline"
-msgstr ""
+msgstr "Şakanın can alıcı yeri"
