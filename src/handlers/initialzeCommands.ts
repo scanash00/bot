@@ -7,6 +7,7 @@ import { readdirSync } from 'fs';
 import path from 'path';
 
 export default async (c: BotClient) => {
+  console.log("processing commands");
   const commandsPath = path.join(process.cwd(), 'src', 'command');
   const commandFiles = readdirSync(commandsPath).filter(f => f.endsWith('.js') || f.endsWith('.ts'));
   const commands: SlashCommandBuilder[] = [];

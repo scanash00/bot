@@ -1,0 +1,35 @@
+{
+    "cooldown": "Please wait {cooldown} second(s) before using this command again.",
+    "failedrequest": "An error occurred while processing your request. Please try again later.",
+    "commands": {
+        "8ball": {
+            "says":"The Magic 8-Ball says...",
+            "question":"Question",
+            "answer":"Answer",
+            "anotherfortune":"Ask again for another fortune!",
+            "spoken":"The magic 8-ball has spoken!",
+            "responces": {
+                "itiscertain": "It is certain",
+                "itisdecidedlyso": "It is decidedly so",
+                "withoutadoubt": "Without a doubt",
+                "yesdefinitely": "Yes definitely",
+                "youmayrelyonit": "You may rely on it",
+                "asiseeityes": "As I see it, yes",
+                "mostlikely": "Most likely",
+                "outlookgood": "Outlook good",
+                "yes": "Yes",
+                "signspointtoyes": "Signs point to yes",
+                "replyhazytryagain": "Reply hazy, try again",
+                "askagainlater": "Ask again later",
+                "betternottellyounow": "Better not tell you now",
+                "cannotpredictnow": "Cannot predict now",
+                "concentrateandaskagain": "Concentrate and ask again",
+                "dontcountonit": "Don't count on it",
+                "myreplyisno": "My reply is no",
+                "mysourcessayno": "My sources say no",
+                "outlooknotsogood": "Outlook not so good",
+                "verydoubtful": "Very doubtful"
+            }
+        }
+    }
+}
