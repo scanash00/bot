@@ -75,7 +75,7 @@ export default {
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
         const waitMessage = await client.getLocaleText("cooldown", interaction.locale, {
-          d: timeLeft
+          cooldown: timeLeft
         });
         return interaction.reply({
           content: waitMessage,
