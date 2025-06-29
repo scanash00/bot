@@ -8,48 +8,50 @@ msgstr ""
 "Project-Id-Version: Aethel 1.10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-27 16:54:08-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-06-29 07:47+0000\n"
+"Last-Translator: Scan <scan@scanash.com>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/aethel/aethel/"
+"pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 # Command Names
 msgid "help"
-msgstr ""
+msgstr "help"
 
 msgid "8ball"
-msgstr ""
+msgstr "8ball"
 
 msgid "cat"
-msgstr ""
+msgstr "cat"
 
 msgid "dog"
-msgstr ""
+msgstr "dog"
 
 msgid "joke"
-msgstr ""
+msgstr "joke"
 
 msgid "remind"
-msgstr ""
+msgstr "remind"
 
 msgid "weather"
-msgstr ""
+msgstr "weather"
 
 msgid "whois"
-msgstr ""
+msgstr "whois"
 
 msgid "wiki"
-msgstr ""
+msgstr "wiki"
 
 msgid "ai"
-msgstr ""
+msgstr "ai"
 
 msgid "set-language"
-msgstr ""
+msgstr "set-language"
 
 # Command Descriptions
 msgid "Show all available commands and their usage"
