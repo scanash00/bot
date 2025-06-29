@@ -61,13 +61,13 @@ msgid "Ask the magic 8-ball a question"
 msgstr "8ball'a bir soru sor"
 
 msgid "Get a random cat picture"
-msgstr "Rastgele bir kedi resmi al"
+msgstr "Rastgele bir kedi resmi bul"
 
 msgid "Get a random dog picture"
-msgstr "Rastgele bir köpek resmi al"
+msgstr "Rastgele bir köpek resmi bul"
 
 msgid "Get a random joke!"
-msgstr ""
+msgstr "Rastgele bir şaka bul"
 
 msgid "Set a reminder"
 msgstr ""
