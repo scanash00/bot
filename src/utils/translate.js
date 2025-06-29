@@ -20,12 +20,20 @@ const LOCALE_MAPPING = {
   fr: 'fr',
   'fr-FR': 'fr',
   fr_FR: 'fr',
-  'ja': 'jp_JP',
+  ja: 'jp_JP',
   'ja-JP': 'jp_JP',
   ja_JP: 'jp_JP',
-  'jp': 'jp_JP',
+  jp: 'jp_JP',
   'jp-JP': 'jp_JP',
   jp_JP: 'jp_JP',
+  pt: 'pt',
+  'pt-PT': 'pt',
+  pt_PT: 'pt',
+  'pt-BR': 'pt',
+  pt_BR: 'pt',
+  de: 'de',
+  'de-DE': 'de',
+  de_DE: 'de',
 };
 
 const translations = {
@@ -33,6 +41,8 @@ const translations = {
   es: {},
   fr: {},
   jp_JP: {},
+  pt: {},
+  de: {},
 };
 
 const localesPath = path.join(__dirname, '../../weblate/locales');

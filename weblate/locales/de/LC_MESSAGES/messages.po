@@ -19,396 +19,396 @@ msgstr ""
 
 # Command Names
 msgid "help"
-msgstr ""
+msgstr "help"
 
 msgid "8ball"
-msgstr ""
+msgstr "8ball"
 
 msgid "cat"
-msgstr ""
+msgstr "cat"
 
 msgid "dog"
-msgstr ""
+msgstr "dog"
 
 msgid "joke"
-msgstr ""
+msgstr "joke"
 
 msgid "remind"
-msgstr ""
+msgstr "remind"
 
 msgid "weather"
-msgstr ""
+msgstr "weather"
 
 msgid "whois"
-msgstr ""
+msgstr "whois"
 
 msgid "wiki"
-msgstr ""
+msgstr "wiki"
 
 msgid "ai"
-msgstr ""
+msgstr "ai"
 
 msgid "set-language"
-msgstr ""
+msgstr "sprache-einstellen"
 
 # Command Descriptions
 msgid "Show all available commands and their usage"
-msgstr ""
+msgstr "Zeige alle verfügbaren Befehle und deren Verwendung"
 
 msgid "Ask the magic 8-ball a question"
-msgstr ""
+msgstr "Stelle der magischen 8-Ball eine Frage"
 
 msgid "Get a random cat picture"
-msgstr ""
+msgstr "Hole ein zufälliges Katzenbild"
 
 msgid "Get a random dog picture"
-msgstr ""
+msgstr "Hole ein zufälliges Hundebild"
 
 msgid "Get a random joke!"
-msgstr ""
+msgstr "Hole einen zufälligen Witz!"
 
 msgid "Set a reminder"
-msgstr ""
+msgstr "Lege eine Erinnerung fest"
 
 msgid "Get weather information"
-msgstr ""
+msgstr "Hole Wetterinformationen"
 
 msgid "Get information about a user"
-msgstr ""
+msgstr "Hole Informationen über einen Benutzer"
 
 msgid "Search Wikipedia"
-msgstr ""
+msgstr "Durchsuche Wikipedia"
 
 msgid "Ask the AI a question"
-msgstr ""
+msgstr "Stelle der KI eine Frage"
 
 msgid "Change your language settings"
-msgstr ""
+msgstr "Ändere deine Spracheinstellungen"
 
 # Command Parameters
 msgid "The question you want to ask the 8-ball"
-msgstr ""
+msgstr "Die Frage, die du der 8-Ball stellen möchtest"
 
 msgid "The type of joke you want"
-msgstr ""
+msgstr "Die Art des Witzes, den du möchtest"
 
 msgid "When to remind (e.g., 'in 2 hours' or 'tomorrow at 3pm')"
-msgstr ""
+msgstr "Wann erinnern (z. B. „in 2 Stunden“ oder „morgen um 15 Uhr“) "
 
 msgid "What to remind you about"
-msgstr ""
+msgstr "Woran soll ich dich erinnern"
 
 msgid "The user to get information about"
-msgstr ""
+msgstr "Der Benutzer, über den du Informationen möchtest"
 
 msgid "Search term"
-msgstr ""
+msgstr "Suchbegriff"
 
 msgid "Your question for the AI"
-msgstr ""
+msgstr "Deine Frage an die KI"
 
 # Categories
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 msgid "Fun"
-msgstr ""
+msgstr "Spaß"
 
 msgid "Utility"
-msgstr ""
+msgstr "Werkzeuge"
 
 msgid "Information"
-msgstr ""
+msgstr "Informationen"
 
 msgid "Moderation"
-msgstr ""
+msgstr "Moderation"
 
 msgid "Other"
-msgstr ""
+msgstr "Sonstiges"
 
 # Help Command
 msgid "Aethel Commands"
-msgstr ""
+msgstr "Aethel-Befehle"
 
 msgid "Here are all the available commands:"
-msgstr ""
+msgstr "Hier sind alle verfügbaren Befehle:"
 
 msgid "No options"
-msgstr ""
+msgstr "Keine Optionen"
 
 # Joke Types
 msgid "Knock-knock"
-msgstr ""
+msgstr "Klopf-klopf"
 
 msgid "Programming"
-msgstr ""
+msgstr "Programmierung"
 
 msgid "Dad"
-msgstr ""
+msgstr "Papa"
 
 # Magic 8-Ball Responses
 msgid "Magic 8-Ball"
-msgstr ""
+msgstr "Magische 8-Ball"
 
 msgid "Question"
-msgstr ""
+msgstr "Frage"
 
 msgid "Answer"
-msgstr ""
+msgstr "Antwort"
 
 msgid "Ask again for another fortune!"
-msgstr ""
+msgstr "Frag noch einmal für ein anderes Orakel!"
 
 msgid "It is certain."
-msgstr ""
+msgstr "Es ist sicher."
 
 msgid "It is decidedly so."
-msgstr ""
+msgstr "Ganz entschieden ja."
 
 msgid "Without a doubt."
-msgstr ""
+msgstr "Ohne Zweifel."
 
 msgid "Yes definitely."
-msgstr ""
+msgstr "Ja, definitiv."
 
 msgid "You may rely on it."
-msgstr ""
+msgstr "Darauf kannst du dich verlassen."
 
 msgid "As I see it, yes."
-msgstr ""
+msgstr "So wie ich es sehe: ja."
 
 msgid "Most likely."
-msgstr ""
+msgstr "Höchstwahrscheinlich."
 
 msgid "Outlook good."
-msgstr ""
+msgstr "Aussichten gut."
 
 msgid "Yes."
-msgstr ""
+msgstr "Ja."
 
 msgid "Signs point to yes."
-msgstr ""
+msgstr "Alles deutet auf Ja."
 
 msgid "Reply hazy, try again."
-msgstr ""
+msgstr "Antwort unklar, versuch es erneut."
 
 msgid "Ask again later."
-msgstr ""
+msgstr "Frag später noch einmal."
 
 msgid "Better not tell you now."
-msgstr ""
+msgstr "Besser, ich sage es dir jetzt nicht."
 
 msgid "Cannot predict now."
-msgstr ""
+msgstr "Kann ich gerade nicht vorhersagen."
 
 msgid "Concentrate and ask again."
-msgstr ""
+msgstr "Konzentriere dich und frag noch einmal."
 
 msgid "Don't count on it."
-msgstr ""
+msgstr "Verlass dich nicht darauf."
 
 msgid "My reply is no."
-msgstr ""
+msgstr "Meine Antwort ist nein."
 
 msgid "My sources say no."
-msgstr ""
+msgstr "Meine Quellen sagen nein."
 
 msgid "Outlook not so good."
-msgstr ""
+msgstr "Aussichten nicht so gut."
 
 msgid "Very doubtful."
-msgstr ""
+msgstr "Sehr zweifelhaft."
 
 # AI Command Messages
 msgid "You already have a request in progress. Please wait for it to complete."
-msgstr ""
+msgstr "Du hast bereits eine Anfrage in Bearbeitung. Bitte warte, bis sie abgeschlossen ist."
 
 msgid "🤔 Thinking..."
-msgstr ""
+msgstr "🤔 Denke nach..."
 
 msgid "An error occurred while processing your request. Please try again later."
-msgstr ""
+msgstr "Beim Verarbeiten deiner Anfrage ist ein Fehler aufgetreten. Bitte versuche es später noch einmal."
 
 msgid "🧹 Your AI chat history has been reset."
-msgstr ""
+msgstr "🧹 Dein KI-Chatverlauf wurde zurückgesetzt."
 
 msgid "✅ Switched to default API. Your custom API key has been cleared and the default model will be used."
-msgstr ""
+msgstr "✅ Auf die Standard-API gewechselt. Dein benutzerdefinierter API-Schlüssel wurde entfernt und das Standardmodell wird verwendet."
 
 msgid "No pending request found. Please try the command again."
-msgstr ""
+msgstr "Keine ausstehende Anfrage gefunden. Bitte führe den Befehl erneut aus."
 
 msgid "✅ API credentials saved. You can now use the `/ai` command without re-entering your credentials. To stop using your key, do `/ai use_custom_api false`"
-msgstr ""
+msgstr "✅ API-Zugangsdaten gespeichert. Du kannst jetzt den Befehl `/ki` verwenden, ohne deine Zugangsdaten erneut einzugeben. Um deinen Schlüssel nicht mehr zu verwenden, nutze `/ki use_custom_api false`"
 
 msgid "❌ You've reached your daily limit of AI requests"
-msgstr ""
+msgstr "❌ Du hast dein tägliches Limit an KI-Anfragen erreicht"
 
 msgid "❌ Error processing your request"
-msgstr ""
+msgstr "❌ Fehler beim Verarbeiten deiner Anfrage"
 
 msgid "❌ Please set up your API key first"
-msgstr ""
+msgstr "❌ Bitte richte zuerst deinen API-Schlüssel ein"
 
 msgid "❌ API key removed successfully"
-msgstr ""
+msgstr "❌ API-Schlüssel erfolgreich entfernt"
 
 msgid "❌ Failed to remove API key"
-msgstr ""
+msgstr "❌ Entfernen des API-Schlüssels fehlgeschlagen"
 
 msgid "❌ Invalid API key format"
-msgstr ""
+msgstr "❌ Ungültiges API-Schlüssel-Format"
 
 msgid "❌ Failed to set API key"
-msgstr ""
+msgstr "❌ API-Schlüssel konnte nicht gesetzt werden"
 
 msgid "❌ Failed to process AI response"
-msgstr ""
+msgstr "❌ Antwort der KI konnte nicht verarbeitet werden"
 
 msgid "❌ Message is too long"
-msgstr ""
+msgstr "❌ Nachricht ist zu lang"
 
 msgid "❌ No response from AI"
-msgstr ""
+msgstr "❌ Keine Antwort von der KI"
 
 # Reminder Messages
 msgid "Remind Me"
-msgstr ""
+msgstr "Erinnere mich"
 
 msgid "⏰ Set Reminder"
-msgstr ""
+msgstr "⏰ Erinnerung festlegen"
 
 msgid "⏰ Reminder!"
-msgstr ""
+msgstr "⏰ Erinnerung!"
 
 msgid "⏰ Reminder Set!"
-msgstr ""
+msgstr "⏰ Erinnerung festgelegt!"
 
 msgid "❌ Invalid time format! Use combinations like: 1h30m, 45m, or 2h"
-msgstr ""
+msgstr "❌ Ungültiges Zeitformat! Verwende Kombinationen wie: 1h30m, 45m oder 2h"
 
 msgid "❌ Please provide a valid message (1-1000 characters)"
-msgstr ""
+msgstr "❌ Bitte gib eine gültige Nachricht ein (1–1000 Zeichen)"
 
 msgid "❌ Reminder time must be at least 1 minute!"
-msgstr ""
+msgstr "❌ Erinnerungszeit muss mindestens 1 Minute betragen!"
 
 msgid "❌ Reminder time cannot be longer than 24 hours!"
-msgstr ""
+msgstr "❌ Erinnerungszeit darf 24 Stunden nicht überschreiten!"
 
 msgid "✅ Reminder set! I'll remind you in %time% about: %message%"
-msgstr ""
+msgstr "✅ Erinnerung festgelegt! Ich erinnere dich in %time% an: %message%"
 
 msgid "❌ An error occurred while setting your reminder. Please try again later."
-msgstr ""
+msgstr "❌ Beim Festlegen deiner Erinnerung ist ein Fehler aufgetreten. Bitte versuche es später erneut."
 
 msgid "I'll remind you about:\n\n*%message%*"
-msgstr ""
+msgstr "Ich werde dich daran erinnern:\n\n*%message%*"
 
 msgid "You asked me to remind you about:\n\n*%message%*"
-msgstr ""
+msgstr "Du hast mich gebeten, dich daran zu erinnern:\n\n*%message%*"
 
 msgid "⏱️ Time"
-msgstr ""
+msgstr "⏱️ Zeit"
 
 msgid "⏱️ Time elapsed"
-msgstr ""
+msgstr "⏱️ Vergangene Zeit"
 
 msgid "📅 Original time"
-msgstr ""
+msgstr "📅 Ursprüngliche Zeit"
 
 msgid "🔗 Original Message"
-msgstr ""
+msgstr "🔗 Ursprüngliche Nachricht"
 
 msgid "🔗 Message Link"
-msgstr ""
+msgstr "🔗 Nachrichtenlink"
 
 msgid "🕒 Will trigger"
-msgstr ""
+msgstr "🕒 Wird ausgelöst"
 
 msgid "Jump to message"
-msgstr ""
+msgstr "Zur Nachricht springen"
 
 msgid "When to remind you? (e.g., 10m, 1h, 2h30m)"
-msgstr ""
+msgstr "Wann soll ich dich erinnern? (z. B. 10m, 1h, 2h30m)"
 
 msgid "10m, 1h, or 2h30m"
-msgstr ""
+msgstr "10m, 1h oder 2h30m"
 
 msgid "What should I remind you about?"
-msgstr ""
+msgstr "Woran soll ich dich erinnern?"
 
 msgid "Type your reminder message here..."
-msgstr ""
+msgstr "Schreibe deine Erinnerungsnachricht hier..."
 
 msgid "You will be reminded about this message."
-msgstr ""
+msgstr "Du wirst an diese Nachricht erinnert."
 
 msgid "Please wait %d second(s) before using this command again."
-msgstr ""
+msgstr "Bitte warte %d Sekunde(n), bevor du diesen Befehl erneut verwendest."
 
 # Wikipedia
 msgid "Wikipedia Article"
-msgstr ""
+msgstr "Wikipedia-Artikel"
 
 msgid "Read more on Wikipedia"
-msgstr ""
+msgstr "Mehr auf Wikipedia lesen"
 
 msgid "No summary available"
-msgstr ""
+msgstr "Keine Zusammenfassung verfügbar"
 
 msgid "Article truncated - click link to read more"
-msgstr ""
+msgstr "Artikel gekürzt – klicke auf den Link, um mehr zu lesen"
 
 # Weather
 msgid "Weather at %city%, %country% %emoji%"
-msgstr ""
+msgstr "Wetter in %city%, %country% %emoji%"
 
 msgid "Temperature"
-msgstr ""
+msgstr "Temperatur"
 
 msgid "Feels Like"
-msgstr ""
+msgstr "Gefühlte Temperatur"
 
 msgid "Weather"
-msgstr ""
+msgstr "Wetter"
 
 msgid "Humidity"
-msgstr ""
+msgstr "Luftfeuchtigkeit"
 
 msgid "Wind Speed"
-msgstr ""
+msgstr "Windgeschwindigkeit"
 
 msgid "Pressure"
-msgstr ""
+msgstr "Luftdruck"
 
 msgid "Weather data provided by OpenWeatherMap"
-msgstr ""
+msgstr "Wetterdaten bereitgestellt von OpenWeatherMap"
 
 # Cat Command
 msgid "Random Cat"
-msgstr ""
+msgstr "Zufällige Katze"
 
 msgid "From r/%s"
-msgstr ""
+msgstr "Von r/%s"
 
 msgid "powered by pur.cat"
-msgstr ""
+msgstr "powered by pur.cat"
 
 #. Button label for refreshing the cat image
 msgid "New Cat"
-msgstr ""
+msgstr "Neue Katze"
 
 # Dog Command
 msgid "Random Dog"
-msgstr ""
+msgstr "Zufälliger Hund"
 
 msgid "powered by erm.dog"
-msgstr ""
+msgstr "powered by erm.dog"
 
 # Joke Command
 msgid "Random Joke"
-msgstr ""
+msgstr "Zufälliger Witz"
 
 msgid "Punchline"
-msgstr ""
+msgstr "Pointe"
