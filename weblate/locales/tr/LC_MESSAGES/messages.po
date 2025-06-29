@@ -67,41 +67,41 @@ msgid "Get a random dog picture"
 msgstr "Rastgele bir köpek resmi bul"
 
 msgid "Get a random joke!"
-msgstr "Rastgele bir şaka bul"
+msgstr "Rastgele bir şaka bul!"
 
 msgid "Set a reminder"
-msgstr ""
+msgstr "Hatırlatıcı ayarla"
 
 msgid "Get weather information"
-msgstr ""
+msgstr "Hava durumu bilgisi al"
 
 msgid "Get information about a user"
-msgstr ""
+msgstr "Bir kullanıcı hakkında bilgi al"
 
 msgid "Search Wikipedia"
-msgstr ""
+msgstr "Wikipedia'yı ara"
 
 msgid "Ask the AI a question"
-msgstr ""
+msgstr "Yapay zekaya soru sor"
 
 msgid "Change your language settings"
-msgstr ""
+msgstr "Dil ayarlarını değiştir"
 
 # Command Parameters
 msgid "The question you want to ask the 8-ball"
-msgstr ""
+msgstr "8ball'a sormak istediğin soru"
 
 msgid "The type of joke you want"
-msgstr ""
+msgstr "İstediğin şaka türü"
 
 msgid "When to remind (e.g., 'in 2 hours' or 'tomorrow at 3pm')"
-msgstr ""
+msgstr "Ne zaman hatırlatsın? (mesela 'in 2 hours' veya 'tomorrow at 3pm')"
 
 msgid "What to remind you about"
-msgstr ""
+msgstr "Hatırlatılacak şey nedir"
 
 msgid "The user to get information about"
-msgstr ""
+msgstr "Kullanıcının alacağı bilgi"
 
 msgid "Search term"
 msgstr ""
