@@ -277,41 +277,46 @@ msgid "❌ Message is too long"
 msgstr "❌ Mesaj çok uzun"
 
 msgid "❌ No response from AI"
-msgstr "Yapay zeka'dan yanıt yok"
+msgstr "❌ Yapay zeka'dan yanıt yok"
 
 # Reminder Messages
 msgid "Remind Me"
-msgstr ""
+msgstr "Bana Hatırlat"
 
 msgid "⏰ Set Reminder"
-msgstr ""
+msgstr "⏰ Hatırlatıcı Ayarla"
 
 msgid "⏰ Reminder!"
-msgstr ""
+msgstr "⏰ Hatırlatıcı!"
 
 msgid "⏰ Reminder Set!"
-msgstr ""
+msgstr "⏰ Hatırlatıcı ayarlandı!"
 
 msgid "❌ Invalid time format! Use combinations like: 1h30m, 45m, or 2h"
-msgstr ""
+msgstr "❌ Geçersiz saat biçimi! örnek kombinasyonlar: 1h30m, 45m veya 2h"
 
 msgid "❌ Please provide a valid message (1-1000 characters)"
-msgstr ""
+msgstr "❌ Lütfen geçerli bir mesaj girin (1-1000 karakter)"
 
 msgid "❌ Reminder time must be at least 1 minute!"
-msgstr ""
+msgstr "❌ Hatırlatma süresi en az 1 dakika olmalıdır!"
 
 msgid "❌ Reminder time cannot be longer than 24 hours!"
-msgstr ""
+msgstr "❌ Hatırlatma süresi 24 saatten uzun olamaz!"
 
 msgid "✅ Reminder set! I'll remind you in %time% about: %message%"
-msgstr ""
+msgstr "✅ Hatırlatma seti! Size %zaman% sonra şunu hatırlatacağım: %mesaj%"
 
 msgid "❌ An error occurred while setting your reminder. Please try again later."
 msgstr ""
+"❌ Hatırlatıcınızı ayarlarken bir hata oluştu. Lütfen daha sonra tekrar "
+"deneyin."
 
 msgid "I'll remind you about:\n\n*%message%*"
 msgstr ""
+"hatırlatacağım metin:\n"
+"\n"
+"*%mesaj%*"
 
 msgid "You asked me to remind you about:\n\n*%message%*"
 msgstr ""
