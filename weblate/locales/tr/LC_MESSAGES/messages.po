@@ -58,13 +58,13 @@ msgid "Show all available commands and their usage"
 msgstr "Kullanılabilir komutları ve kullanımlarını göster"
 
 msgid "Ask the magic 8-ball a question"
-msgstr "8ball'a bir soru sor."
+msgstr "8ball'a bir soru sor"
 
 msgid "Get a random cat picture"
-msgstr ""
+msgstr "Rastgele bir kedi resmi al"
 
 msgid "Get a random dog picture"
-msgstr ""
+msgstr "Rastgele bir köpek resmi al"
 
 msgid "Get a random joke!"
 msgstr ""
