@@ -101,13 +101,13 @@ msgid "What to remind you about"
 msgstr "Hatırlatılacak şey nedir"
 
 msgid "The user to get information about"
-msgstr "Kullanıcının alacağı bilgi"
+msgstr "Kullanıcının bir şey hakkında alacağı bilgi"
 
 msgid "Search term"
-msgstr ""
+msgstr "terim ara"
 
 msgid "Your question for the AI"
-msgstr ""
+msgstr "AI için soracağın sorun"
 
 # Categories
 msgid "General"
