@@ -201,77 +201,83 @@ msgid "Better not tell you now."
 msgstr "Şimdi söylemesem daha iyi."
 
 msgid "Cannot predict now."
-msgstr "Cannot predict now."
+msgstr "Şu anda tahmin edemiyorum."
 
 msgid "Concentrate and ask again."
-msgstr ""
+msgstr "Konsantre olun ve tekrar sorun."
 
 msgid "Don't count on it."
-msgstr ""
+msgstr "Buna güvenme."
 
 msgid "My reply is no."
-msgstr ""
+msgstr "Cevabım hayır."
 
 msgid "My sources say no."
-msgstr ""
+msgstr "Kaynaklarım hayır diyor."
 
 msgid "Outlook not so good."
-msgstr ""
+msgstr "Görünüm pek iyi değil."
 
 msgid "Very doubtful."
-msgstr ""
+msgstr "Çok şüpheli."
 
 # AI Command Messages
 msgid "You already have a request in progress. Please wait for it to complete."
 msgstr ""
+"Halihazırda devam eden bir talebiniz var. Lütfen tamamlanmasını bekleyin."
 
 msgid "🤔 Thinking..."
-msgstr ""
+msgstr "🤔 Düşünüyor..."
 
 msgid "An error occurred while processing your request. Please try again later."
-msgstr ""
+msgstr "İsteğiniz işlenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
 
 msgid "🧹 Your AI chat history has been reset."
-msgstr ""
+msgstr "🧹 Yapay zeka sohbet geçmişiniz sıfırlandı."
 
 msgid "✅ Switched to default API. Your custom API key has been cleared and the default model will be used."
 msgstr ""
+"✅ Varsayılan API'ye geçildi. Özel API anahtarınız temizlendi ve varsayılan "
+"model kullanılacak."
 
 msgid "No pending request found. Please try the command again."
-msgstr ""
+msgstr "Bekleyen bir istek bulunamadı. Lütfen komutu tekrar deneyin."
 
 msgid "✅ API credentials saved. You can now use the `/ai` command without re-entering your credentials. To stop using your key, do `/ai use_custom_api false`"
 msgstr ""
+"✅ API kimlik bilgileri kaydedildi. Artık kimlik bilgilerinizi yeniden "
+"girmeden `/ai` komutunu kullanabilirsiniz. Anahtarınızı kullanmayı durdurmak "
+"için `/ai use_custom_api false` yazın"
 
 msgid "❌ You've reached your daily limit of AI requests"
-msgstr ""
+msgstr "❌ Günlük yapay zeka talebi limitinize ulaştınız"
 
 msgid "❌ Error processing your request"
-msgstr ""
+msgstr "❌ Talebiniz işlenirken hata oluştu"
 
 msgid "❌ Please set up your API key first"
-msgstr ""
+msgstr "❌ Lütfen önce API anahtarınızı ayarlayın"
 
 msgid "❌ API key removed successfully"
-msgstr ""
+msgstr "❌ API anahtarı başarıyla kaldırıldı"
 
 msgid "❌ Failed to remove API key"
-msgstr ""
+msgstr "❌ API anahtarı kaldırılamadı"
 
 msgid "❌ Invalid API key format"
-msgstr ""
+msgstr "❌ Geçersiz API anahtarı biçimi"
 
 msgid "❌ Failed to set API key"
-msgstr ""
+msgstr "❌ API anahtarı ayarlanamadı"
 
 msgid "❌ Failed to process AI response"
-msgstr ""
+msgstr "❌ Yapay zeka yanıtı işlenemedi"
 
 msgid "❌ Message is too long"
-msgstr ""
+msgstr "❌ Mesaj çok uzun"
 
 msgid "❌ No response from AI"
-msgstr ""
+msgstr "Yapay zeka'dan yanıt yok"
 
 # Reminder Messages
 msgid "Remind Me"
