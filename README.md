@@ -1,6 +1,6 @@
 # Aethel Bot
 
-[![Node.js](https://img.shields.io/badge/node-%3E=16.9.0-green?logo=node.js)](https://nodejs.org/) [![CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![Node.js](https://img.shields.io/badge/node-%3E=16.9.0-green?logo=node.js)](https://nodejs.org/) 
 
 A privacy-conscious, production-ready Discord user bot with AI chat, reminders, and utility commands. Built with Node.js, Discord.js v14, PostgreSQL, and robust security best practices.
 
@@ -83,10 +83,7 @@ This project is licensed under the Creative Commons Attribution-NonCommercial 4.
 
 You are free to share and adapt the code for non-commercial purposes, provided you give appropriate credit.
 
-See [LICENSE](LICENSE) and [Creative Commons CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) for details.
-
-[cc-by-nc-shield]: https://licensebuttons.net/l/by-nc/4.0/80x15.png
-[cc-by-nc-link]: https://creativecommons.org/licenses/by-nc/4.0/
+See [LICENSE](LICENSE) for details.
 
 7. Start the bot:
    ```bash
