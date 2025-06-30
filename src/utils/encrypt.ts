@@ -1,12 +1,13 @@
 // Very super duper smart encryption
 
+import { API_KEY_ENCRYPTION_SECRET } from '@/config';
 import crypto from 'crypto';
 
 const ALGO = 'aes-256-gcm';
-const KEY = crypto.createHash('sha256').update(process.env.API_KEY_ENCRYPTION_SECRET).digest();
+const KEY = crypto.createHash('sha256').update(API_KEY_ENCRYPTION_SECRET).digest();
 const IV_LENGTH = 12;
 
-function encrypt(text) {
+function encrypt(text: string) {
   const iv = crypto.randomBytes(IV_LENGTH);
   const cipher = crypto.createCipheriv(ALGO, KEY, iv);
   let encrypted = cipher.update(text, 'utf8', 'base64');
@@ -15,7 +16,7 @@ function encrypt(text) {
   return `${iv.toString('base64')}:${tag.toString('base64')}:${encrypted}`;
 }
 
-function decrypt(encrypted) {
+function decrypt(encrypted: string) {
   const [ivB64, tagB64, data] = encrypted.split(':');
   const iv = Buffer.from(ivB64, 'base64');
   const tag = Buffer.from(tagB64, 'base64');

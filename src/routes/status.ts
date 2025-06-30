@@ -1,11 +1,8 @@
 import express from 'express';
-import getGitCommitHash from '../utils/getGitCommitHash.js';
+import getGitCommitHash from '@/utils/getGitCommitHash';
+import BotClient from '@/services/Client.js';
 
-/**
- *
- * @param {Client} client
- */
-export default (client) => {
+export default (client: BotClient) => {
   const status = express.Router();
 
   status.get('/', async (req, res) => {
