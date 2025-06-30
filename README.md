@@ -63,7 +63,7 @@ pnpm run scripts/run-migration.js # or node scripts/run-migration.js
 - **No plaintext API keys stored or logged**
 - **User data is encrypted and can be deleted by user command**
 - **No data sold or shared with third parties**
-- **See https://bot.pur.cat/legal/privacy for full policy**
+- **See https://aethel.xyz/legal/privacy for full policy**
 
 ---
 
@@ -77,11 +77,7 @@ pnpm run scripts/run-migration.js # or node scripts/run-migration.js
 
 ## License
 
-[![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc-link]
-
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
-
-You are free to share and adapt the code for non-commercial purposes, provided you give appropriate credit.
+This project is licensed under the MIT License.
 
 See [LICENSE](LICENSE) for details.
 
