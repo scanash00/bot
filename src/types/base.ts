@@ -1,4 +1,4 @@
-export interface RandomCat {
+export interface RandomReddit {
     response_time_ms: number,
     source: "reddit",
     subreddit: string,

@@ -40,6 +40,11 @@
             "randomcat": "Random cat",
             "newcat": "New cat",
             "error":"Sorry, I had trouble fetching a cat image. Please try again later!"
+        },
+        "dog": {
+            "randomdog": "Random dog",
+            "newdog": "New dog",
+            "error": "Sorry, I had trouble fetching a dog image. Please try again later!"
         }
     }
 }
