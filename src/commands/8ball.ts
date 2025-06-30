@@ -1,7 +1,6 @@
 import { SlashCommandBuilder, EmbedBuilder, MessageFlags, ApplicationIntegrationType, InteractionContextType } from 'discord.js';
 import { validateCommandOptions, sanitizeInput } from '@/utils/validation';
 import logger from '@/utils/logger';
-import i18n from '@/utils/translate';
 import { SlashCommandProps } from '@/types/command';
 import { random } from '@/utils/misc';
 

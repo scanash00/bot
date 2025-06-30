@@ -11,7 +11,6 @@ import {
 import fetch from 'node-fetch';
 import { sanitizeInput } from '@/utils/validation';
 import logger from '@/utils/logger';
-import i18n from '@/utils/translate';
 import { SlashCommandProps } from '@/types/command';
 import { RandomCat } from '@/types/base';
 
