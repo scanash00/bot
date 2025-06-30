@@ -1,13 +1,14 @@
-const {
+import {
   SlashCommandBuilder,
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
   EmbedBuilder,
-} = require('discord.js');
-const fetch = require('node-fetch');
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+} from 'discord.js';
+import fetch from 'node-fetch';
+import { sanitizeInput } from '../utils/validation.js';
+import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 3000;
@@ -20,23 +21,70 @@ async function fetchCatImage() {
   return response.json();
 }
 
-function createCatEmbed(data) {
-  const title = data.title ? sanitizeInput(data.title).slice(0, 245) + '...' : 'Random Cat';
-  const embed = new EmbedBuilder()
-    .setColor(0xfaa0a0)
-    .setTitle(title)
-    .setImage(data.url)
-    .setFooter({ text: 'powered by pur.cat' });
+export function createCatEmbed(data, _locale = 'en', t) {
+  const title = data.title
+    ? sanitizeInput(data.title).slice(0, 245) + '...'
+    : t('Random Cat', { default: 'Random Cat' });
+
+  const embed = new EmbedBuilder().setColor(0xfaa0a0).setTitle(title).setImage(data.url);
+
+  let footerText = t('powered by pur.cat', { default: 'powered by pur.cat' });
+  if (typeof footerText !== 'string') {
+    footerText = 'powered by pur.cat';
+  }
+  embed.setFooter({ text: footerText });
 
   if (data.subreddit) {
-    embed.setDescription(`From r/${sanitizeInput(data.subreddit)}`);
+    let fromText = t('From r/%s', { default: 'From r/%s' });
+    if (typeof fromText !== 'string') fromText = 'From r/%s';
+    if (fromText.includes('%s')) {
+      embed.setDescription(fromText.replace('%s', sanitizeInput(data.subreddit)));
+    } else {
+      embed.setDescription(`${fromText}${sanitizeInput(data.subreddit)}`);
+    }
   }
 
   return embed;
 }
 
-module.exports = {
-  data: new SlashCommandBuilder().setName('cat').setDescription('Get a random cat image!'),
+export async function createCatEmbedAsync(catData, t /*, locale */) {
+  const title = catData.title
+    ? sanitizeInput(catData.title).slice(0, 245) + '...'
+    : await t('Random Cat', { default: 'Random Cat' });
+
+  const embed = new EmbedBuilder().setColor(0xfaa0a0).setTitle(title).setImage(catData.url);
+
+  let footerText = await t('powered by pur.cat', { default: 'powered by pur.cat' });
+  if (typeof footerText !== 'string') {
+    footerText = 'powered by pur.cat';
+  }
+  embed.setFooter({ text: footerText });
+
+  if (catData.subreddit) {
+    let fromText = await t('From r/%s', { default: 'From r/%s' });
+    if (typeof fromText !== 'string') fromText = 'From r/%s';
+    if (fromText.includes('%s')) {
+      embed.setDescription(fromText.replace('%s', sanitizeInput(catData.subreddit)));
+    } else {
+      embed.setDescription(`${fromText}${sanitizeInput(catData.subreddit)}`);
+    }
+  }
+
+  return embed;
+}
+
+export default {
+  data: new SlashCommandBuilder()
+    .setName('cat')
+    .setNameLocalizations({
+      'es-ES': 'gato',
+      'es-419': 'gato',
+    })
+    .setDescription('Get a random cat image!')
+    .setDescriptionLocalizations({
+      'es-ES': '¡Obtén una imagen aleatoria de un gato!',
+      'es-419': '¡Obtén una imagen aleatoria de un gato!',
+    }),
 
   async execute(interaction) {
     try {
@@ -46,9 +94,16 @@ module.exports = {
 
       if (now < cooldownEnd) {
         const timeLeft = Math.ceil((cooldownEnd - now) / 1000);
+        const waitMessage = await interaction.t(
+          'Please wait %d second(s) before using this command again.',
+          {
+            default: `Please wait ${timeLeft} second(s) before using this command again.`,
+            replace: { d: timeLeft },
+          }
+        );
         return interaction.reply({
-          content: `Please wait ${timeLeft} second(s) before using this command again.`,
-          ephemeral: true,
+          content: waitMessage,
+          flags: 1 << 6,
         });
       }
 
@@ -56,47 +111,57 @@ module.exports = {
       setTimeout(() => cooldowns.delete(cooldownKey), COOLDOWN_TIME);
 
       await interaction.deferReply();
-
       try {
         logger.info(`Cat command used by ${interaction.user.tag}`);
-
-        const data = await fetchCatImage();
-
-        if (!data || !data.url) {
+        const catData = await fetchCatImage();
+        if (!catData || !catData.url) {
           throw new Error('No image URL found in response');
         }
-
-        const embed = createCatEmbed(data);
-
+        // Use the async embed builder for proper translation
+        const embed = await createCatEmbedAsync(
+          catData,
+          async (...args) => await interaction.t(...args)
+        );
+        const refreshLabel = await interaction.t('New Cat', { default: 'New Cat' });
         const refreshButton = new ButtonBuilder()
           .setCustomId('refresh_cat')
-          .setLabel('New Cat')
+          .setLabel(refreshLabel)
           .setStyle(ButtonStyle.Danger)
           .setEmoji('🐱');
-
         const row = new ActionRowBuilder().addComponents(refreshButton);
-
         await interaction.editReply({
           embeds: [embed],
           components: [row],
         });
       } catch (error) {
         logger.error('Error fetching cat image:', error);
+        const errorMsg = await i18n(
+          'Sorry, I had trouble fetching a cat image. Please try again later!',
+          {
+            locale: interaction.locale || 'en',
+            default: 'Sorry, I had trouble fetching a cat image. Please try again later!',
+          }
+        );
         await interaction.editReply({
-          content: 'Sorry, I had trouble fetching a cat image. Please try again later!',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     } catch (error) {
       logger.error('Unexpected error in cat command:', error);
+      const errorMsg = await i18n('An unexpected error occurred. Please try again later.', {
+        locale: interaction.locale || 'en',
+        default: 'An unexpected error occurred. Please try again later.',
+      });
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({
-          content: 'An unexpected error occurred. Please try again later.',
-          ephemeral: true,
+          content: errorMsg,
+          flags: 1 << 6,
         });
       } else if (interaction.deferred) {
         await interaction.editReply({
-          content: 'An unexpected error occurred. Please try again later.',
+          content: errorMsg,
+          flags: 1 << 6,
         });
       }
     }

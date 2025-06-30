@@ -1,10 +1,9 @@
-require('dotenv').config();
+import 'dotenv/config';
 
 const config = {
   discord: {
     token: process.env.TOKEN,
     clientId: process.env.CLIENT_ID,
-    publicKey: process.env.PUBLIC_KEY,
   },
 
   api: {
@@ -22,7 +21,10 @@ const config = {
   },
 };
 
-const requiredConfig = [{ key: 'DISCORD_TOKEN', value: config.discord.token }];
+const requiredConfig = [
+  { key: 'TOKEN', value: config.discord.token },
+  { key: 'CLIENT_ID', value: config.discord.clientId },
+];
 
 const missingConfig = requiredConfig.filter(({ value }) => !value);
 if (missingConfig.length > 0) {
@@ -30,4 +32,4 @@ if (missingConfig.length > 0) {
   throw new Error(`Missing required environment variables: ${missingKeys}`);
 }
 
-module.exports = config;
+export default config;

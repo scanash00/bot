@@ -1,54 +1,146 @@
-// best help command ever
+import { SlashCommandBuilder, EmbedBuilder, Collection } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import i18n from '../utils/translate.js';
 
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const fs = require('fs');
-const path = require('path');
-const logger = require('../utils/logger');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-module.exports = {
+export default {
   data: new SlashCommandBuilder()
     .setName('help')
-    .setDescription('Show all available commands and their usage'),
+    .setNameLocalizations({
+      'es-ES': 'ayuda',
+      'es-419': 'ayuda',
+      'en-US': 'help',
+    })
+    .setDescription('Show all available commands and their usage')
+    .setDescriptionLocalizations({
+      'es-ES': 'Muestra todos los comandos disponibles y su uso',
+      'es-419': 'Muestra todos los comandos disponibles y su uso',
+      'en-US': 'Show all available commands and their usage',
+    }),
 
   async execute(interaction) {
     try {
-      const commandsPath = path.join(__dirname);
-      const commandFiles = fs
-        .readdirSync(commandsPath)
-        .filter((file) => file.endsWith('.js') && file !== 'help.js');
+      await interaction.deferReply({ flags: 1 << 6 });
+
+      const userId = interaction.user?.id;
+      if (!userId) {
+        const errorMsg = await i18n('Unable to identify user.', {
+          locale: interaction.locale || 'en',
+          default: '❌ Unable to identify user.',
+        });
+        return interaction.editReply({ content: errorMsg });
+      }
+
+      const [title, description] = await Promise.all([
+        await i18n('Aethel Commands', {
+          locale: interaction.locale || 'en',
+          default: 'Aethel Commands',
+        }),
+        await i18n('Here are all the available commands:', {
+          locale: interaction.locale || 'en',
+          default: 'Here are all the available commands:',
+        }),
+      ]);
+
+      const commandsPath = path.join(process.cwd(), 'src/commands');
+      const commandFiles = fs.readdirSync(commandsPath).filter((file) => file.endsWith('.js'));
 
       const embed = new EmbedBuilder()
-        .setColor('#FAA0A0')
-        .setTitle('>< Bot Commands')
-        .setDescription('Here are all the available commands:');
+        .setColor('#0099ff')
+        .setTitle(`🤖 ${title}`)
+        .setDescription(description);
+
+      const commandsByCategory = new Collection();
 
       for (const file of commandFiles) {
-        try {
-          const command = require(`./${file}`);
-          if (command.data) {
-            const commandData = command.data.toJSON();
-            const options =
-              commandData.options?.map((opt) => `*${opt.name}*: ${opt.description}`).join('\n') ||
-              'No options';
+        if (file === 'help.js') continue;
 
-            embed.addFields({
-              name: `/${commandData.name}`,
-              value: `${commandData.description}\n${options}`,
-              inline: false,
-            });
+        try {
+          const commandModule = await import(`${commandsPath}/${file}`);
+          const command = commandModule.default || commandModule;
+          if (!command.data) continue;
+
+          // Use i18n for command name/description, fallback to default if not found
+          const name = await i18n(command.data.name, {
+            locale: interaction.locale || 'en',
+            default: command.data.name,
+          });
+          const description = await i18n(command.data.description, {
+            locale: interaction.locale || 'en',
+            default: command.data.description,
+          });
+
+          const translatedCommand = {
+            ...command,
+            data: {
+              ...command.data,
+              name,
+              description,
+            },
+            category: command.category || 'other',
+          };
+
+          const category = translatedCommand.category;
+          if (!commandsByCategory.has(category)) {
+            commandsByCategory.set(category, []);
           }
+          commandsByCategory.get(category).push(translatedCommand);
         } catch (error) {
-          logger.error(`Error loading command ${file}:`, error);
+          // console.error(`Error loading command ${file}:`, error);
         }
       }
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
-    } catch (error) {
-      logger.error('Error in help command:', error);
-      await interaction.reply({
-        content: 'An error occurred while fetching the help information.',
-        ephemeral: true,
+      const commandList = [];
+      for (const commands of commandsByCategory.values()) {
+        for (const cmd of commands) {
+          commandList.push(`• **/${cmd.data.name}** - ${cmd.data.description}`);
+        }
+      }
+      embed.addFields({
+        name: title,
+        value:
+          commandList.join('\n') ||
+          (await i18n('No options', { locale: interaction.locale || 'en', default: 'No options' })),
+        inline: false,
       });
+
+      await interaction.editReply({ embeds: [embed] });
+    } catch (error) {
+      // console.error('Error in help command:', error);
+      try {
+        const errorMessage = await i18n(
+          'An error occurred while loading commands. Please try again later.',
+          {
+            locale: interaction.locale || 'en',
+            default: '❌ An error occurred while loading commands. Please try again later.',
+          }
+        );
+
+        if (interaction.deferred) {
+          await interaction.editReply({
+            content: errorMessage,
+            embeds: [],
+          });
+        } else if (!interaction.replied) {
+          await interaction.reply({
+            content: errorMessage,
+            flags: 1 << 6,
+          });
+        } else {
+          await interaction.followUp({
+            content: errorMessage,
+            flags: 1 << 6,
+          });
+        }
+      } catch (err) {
+        // console.error('Error sending error message:', err);
+        // console.error('FATAL: Could not send any error message to user');
+      }
     }
   },
 };

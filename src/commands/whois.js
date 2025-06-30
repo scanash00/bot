@@ -1,8 +1,9 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const whois = require('whois-json');
-const { isIP } = require('net');
-const { sanitizeInput } = require('../utils/validation');
-const logger = require('../utils/logger');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import whois from 'whois-json';
+import { isIP } from 'net';
+import { sanitizeInput, isValidDomain } from '../utils/validation.js';
+import logger from '../utils/logger.js';
+import i18n from '../utils/translate.js';
 
 const cooldowns = new Map();
 const COOLDOWN_TIME = 10000;
@@ -123,7 +124,7 @@ function getWhoisServers(domain) {
 
 async function isServerReachable(server) {
   try {
-    const { Resolver } = require('dns').promises;
+    const { Resolver } = await import('dns').then((module) => module.promises);
     const resolver = new Resolver();
     resolver.setServers(['1.1.1.1', '8.8.8.8']);
     await resolver.resolve4(server);
@@ -132,10 +133,6 @@ async function isServerReachable(server) {
     logger.debug(`Server ${server} is not reachable:`, error.message);
     return false;
   }
-}
-
-function isValidDomain(domain) {
-  return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain);
 }
 
 function formatWhoisData(data) {
@@ -436,11 +433,27 @@ async function getWhoisData(query) {
 const command = {
   data: new SlashCommandBuilder()
     .setName('whois')
+    .setNameLocalizations({
+      'es-ES': 'quien',
+      'es-419': 'quien',
+    })
     .setDescription('Look up WHOIS information for a domain or IP address')
+    .setDescriptionLocalizations({
+      'es-ES': 'Buscar información WHOIS de un dominio o dirección IP',
+      'es-419': 'Buscar información WHOIS de un dominio o dirección IP',
+    })
     .addStringOption((option) =>
       option
         .setName('query')
-        .setDescription('Domain name or IP address to look up')
+        .setNameLocalizations({
+          'es-ES': 'consulta',
+          'es-419': 'consulta',
+        })
+        .setDescription('Domain or IP address to look up')
+        .setDescriptionLocalizations({
+          'es-ES': 'Dominio o dirección IP a buscar',
+          'es-419': 'Dominio o dirección IP a buscar',
+        })
         .setRequired(true)
     ),
 
@@ -452,7 +465,7 @@ const command = {
       const timeLeft = Math.ceil((COOLDOWN_TIME - (now - cooldown)) / 1000);
       return interaction.reply({
         content: `⏳ Please wait ${timeLeft} seconds before using this command again.`,
-        ephemeral: true,
+        flags: 1 << 6,
       });
     }
 
@@ -464,7 +477,7 @@ const command = {
     if (!isValidDomain(query) && !isIP(query)) {
       return interaction.reply({
         content: '❌ Please provide a valid domain name or IP address.',
-        ephemeral: true,
+        flags: 1 << 6,
       });
     }
 
@@ -492,13 +505,22 @@ const command = {
     } catch (error) {
       logger.error(`Error in whois command for ${sanitizedQuery}:`, error);
 
+      const errorMsg = await i18n(
+        'Sorry, I had trouble fetching WHOIS data. Please try again later!',
+        {
+          locale: interaction.locale || 'en',
+          default: 'Sorry, I had trouble fetching WHOIS data. Please try again later!',
+        }
+      );
+
       await interaction.editReply({
-        content: `❌ Error: ${error.message || 'An error occurred while fetching WHOIS data.'}`,
+        content: errorMsg,
+        flags: 1 << 6,
       });
     }
   },
 };
 
-module.exports = command;
+export default command;
 
 // parsing the response hurts

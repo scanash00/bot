@@ -1,5 +1,5 @@
-const winston = require('winston');
-const config = require('../../config/config');
+import winston from 'winston';
+import config from '../../config/config.js';
 
 const logger = winston.createLogger({
   level: config.logging.level,
@@ -9,7 +9,7 @@ const logger = winston.createLogger({
     winston.format.splat(),
     winston.format.json()
   ),
-  defaultMeta: { service: '><-bot' },
+  defaultMeta: { service: 'Aethel' },
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
@@ -31,6 +31,6 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-module.exports = logger;
+export default logger;
 
 // logger

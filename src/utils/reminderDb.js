@@ -1,5 +1,5 @@
-const pool = require('./pgClient');
-const logger = require('./logger');
+import pool from './pgClient.js';
+import logger from './logger.js';
 
 async function saveReminder(reminderData) {
   const query = `
@@ -97,12 +97,12 @@ async function cleanupReminders(days = 30) {
   const query = `
     DELETE FROM reminders
     WHERE is_completed = TRUE
-    AND completed_at < CURRENT_TIMESTAMP - INTERVAL '${days} days'
+    AND completed_at < CURRENT_TIMESTAMP - ($1 * INTERVAL '1 day')
     RETURNING *
   `;
 
   try {
-    const result = await pool.query(query);
+    const result = await pool.query(query, [days]);
     return result.rowCount;
   } catch (error) {
     logger.error('Error cleaning up old reminders:', error);
@@ -110,7 +110,7 @@ async function cleanupReminders(days = 30) {
   }
 }
 
-module.exports = {
+export {
   saveReminder,
   completeReminder,
   getActiveReminders,
