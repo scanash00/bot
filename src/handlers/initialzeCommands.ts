@@ -8,7 +8,7 @@ import path from 'path';
 
 export default async (c: BotClient) => {
   console.log("processing commands");
-  const commandsPath = path.join(process.cwd(), 'src', 'command');
+  const commandsPath = path.join(process.cwd(), 'src', 'commands');
   const commandFiles = readdirSync(commandsPath).filter(f => f.endsWith('.js') || f.endsWith('.ts'));
   const commands: SlashCommandBuilder[] = [];
   await Promise.all(commandFiles.map(async (val, i) => {
