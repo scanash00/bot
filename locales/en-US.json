@@ -1,6 +1,11 @@
 {
     "cooldown": "Please wait {cooldown} second(s) before using this command again.",
     "failedrequest": "An error occurred while processing your request. Please try again later.",
+    "unexpectederror": "An unexpected error occurred. Please try again later.",
+    "poweredby": "Powered by",
+    "reddit": {
+        "from": "From r/{subreddit}"
+    },
     "commands": {
         "8ball": {
             "says":"The Magic 8-Ball says...",
@@ -30,6 +35,11 @@
                 "outlooknotsogood": "Outlook not so good",
                 "verydoubtful": "Very doubtful"
             }
+        },
+        "cat": {
+            "randomcat": "Random cat",
+            "newcat": "New cat",
+            "error":"Sorry, I had trouble fetching a cat image. Please try again later!"
         }
     }
 }
