@@ -64,6 +64,16 @@
             "error": "Sorry, I had trouble fetching the weather. Please try again later!",
             "nolocation": "Location not found. Please check the city name and try again.",
             "apikeymissing": "OpenWeather API key is missing or invalid."
+        },
+        "joke": {
+            "waitingpunchline": "The punchline will appear in {seconds} seconds...",
+            "error": "Sorry, I had trouble fetching a joke. Please try again later!",
+            "type": {
+                "default": "{type} joke",
+                "general": "General",
+                "programming": "Programming",
+                "dad": "Dad"
+            }
         }
     }
 }
