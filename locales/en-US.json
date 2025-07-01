@@ -3,6 +3,7 @@
     "failedrequest": "An error occurred while processing your request. Please try again later.",
     "unexpectederror": "An unexpected error occurred. Please try again later.",
     "poweredby": "Powered by",
+    "providedby": "Data provided by",
     "reddit": {
         "from": "From r/{subreddit}"
     },
@@ -51,6 +52,18 @@
             "error": "Sorry, I had trouble fetching the Wikipedia article. Please try again later!",
             "nosummary": "No summary available",
             "readmoreonwiki": "Read more"
+        },
+        "weather": {
+            "temperature": "Temperature",
+            "feelslike": "Feels like",
+            "default": "Weather",
+            "humidity": "Humidity",
+            "windspeed": "Wind speed",
+            "pressure": "Pressure",
+            "weatherin": "Weather in {location}",
+            "error": "Sorry, I had trouble fetching the weather. Please try again later!",
+            "nolocation": "Location not found. Please check the city name and try again.",
+            "apikeymissing": "OpenWeather API key is missing or invalid."
         }
     }
 }
