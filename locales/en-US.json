@@ -45,6 +45,12 @@
             "randomdog": "Random dog",
             "newdog": "New dog",
             "error": "Sorry, I had trouble fetching a dog image. Please try again later!"
+        },
+        "wiki": {
+            "pedia": "Wikipedia: {article}",
+            "error": "Sorry, I had trouble fetching the Wikipedia article. Please try again later!",
+            "nosummary": "No summary available",
+            "readmoreonwiki": "Read more"
         }
     }
 }
