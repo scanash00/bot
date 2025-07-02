@@ -1,7 +1,5 @@
 import { SlashCommandProps } from '@/types/command';
-import { SlashCommandBuilder, EmbedBuilder, Collection, InteractionContextType, ApplicationIntegrationType } from 'discord.js';
-import fs from 'fs';
-import path from 'path';
+import { SlashCommandBuilder, EmbedBuilder, InteractionContextType, ApplicationIntegrationType } from 'discord.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -21,14 +19,12 @@ export default {
     .setIntegrationTypes(ApplicationIntegrationType.UserInstall),
   async execute(client, interaction) {
     try {
-      await client.application?.commands.fetch();
-      await interaction.deferReply({ flags: 1 << 6 });
+      await interaction.deferReply();
 
       const [title, description] = await Promise.all([
         await client.getLocaleText("commands.help.embed.title", interaction.locale),
         await client.getLocaleText("commands.help.embed.description", interaction.locale),
       ]);
-
 
       const embed = new EmbedBuilder()
         .setColor('#0099ff')
@@ -37,22 +33,23 @@ export default {
 
       const commandCategories: Map<string, string[]> = new Map();
       // Group commands by category
-      client.commands.forEach((cmd) => {
+      for (const cmd of client.commands.values()) {
+        const ClientApplicationCommandCache = client.application?.commands.cache.find(command => command.name == cmd.data.name);
         const category = cmd.category || "Uncategorized";
         if (!commandCategories.has(category)) {
           commandCategories.set(category, []);
         }
-        commandCategories.get(category)!.push(`</${cmd.data.name}:${client.application?.commands.cache.find(cmdObj => cmdObj.name === cmd.data.name)?.id}> - ${cmd.data.description}`);
-      });
-
+        const localizedDescription = await client.getLocaleText(`commands.${cmd.data.name}.description`, interaction.locale)
+        commandCategories.get(category)!.push(`</${ClientApplicationCommandCache?.name}:${ClientApplicationCommandCache?.id}> - ${localizedDescription}`);
+      };
       for (const [category, cmds] of commandCategories.entries()) {
+        const localizedCategory = await client.getLocaleText(`categories.${category}`, interaction.locale);
         embed.addFields({
-          name: `📂 ${category}`,
+          name: `📂 ${localizedCategory}`,
           value: cmds.join("\n"),
           inline: false,
         });
       }
-
       await interaction.editReply({ embeds: [embed] });
     } catch (error) {
       const errorMsg = await client.getLocaleText("unexpectederror", interaction.locale);

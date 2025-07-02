@@ -49,13 +49,26 @@ export default class BotClient extends Client {
     }
     public async getLocaleText(key: string, locale: string, replaces = {}): Promise<string> {
         const fallbackLocale = 'en-US';
-        let langMap = this.t.get(locale);
-        if (!langMap) langMap = this.t.get(fallbackLocale);
-        let text = key.split('.').reduce((prev, cur) => prev[cur], langMap);
+
+        let langMap = this.t.get(locale) || this.t.get(fallbackLocale);
+
+        const getValueFromMap = (map: any, keyPath: string): any => {
+            return keyPath.split('.').reduce((prev, cur) => (prev && prev[cur] !== undefined) ? prev[cur] : undefined, map);
+        };
+
+        let text = getValueFromMap(langMap, key);
+
+        // If value is undefined, try fallback
+        if (text === undefined && locale !== fallbackLocale) {
+            langMap = this.t.get(fallbackLocale);
+            text = getValueFromMap(langMap, key);
+        }
+
         for (const [varName, value] of Object.entries(replaces)) {
             const regex = new RegExp(`{${varName}}`, "g");
             text = text.replace(regex, value);
         }
+
         return text;
     }
 };

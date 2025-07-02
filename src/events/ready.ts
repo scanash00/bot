@@ -5,7 +5,8 @@ export default class ReadyEvent {
         c.once('ready', () => this.readyEvent(c));
     }
 
-    private readyEvent(client: BotClient) {
-        console.log(`Logged in as`, client.user?.username)
+    private async readyEvent(client: BotClient) {
+        console.log(`Logged in as`, client.user?.username);
+        await client.application?.commands.fetch({ withLocalizations: true });
     }
 }
