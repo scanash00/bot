@@ -100,7 +100,11 @@
             "name": "remind"
         },
         "whois": {
-            "name": "whois"
+            "name": "whois",
+            "description": "die",
+            "error":"Sorry, I had trouble fetching WHOIS data. Please try again later!",
+            "nodata": "No WHOIS data found for the specified domain or IP.",
+            "notvalid": "Please provide a valid domain name or IP address."
         },
         "ai": {
             "name": "ai"

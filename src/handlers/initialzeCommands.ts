@@ -21,11 +21,11 @@ export default async (c: BotClient) => {
       commands.push(command.data);
     }));
   }
-  // try {
-  //   const rest = new REST({ version: "10" }).setToken(TOKEN!);
-  //   await rest.put(Routes.applicationCommands(CLIENT_ID!), { body: commands });
-  //   console.log("all commands has beed registered")
-  // } catch (error) {
+  try {
+    const rest = new REST({ version: "10" }).setToken(TOKEN!);
+    await rest.put(Routes.applicationCommands(CLIENT_ID!), { body: commands });
+    console.log("all commands has beed registered")
+  } catch (error) {
 
-  // }
+  }
 }
