@@ -9,6 +9,7 @@
     },
     "commands": {
         "8ball": {
+            "name": "8ball",
             "says":"The Magic 8-Ball says...",
             "question":"Question",
             "answer":"Answer",
@@ -38,22 +39,26 @@
             }
         },
         "cat": {
+            "name": "cat",
             "randomcat": "Random cat",
             "newcat": "New cat",
             "error":"Sorry, I had trouble fetching a cat image. Please try again later!"
         },
         "dog": {
+            "name": "dog",
             "randomdog": "Random dog",
             "newdog": "New dog",
             "error": "Sorry, I had trouble fetching a dog image. Please try again later!"
         },
         "wiki": {
+            "name": "wiki",
             "pedia": "Wikipedia: {article}",
             "error": "Sorry, I had trouble fetching the Wikipedia article. Please try again later!",
             "nosummary": "No summary available",
             "readmoreonwiki": "Read more"
         },
         "weather": {
+            "name": "weather",
             "temperature": "Temperature",
             "feelslike": "Feels like",
             "default": "Weather",
@@ -66,6 +71,7 @@
             "apikeymissing": "OpenWeather API key is missing or invalid."
         },
         "joke": {
+            "name": "joke",
             "waitingpunchline": "The punchline will appear in {seconds} seconds...",
             "error": "Sorry, I had trouble fetching a joke. Please try again later!",
             "type": {
@@ -74,6 +80,24 @@
                 "programming": "Programming",
                 "dad": "Dad"
             }
+        },
+        "help": {
+            "name": "help",
+            "description":"Show all available commands and their usage",
+            "embed": {
+                "title": "Aethel commands",
+                "description": "Here are all the available commands"
+            },
+            "nooptions": "No options"
+        },
+        "remind": {
+            "name": "remind"
+        },
+        "whois": {
+            "name": "whois"
+        },
+        "ai": {
+            "name": "ai"
         }
     }
 }

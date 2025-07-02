@@ -47,7 +47,7 @@ export default class BotClient extends Client {
             this.t.set(locale.split('.')[0], JSON.parse(data))
         }
     }
-    public async getLocaleText(key: string, locale: string, replaces = {}) {
+    public async getLocaleText(key: string, locale: string, replaces = {}): Promise<string> {
         const fallbackLocale = 'en-US';
         let langMap = this.t.get(locale);
         if (!langMap) langMap = this.t.get(fallbackLocale);
